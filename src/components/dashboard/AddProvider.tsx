@@ -27,8 +27,8 @@ import { storage } from "../../store";
 import { Store } from "reducers/types";
 const { v4: uuidv4 } = require("uuid");
 import {TextComponent} from "./TextComponent"
-import EmbedForm from "./embed-component/EmbedForm";
 import EventInfoComponent from "./EventInfoComponent";
+import { SimpleEditor } from "./SimpleEditor";
 
 // const eventInfo = {
 //     title: "Tour Our Station",
@@ -477,7 +477,7 @@ function AddProvider(props) {
                                                     animate ? "fade-in" : "hide"
                                                 }
                                             >
-                                                <RowForm
+                                                {/* <RowForm
                                                     step={steps[step]}
                                                     item={item}
                                                     setItem={(i) => {
@@ -498,11 +498,12 @@ function AddProvider(props) {
                                                     filters={filters}
                                                     descriptions={descriptions}
                                                     categories={categories}
-                                                />
+                                                /> */}
 
                                                 {/* <EmbedComponent eventInfo={eventInfo} /> */}
                                                 {/* <EmbedForm/> */}
                                                 {/* <TextComponent content={content} onContentUpdate={handleUpdate} /> */}
+                                                <SimpleEditor/>
                                                 {/* <EventInfoComponent
                                                     title={eventInfo2.title}
                                                     description={eventInfo2.description}

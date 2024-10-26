@@ -35,10 +35,10 @@ export function TextComponent({ content, onContentUpdate }: TextComponentProps) 
       Strike,
       Code
     ],
-    content: content, // Use content from props
+    content: content, 
   }) as Editor;
 
-  // Handle content updates
+
   useEffect(() => {
     if (editor) {
       editor.on("update", () => {
@@ -73,7 +73,8 @@ export function TextComponent({ content, onContentUpdate }: TextComponentProps) 
   }
 
   return (
-    <Collapsible label="Text"> 
+    // <Collapsible label="Text"> 
+    <>
       <label className={styles.textLabel}>Text</label>
       <div className={styles.editor}>
         <div className={styles.menu}>
@@ -141,6 +142,7 @@ export function TextComponent({ content, onContentUpdate }: TextComponentProps) 
         </div>
       </div>
       <label className={styles.deleteLabel}>Delete</label>
-    </Collapsible>
+    {/* </Collapsible> */}
+    </>
   );
 }
