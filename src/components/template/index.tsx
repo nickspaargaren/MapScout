@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
@@ -15,10 +14,7 @@ import promiseWithTimeout from "../../functions/promiseWithTimeout";
 import { Store } from "reducers/types";
 import { TempTutorial } from "./TempTutorial";
 import { TempTutorialTwo } from "./TempTutorialTwo";
-import { ToggleSlider }  from "react-toggle-slider";
 import { BsPlus } from "react-icons/bs";
-import { Card } from "react-bootstrap";
-import { uuid } from "uuidv4";
 const { v4: uuidv4 } = require("uuid");
 
 function reorder<T>(list: T[], startIndex: number, endIndex: number) {
