@@ -26,14 +26,6 @@ import { GOOGLE_API_KEY } from "../../config/keys";
 import { storage } from "../../store";
 import { Store } from "reducers/types";
 const { v4: uuidv4 } = require("uuid");
-import EmbedForm from "./embed-component/EmbedForm";
-import EmbedComponent from "./embed-component/EmbedComponent";
-
-const eventInfo = {
-    title: "Tour Our Station",
-    videoUrl: "https://www.youtube.com/watch?v=oZcKTf4RLQ8&ab_channel=HorizonsHealth",
-    thumbnail: "https://picsum.photos/200",
-};
 
 let steps = [
     "Map",

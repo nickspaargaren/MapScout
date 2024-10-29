@@ -14,6 +14,8 @@ import Linkify from "react-linkify";
 import ProviderGalleryCarousel from "components/dashboard/ProviderGalleryCarousel";
 import Collapsible from "components/collapsible";
 import Directory from "components/dashboard/Directory";
+import EmbedForm from "components/dashboard/embed-component/EmbedForm";
+import EmbedComponent from "components/dashboard/embed-component/EmbedComponent";
 
 {
     /*TO BE DELETED */
@@ -95,7 +97,12 @@ const directoryData =
             details: "bob@gmail.com",
             image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
         },
-    ];
+];
+const eventInfo = {
+    title: "Tour Our Station",
+    videoUrl: "https://www.youtube.com/watch?v=oZcKTf4RLQ8&ab_channel=HorizonsHealth",
+    thumbnail: "https://picsum.photos/200",
+};
 
 const ProviderInfo = (props) => {
     const [image, setImage] = useState("bog");
@@ -278,6 +285,20 @@ const ProviderInfo = (props) => {
                         <Directory
                             directoryItems={directoryData}
                         ></Directory>
+                    </Collapsible>
+                </Col>
+            </Row>
+            <Row className="info-rows">
+                <Col md={12}>
+                    <Collapsible
+                        label={"Sample Embedded title"}
+                        style={{
+                            maxWidth: "1000px",
+                            marginLeft: "auto",
+                            marginRight: "auto"
+                        }}
+                    >
+                        <EmbedComponent eventInfo={eventInfo} />
                     </Collapsible>
                 </Col>
             </Row>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Collapsible from 'components/collapsible'; 
 import ReactPlayer from 'react-player';
 
 interface EventInfo {
@@ -20,46 +19,34 @@ const EmbedComponent: React.FC<EmbedComponentProps> = ({ eventInfo }) => {
   };
 
   return (
-    <Collapsible label={eventInfo.title}> 
-      <div style={styles.container}>
-        <div style={styles.innerContent}>
-          {!isPlaying ? (
-            <div style={styles.videoThumbnail} onClick={handlePlayVideo}>
-              <img src={eventInfo.thumbnail} alt="Video thumbnail" style={styles.thumbnail} />
-              <div style={styles.playButtonOverlay}>
-                <div style={styles.circleButton}>
-                  <span style={styles.triangle}></span>
-                </div>
+      <div style={styles.innerContent}>
+        {!isPlaying ? (
+          <div style={styles.videoThumbnail} onClick={handlePlayVideo}>
+            <img src={eventInfo.thumbnail} alt="Video thumbnail" style={styles.thumbnail} />
+            <div style={styles.playButtonOverlay}>
+              <div style={styles.circleButton}>
+                <span style={styles.triangle}></span>
               </div>
             </div>
-          ) : (
-            <ReactPlayer
-              url={eventInfo.videoUrl}
-              playing
-              controls
-              width="100%"
-              height="315px"
-              style={styles.videoPlayer}
-            />
-          )}
-        </div>
+          </div>
+        ) : (
+          <ReactPlayer
+            url={eventInfo.videoUrl}
+            playing
+            controls
+            width="100%"
+            height="315px"
+            style={styles.videoPlayer}
+          />
+        )}
       </div>
-    </Collapsible>
   );
 };
 
 const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    width: '100%',
-    maxWidth: '800px',
-    height: 'auto',
-    padding: '20px',
-    border: '1px solid #ccc',
-    borderRadius: '8px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    position: 'relative',
-  },
   innerContent: {
+    width: '100%',
+    height: 'auto',
     padding: '15px',
   },
   videoThumbnail: {
