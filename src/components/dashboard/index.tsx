@@ -271,12 +271,12 @@ function Dashboard({ firestore, team, selectItem }) {
                     )}
                 </div>
                 <button className="template-add">
-                    <Link to={formRoute} style={{ width: "100%" }}>
+                    <Link onClick={() => selectItem({})} to={formRoute} style={{ width: "100%" }}>
                         <BsPlus /> Add New Provider
                     </Link>
                 </button>
                 {/* Bandaid fix for content showing below sticky button */}
-                <div style={{ marginBottom: "-18px", height: "18px", width: "100%", position: "sticky", bottom: "-28px", backgroundColor: "white", zIndex: "2" }}/>
+                <div style={{ marginBottom: "-18px", height: "18px", width: "100%", position: "sticky", bottom: "-28px", backgroundColor: "white", zIndex: "2" }} />
             </Container>
         </div>
     );
