@@ -24,7 +24,7 @@ const dash = require("../../assets/img/dash.svg");
 
 function ProviderEntry({ provider, setLoading, resetIndex, firestore, selectItem, categories }: { provider: ProviderProps, setLoading: Function, resetIndex: Function, firestore: any, selectItem: Function, categories: Array<String> }) {
     return <Collapsible
-        style={{ width: "100%" }}
+        style={{ width: "100%", borderRadius: "8px" }}
         title={
             <div className="provider-entry">
                 {/* title */}
