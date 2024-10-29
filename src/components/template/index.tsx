@@ -33,11 +33,11 @@ export default compose<any>(
     connect(mapStateToProps, {}),
 )(({ team, firestore }) => {
     let timerInterval: NodeJS.Timeout | null = null;
-    const [categories, setCategories] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [providers, setProviders] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [message, setMessage] = useState(null);
     const [newCatName, setNewCatName] = useState("Please edit name of new category");
-    const [isLoading, setIsLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [usePrimary, setUsePrimary] = useState(false);
     const staticData = {
@@ -676,6 +676,8 @@ export default compose<any>(
                 }}>
                 <BsPlus /> Add Filter
                 </button>
+                {/* Bandaid fix for content showing below sticky button */}
+                <div style={{ marginBottom: "-18px", height: "18px", width: "100%", position: "sticky", bottom: "-28px", backgroundColor: "white", zIndex: "2" }} />
                 <Modal show={showModal} onHide={() => setShowModal(false)} dialogClassName="myModal" scrollable>
                     <Modal.Header style={{ backgroundColor: "#2F80ED" }}>
                         <div className="ml-auto">
