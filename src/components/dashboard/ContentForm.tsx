@@ -2,7 +2,6 @@ import "@fontsource/inter";
 
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Col, Container, Dropdown, Form, Row } from "react-bootstrap";
-// import grabberIcon from "../../assets/svg/grabber.svg";
 import { ReactComponent as GrabberIcon } from "../../assets/svg/grabber.svg";
 import { ReactComponent as PencilIcon } from "../../assets/svg/pencil.svg";
 import { ReactComponent as CheckmarkIcon } from "../../assets/svg/checkmark.svg";
@@ -12,6 +11,7 @@ import DirectoryForm from "./DirectoryForm";
 import ChartComponentForm from "components/subcomponents/chartcomponents/ChartComponentForm";
 import Collapsible from "components/collapsible";
 import ProviderGallery from "./ProviderGallery";
+import EmbedForm from "./embed-component/EmbedForm";
 
 const EditableText = ({ text, setText, isEditing, setIsEditing }) => {
     const inputRef = useRef(null);
@@ -153,7 +153,7 @@ const SectionCard = ({
                 className="flex-fill m-0 w-100"
             >
                 <Dropdown>
-                    <Dropdown.Toggle className={styles.deleteButton}
+                    <Dropdown.Toggle
                         style={{
                             color: "white",
                             fontSize: "16px",
@@ -208,6 +208,21 @@ const SectionCard = ({
                                 <DirectoryForm items={[]} />
                             </Collapsible>
                             ])}>Directory</Dropdown.Item>
+                        <Dropdown.Item onClick={() =>
+                            setComponents([...components,
+                            <Collapsible
+                                style={{ width: "100%" }}
+                                titleStyle={{
+                                    background: "white",
+                                    color: "var(--chart-blue)",
+                                    fontSize: "1.25rem",
+                                    fontStyle: "normal",
+                                    lineHeight: "24px"
+                                }}
+                                label={"Embed"}>
+                                <EmbedForm/>
+                            </Collapsible>
+                            ])}>Embed</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
             </Row>

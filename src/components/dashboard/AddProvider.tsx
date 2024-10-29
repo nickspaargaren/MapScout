@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Steps, { Step } from "rc-steps";
 import "rc-steps/assets/index.css";
 import "rc-steps/assets/iconfont.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -47,6 +48,17 @@ function AddProvider(props) {
     const [descriptions, setDescriptions] = useState(null);
     const [single, setSingle] = useState(null);
     const [error, setError] = useState("");
+    const [content, setContent] = useState('ex. "Changing lives one bit at a time..."');
+    const handleUpdate = (updatedContent: string) => {
+        setContent(updatedContent);
+    };
+
+    // const eventInfo2 = {
+    //     title: "Introducing APFF",
+    //     description:
+    //       "Atlanta Professional Fire Foundation supports the firefighters of Atlanta and their families when they need assistance. Due to a growing number of hazards, our brothers & sisters are at greater risk than ever before while protecting the citizens of Atlanta. APFF provides assistance for Illness, Injury, PTSD, Line of Duty Death and Bereavement. APFF also funds Tuition Reimbursement, Tools & Equipment Purchases, Training Opportunities, Living Condition Improvements, Affordable Housing and Fellowship Events.",
+    //     highlight: "Our Foundation is run by Firefighters, for Firefighters!"
+    // };
 
     // async function fetchData() {
     //   const collections = props.firestore.collection('categories');
