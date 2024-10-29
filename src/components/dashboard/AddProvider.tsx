@@ -476,7 +476,7 @@ function AddProvider(props) {
                                                     animate ? "fade-in" : "hide"
                                                 }
                                             >
-                                                {/* <RowForm
+                                                <RowForm
                                                     step={steps[step]}
                                                     item={item}
                                                     setItem={(i) => {
@@ -497,12 +497,7 @@ function AddProvider(props) {
                                                     filters={filters}
                                                     descriptions={descriptions}
                                                     categories={categories}
-                                                /> */}
-
-                                                {/* <EmbedComponent eventInfo={eventInfo}/> */}
-
-                                                {/* <EmbedForm/> */}
-
+                                                />
                                             </div>
                                         </div>
                                     </Form>
