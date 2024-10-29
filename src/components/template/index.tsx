@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
@@ -15,10 +14,7 @@ import promiseWithTimeout from "../../functions/promiseWithTimeout";
 import { Store } from "reducers/types";
 import { TempTutorial } from "./TempTutorial";
 import { TempTutorialTwo } from "./TempTutorialTwo";
-import { ToggleSlider }  from "react-toggle-slider";
 import { BsPlus } from "react-icons/bs";
-import { Card } from "react-bootstrap";
-import { uuid } from "uuidv4";
 const { v4: uuidv4 } = require("uuid");
 
 function reorder<T>(list: T[], startIndex: number, endIndex: number) {
@@ -37,11 +33,11 @@ export default compose<any>(
     connect(mapStateToProps, {}),
 )(({ team, firestore }) => {
     let timerInterval: NodeJS.Timeout | null = null;
-    const [categories, setCategories] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [providers, setProviders] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [message, setMessage] = useState(null);
     const [newCatName, setNewCatName] = useState("Please edit name of new category");
-    const [isLoading, setIsLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [usePrimary, setUsePrimary] = useState(false);
     const staticData = {
@@ -680,6 +676,8 @@ export default compose<any>(
                 }}>
                 <BsPlus /> Add Filter
                 </button>
+                {/* Bandaid fix for content showing below sticky button */}
+                <div style={{ marginBottom: "-18px", height: "18px", width: "100%", position: "sticky", bottom: "-28px", backgroundColor: "white", zIndex: "2" }} />
                 <Modal show={showModal} onHide={() => setShowModal(false)} dialogClassName="myModal" scrollable>
                     <Modal.Header style={{ backgroundColor: "#2F80ED" }}>
                         <div className="ml-auto">
