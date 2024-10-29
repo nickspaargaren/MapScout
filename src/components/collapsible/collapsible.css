@@ -5,7 +5,7 @@
 }
 
 .collapsible .content.open {
-    max-height: 1000px;
+    /* max-height: 1000px; */
     overflow: scroll;
 }
 
@@ -16,6 +16,7 @@
     align-items: flex-start;
     line-break: auto;
     padding: 16px;
+    align-items: center;
 }
 
 .collapsible {

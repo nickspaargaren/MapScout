@@ -1,7 +1,6 @@
 import { connect } from "react-redux";
 import { compose } from "redux";
 import React, { useState, useEffect } from "react";
-import ListGroup from "react-bootstrap/ListGroup";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { withFirestore, isEmpty } from "react-redux-firebase";
@@ -9,18 +8,90 @@ import { formRoute } from "../../routes/pathnames";
 import SingleProvider from "./SingleProvider";
 import { selectItem } from "../../functions/reduxActions";
 import CSV from "./CSV";
-import { DashTutorial } from "./DashTutorial";
 import { useCSVReader } from "react-papaparse";
 import Modal from "react-bootstrap/Modal";
 import handleDrop from "./CSV";
 import importConfig from "./CSV";
 import handleRemoveFile from "./CSV";
 import handleSubmit from "./CSV";
+import { Container } from "react-bootstrap";
+import { BsPlus } from "react-icons/bs";
+import Collapsible from "components/collapsible";
+import { ProviderProps } from "types/firestore";
+import ProviderInfo from "components/subcomponents/ProviderInfo";
 
 const dash = require("../../assets/img/dash.svg");
 
+function ProviderEntry({ provider, setLoading, resetIndex, firestore, selectItem, categories }: { provider: ProviderProps, setLoading: Function, resetIndex: Function, firestore: any, selectItem: Function, categories: Array<String> }) {
+    return <Collapsible
+        style={{ width: "100%", borderRadius: "8px" }}
+        title={
+            <div className="provider-entry">
+                {/* title */}
+                <div style={{ fontSize: "20px" }}>
+                    <b>{provider.facilityName}</b>
+                </div>
+                {/* Info */}
+                <div style={{ marginLeft: "15px", display: "flex", flexDirection: "column" }}>
+                    <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                        <div style={{
+                            width: "calc(100% - 200px",
+                            overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', gap: "10px"
+                        }}>
+                            {provider.address}
+                        </div>
+                        <div>
+                            <Button
+                                style={{ width: "90px", height: "35px", backgroundColor: "#226DFF" }}
+                                block
+                                variant="primary"
+                                onClick={() => selectItem(provider)}
+                                as={Link}
+                                to={formRoute}
+                            >
+                                Edit
+                            </Button>
+                        </div>
+                        <div>
+                            <Button
+                                style={{ width: "90px", height: "35px", backgroundColor: "#fd2c63" }}
+                                block
+                                variant="danger"
+                                onClick={async () => {
+                                    setLoading();
+                                    const collections =
+                                        firestore.collection("providers");
+                                    await collections
+                                        .where("id", "==", provider.id)
+                                        .get()
+                                        .then(async (querySnapshot) => {
+                                            await querySnapshot.forEach((doc) => {
+                                                doc.ref.delete();
+                                            });
+                                        });
+                                    await firestore.get("providers");
+                                    resetIndex();
+                                }}
+                            >
+                                Delete
+                            </Button>
+                        </div>
+                    </div>
+                    <div>
+                        {provider.phoneNum}
+                    </div>
+                </div>
+            </div>
+        }
+    >
+        <Container>
+            <ProviderInfo item={provider} categories={categories} />
+        </Container>
+    </Collapsible>
+
+}
+
 function Dashboard({ firestore, team, selectItem }) {
-    const [selectedIndex, setSelectedIndex] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [providers, setProviders] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -60,8 +131,9 @@ function Dashboard({ firestore, team, selectItem }) {
                 setCategories(c);
             }
         }
-        fetchData().then(() => setIsLoading(false));
-    }, [team]);
+        fetchData()
+        setIsLoading(false);
+    }, [team, isLoading]);
 
     if (isLoading) {
         return (
@@ -170,66 +242,42 @@ function Dashboard({ firestore, team, selectItem }) {
     }
 
     return (
-        <div className="admin-dashboard">
-            <DashTutorial />
-            <div className="admin-list-container">
-                <div className="list-wrapper">
-                    <div className="add-export-bttns-wrapper">
-                        <div className="add-button-wrapper">
-                            <Button
-                                block
-                                variant="primary"
-                                onClick={() => selectItem({})}
-                                as={Link}
-                                to={formRoute}
-                            >
-                                + Add New Provider
-                            </Button>
-                        </div>
-                        <div className="export-button-wrapper">
-                            <CSV
-                                providers={providers}
-                                categories={categories}
-                            />
-                        </div>
-                    </div>
-                    <div
-                        className="scroll-container"
-                        style={{ maxHeight: "calc(100vh - 66px)" }}
-                    >
-                        <ListGroup variant="flush">
-                            {!isEmpty(providers) &&
-                                providers.map((item, index) => (
-                                    <ListGroup.Item
-                                        href={item.id}
-                                        key={index}
-                                        className="point"
-                                        onClick={() => setSelectedIndex(index)}
-                                        active={selectedIndex === index}
-                                    >
-                                        <h2>{item.facilityName}</h2>
-                                    </ListGroup.Item>
-                                ))}
-                        </ListGroup>
-                    </div>
+        <div id="template-root">
+            <Container className="box">
+                <div className="row-spaced">
+                    <h2 className="template-title">Providers Builder</h2>
                 </div>
-            </div>
-            <div className="admin-provider">
-                {providers && providers[selectedIndex] && (
-                    <SingleProvider
-                        item={providers[selectedIndex]}
-                        categories={categories}
-                        editProvider={() =>
-                            selectItem(providers[selectedIndex])
-                        }
-                        setLoading={() => setIsLoading(true)}
-                        resetIndex={() => {
-                            setSelectedIndex(0);
-                            setIsLoading(false);
-                        }}
-                    />
-                )}
-            </div>
+                <div className="template-header">
+                    <h3 className="template-header-title">Providers</h3>
+                    <p className="template-header-desription">
+                        The providers will appear on the Map where
+                        the users will be able to click on them and
+                        view more information about them.
+                    </p>
+                </div>
+                <br />
+                <div className="provider-container">
+                    {providers.map((provider, i) =>
+                        <ProviderEntry
+                            provider={provider}
+                            setLoading={() => setIsLoading(true)}
+                            resetIndex={() => {
+                                setIsLoading(false);
+                            }}
+                            firestore={firestore}
+                            selectItem={selectItem}
+                            categories={categories}
+                        />
+                    )}
+                </div>
+                <button className="template-add">
+                    <Link onClick={() => selectItem({})} to={formRoute} style={{ width: "100%" }}>
+                        <BsPlus /> Add New Provider
+                    </Link>
+                </button>
+                {/* Bandaid fix for content showing below sticky button */}
+                <div style={{ marginBottom: "-18px", height: "18px", width: "100%", position: "sticky", bottom: "-28px", backgroundColor: "white", zIndex: "2" }} />
+            </Container>
         </div>
     );
 }
