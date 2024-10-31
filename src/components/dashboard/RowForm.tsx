@@ -19,7 +19,7 @@ import Button from "react-bootstrap/Button";
 import ActionForm from "./ActionForm";
 import ContentForm from "./ContentForm";
 
-import { SimpleEditor } from "./SimpleEditor";
+import { SimpleEditor } from "./TextComponent/SimpleEditor";
 
 function validURL(str) {
     const pattern = new RegExp(

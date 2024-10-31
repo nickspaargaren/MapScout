@@ -1,7 +1,6 @@
 import React from "react";
 import ReactModal, { Props } from "react-modal";
 
-// Modal setting.
 const modalStyles = {
   overlay: {
     zIndex: 10000

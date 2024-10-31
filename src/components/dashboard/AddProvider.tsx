@@ -26,9 +26,9 @@ import { GOOGLE_API_KEY } from "../../config/keys";
 import { storage } from "../../store";
 import { Store } from "reducers/types";
 const { v4: uuidv4 } = require("uuid");
-import {TextComponent} from "./TextComponent"
+
 import EventInfoComponent from "./EventInfoComponent";
-import { SimpleEditor } from "./SimpleEditor";
+import { SimpleEditor } from "./TextComponent/SimpleEditor";
 
 // const eventInfo = {
 //     title: "Tour Our Station",
