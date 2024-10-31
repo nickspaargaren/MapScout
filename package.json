@@ -125,6 +125,7 @@
         "redux-logger": "^3.0.6",
         "redux-thunk": "^2.2.0",
         "tiptap-extension-resize-image": "^1.1.9",
+        "tiptap-imagresize": "^1.1.0",
         "tiptap-resize-image": "^2.0.1",
         "typescript": "^4.0.2",
         "url-loader": "^4.0.0",

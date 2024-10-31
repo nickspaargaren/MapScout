@@ -23,9 +23,22 @@ import BulletList from "@tiptap/extension-bullet-list";
 import ListItem from "@tiptap/extension-list-item";
 import OrderedList from "@tiptap/extension-ordered-list";
 import Image from "@tiptap/extension-image";
+import Blockquote from "@tiptap/extension-blockquote";
+import bqSVG from "../../../assets/svg/blockquote.svg"
 
 
 export function SimpleEditor() {
+  const CustomImage = Image.extend({
+    addAttributes() {
+      return {
+        ...this.parent?.(),
+        class: {
+          default: "fixed-image", // Assign the CSS class here
+        },
+      };
+    },
+  });
+
   const editor = useEditor({
     extensions: [
       Document,
@@ -44,7 +57,8 @@ export function SimpleEditor() {
       BulletList,
       ListItem,
       OrderedList,
-      Image
+      CustomImage,
+      Blockquote
     ],
     content: '<p>ex. "Changing lives one bit at a time..."</p>',
   }) as Editor;
@@ -111,10 +125,11 @@ export function SimpleEditor() {
     editor.chain().focus().toggleCode().run();
   }, [editor]);
 
+
   const addImage = useCallback(() => {
-    const imageUrl = prompt("Enter the image URL");
+    const imageUrl: string | null = prompt("Enter the image URL");
     if (imageUrl) {
-      editor?.chain().focus().setImage({ src: imageUrl }).run();
+      editor.chain().focus().setImage({ src: imageUrl }).run(); 
     }
   }, [editor]);
 
@@ -291,7 +306,7 @@ export function SimpleEditor() {
             })}
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
           >
-            <Icons.NumberedListIcon /> {/* Replace with your numbered list icon */}
+            <Icons.NumberedListIcon /> 
           </button>
 
           <button
@@ -308,12 +323,27 @@ export function SimpleEditor() {
           </button>
 
           <button
-            type="button"
-            className="menu-button"
-            onClick={addImage} 
+          type="button"
+          className="menu-button"
+          onClick={addImage}
           >
             <Icons.ImageIcon />
           </button>
+
+          <button
+            type="button"
+            className={classNames("menu-button", {
+              "is-active": editor.isActive("blockquote"),
+            })}
+            onClick={(event) => {
+              event.preventDefault();
+              editor.chain().focus().toggleBlockquote().run();
+            }}
+          >
+            <img src={bqSVG} alt="Blockquote" style={{ width: 20, height: 20 }} />
+            </button>
+
+
 
           
         </div>

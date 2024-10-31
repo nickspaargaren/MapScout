@@ -130,6 +130,18 @@ body {
   pointer-events: none;
 }
 
+.fixed-image {
+  width: 300px;
+  height: 200px;
+}
+
+blockquote {
+  border-left: 4px solid #ddd;
+  margin-left: 0;
+  padding-left: 1em;
+  color: #555;
+  font-style: italic;
+}
 
 
 
