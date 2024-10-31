@@ -219,8 +219,29 @@ export const NumberedListIcon = ({ size = 16, color = "currentColor" }) => (
     <line x1="8" y1="6" x2="21" y2="6" />
     <line x1="8" y1="18" x2="21" y2="18" />
 
-    <text x="1" y="8" fontSize="7" fill={color} fontFamily="Arial">1</text>
-    <text x="1" y="20" fontSize="7" fill={color} fontFamily="Arial">2</text>
+    <text x="1" y="8" fontSize="8" fill={color} fontFamily="Arial">1</text>
+    <text x="1" y="20" fontSize="8" fill={color} fontFamily="Arial">2</text>
+  </svg>
+);
+
+export const ImageIcon = ({ size = 16, color = "currentColor" }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    {/* Frame of the image */}
+    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+    {/* Circle inside the image to represent an object */}
+    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+    {/* Line representing a mountain or shape */}
+    <path d="M21 15l-5-5L5 21"></path>
   </svg>
 );
 

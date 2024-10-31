@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState} from "react";
 import classNames from "classnames";
 import "./styles.css";
 import { useEditor, EditorContent, Editor, BubbleMenu } from "@tiptap/react";
@@ -22,6 +22,8 @@ import ColorPickerButton from "./TextColor/ColorPickerButton";
 import BulletList from "@tiptap/extension-bullet-list";
 import ListItem from "@tiptap/extension-list-item";
 import OrderedList from "@tiptap/extension-ordered-list";
+import Image from "@tiptap/extension-image";
+
 
 export function SimpleEditor() {
   const editor = useEditor({
@@ -42,6 +44,7 @@ export function SimpleEditor() {
       BulletList,
       ListItem,
       OrderedList,
+      Image
     ],
     content: '<p>ex. "Changing lives one bit at a time..."</p>',
   }) as Editor;
@@ -108,9 +111,17 @@ export function SimpleEditor() {
     editor.chain().focus().toggleCode().run();
   }, [editor]);
 
+  const addImage = useCallback(() => {
+    const imageUrl = prompt("Enter the image URL");
+    if (imageUrl) {
+      editor?.chain().focus().setImage({ src: imageUrl }).run();
+    }
+  }, [editor]);
+
   if (!editor) {
     return null;
   }
+
 
   return (
     <div className="editor">
@@ -295,6 +306,15 @@ export function SimpleEditor() {
           >
             <Icons.Link />
           </button>
+
+          <button
+            type="button"
+            className="menu-button"
+            onClick={addImage} 
+          >
+            <Icons.ImageIcon />
+          </button>
+
           
         </div>
         <EditorContent editor={editor} />
