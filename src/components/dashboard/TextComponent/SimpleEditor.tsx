@@ -342,10 +342,7 @@ export function SimpleEditor() {
           >
             <img src={bqSVG} alt="Blockquote" style={{ width: 20, height: 20 }} />
             </button>
-
-
-
-          
+            
         </div>
         <EditorContent editor={editor} />
       </div>

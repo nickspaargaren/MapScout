@@ -13,7 +13,7 @@ const EventInfoComponent: React.FC<EventInfoComponentProps> = ({ title, descript
     <Collapsible label={title}> 
       <div className="event-info-container">
         <p className="event-description">{description}</p>
-        <p className="event-highlight">{highlight}</p>
+        <p className="event-description">{highlight}</p>
       </div>
     </Collapsible>
   );

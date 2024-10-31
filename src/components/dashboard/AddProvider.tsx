@@ -500,9 +500,6 @@ function AddProvider(props) {
                                                     categories={categories}
                                                 /> */}
 
-                                                {/* <EmbedComponent eventInfo={eventInfo} /> */}
-                                                {/* <EmbedForm/> */}
-                                                {/* <TextComponent content={content} onContentUpdate={handleUpdate} /> */}
                                                 <SimpleEditor/>
                                                 {/* <EventInfoComponent
                                                     title={eventInfo2.title}
