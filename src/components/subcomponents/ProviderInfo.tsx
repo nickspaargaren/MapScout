@@ -138,7 +138,7 @@ const ProviderInfo = (props) => {
         }
         fetchData();
     }, [props.item]);
-
+    
     if (isLoading) {
         return (
             <div className="spinner-wrap">
@@ -269,8 +269,8 @@ const ProviderInfo = (props) => {
             </Row>
             {/* Sample components that in the future should be added dynamically
             based on the response from firebase */}
-            <Row className="info-rows">
-                <Col md={12}>
+            <Row className="info-rows" >
+                <Col md={12} >
                     <Collapsible
                         label={"Gallery"}
                         style={{
