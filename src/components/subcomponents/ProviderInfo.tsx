@@ -310,7 +310,7 @@ const ProviderInfo = (props) => {
                         }}
                     >
                         {/*TO BE DELETED */}
-                        <CalendarForm eventsArray={calenderData} />
+                        <CalendarForm eventsArray={calenderData as any} />
                     </Collapsible>
                 </Col>
             </Row>
