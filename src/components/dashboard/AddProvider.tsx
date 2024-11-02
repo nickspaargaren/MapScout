@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { compose } from "redux";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Steps, { Step } from "rc-steps";
 import "rc-steps/assets/index.css";
 import "rc-steps/assets/iconfont.css";
@@ -53,68 +53,6 @@ function AddProvider(props) {
         setContent(updatedContent);
     };
 
-    // const eventInfo2 = {
-    //     title: "Introducing APFF",
-    //     description:
-    //       "Atlanta Professional Fire Foundation supports the firefighters of Atlanta and their families when they need assistance. Due to a growing number of hazards, our brothers & sisters are at greater risk than ever before while protecting the citizens of Atlanta. APFF provides assistance for Illness, Injury, PTSD, Line of Duty Death and Bereavement. APFF also funds Tuition Reimbursement, Tools & Equipment Purchases, Training Opportunities, Living Condition Improvements, Affordable Housing and Fellowship Events.",
-    //     highlight: "Our Foundation is run by Firefighters, for Firefighters!"
-    // };
-
-    // async function fetchData() {
-    //   const collections = props.firestore.collection('categories');
-    //   const f = await collections
-    //     .where('team', '==', props.team.name)
-    //     .where('active', '==', true)
-    //     .where('select_type', '==', 2)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //       const idToData = {};
-    //       querySnapshot.forEach((doc) => {
-    //         const data = doc.data();
-    //         idToData[doc.id] = {
-    //           name: data.name,
-    //           options: data.options,
-    //         };
-    //       });
-    //       return idToData;
-    //     });
-    //   const d = await collections
-    //     .where('team', '==', props.team.name)
-    //     .where('active', '==', true)
-    //     .where('select_type', '==', 0)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //       const idToData = {};
-    //       querySnapshot.forEach((doc) => {
-    //         const data = doc.data();
-    //         idToData[doc.id] = {
-    //           name: data.name,
-    //           options: data.options,
-    //         };
-    //       });
-    //       return idToData;
-    //     });
-    //   const c = await collections
-    //     .where('team', '==', props.team.name)
-    //     .where('active', '==', true)
-    //     .where('select_type', '==', 1)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //       const idToData = {};
-    //       querySnapshot.forEach((doc) => {
-    //         const data = doc.data();
-    //         idToData[doc.id] = {
-    //           name: data.name,
-    //           options: data.options,
-    //         };
-    //       });
-    //       return idToData;
-    //     });
-    //   setFilters(f);
-    //   setDescriptions(d);
-    //   setCategories(c);
-    // }
-    const [lock, setLock]=useState(0);
     useEffect(() => {
         async function fetchData() {
             const collections = props.firestore.collection("categories");
@@ -169,9 +107,7 @@ function AddProvider(props) {
             setFilters(f);
             setDescriptions(d);
             setSingle(c);
-            setLock(1);
         }
-        console.log("updating")
         fetchData().then(() => setIsLoading(false));
     }, []);
 
@@ -208,9 +144,8 @@ function AddProvider(props) {
                 delIndex == -1 && steps.push("Toggle");
             }
         }
-        if(lock!=0)
-            updateSteps();
-    }, [filters, descriptions, single, lock]);
+        updateSteps();
+    }, [filters, descriptions, single]);
 
     // function updateSteps() {
     //   if (filters && !Object.keys(filters).length) {

@@ -97,7 +97,6 @@ const ProviderRoutes = (props) => {
             (!team || !team.name) &&
             typeof firebaseAuth.auth.uid === "string"
         ) {
-            console.log('fetching')
             firestore
                 .collection("users")
                 .where("UID", "==", firebaseAuth.auth.uid)
