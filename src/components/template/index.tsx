@@ -71,27 +71,14 @@ export default compose<any>(
 
     useEffect(() => {
         async function fetchData() {
-            const saved = localStorage.getItem("saved");
             const arr = [];
             const arr2 = [];
             const collections = firestore.collection("categories");
             const collections2 = firestore.collection("providers");
             // Note: this is a temperary workaround so the page does appears fine, however, further fix is neccessary to actually resolve the issue
             if (team.name === "") {
-                await collections
-                    .where("team", "==", saved)
-                    .get()
-                    .then((querySnapshot) => {
-                        querySnapshot.forEach((doc) => {
-                            const data = doc.data();
-                            if (!data.id) {
-                                data.id = doc.id;
-                            }
-                            arr.push(data);
-                        });
-                    });
+                console.error("Team NOT FETCHED ERROR");
             } else {
-                localStorage.setItem("saved", team.name);
                 await collections
                     .where("team", "==", team.name)
                     .get()
@@ -105,17 +92,8 @@ export default compose<any>(
             arr.sort((a, b) => a.priority - b.priority);
             setCategories(arr);
             if (team.name === "") {
-                await collections2
-                    .where("team", "==", saved)
-                    .get()
-                    .then((querySnapshot) => {
-                        querySnapshot.forEach((doc) => {
-                            const data = doc.data();
-                            arr2.push(data);
-                        });
-                    });
+                console.error("Team NOT FETCHED ERROR");
             } else {
-                localStorage.setItem("saved", team.name);
                 await collections2
                     .where("team", "==", team.name)
                     .get()
