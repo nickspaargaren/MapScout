@@ -16,17 +16,59 @@ import Collapsible from "components/collapsible";
 import Directory from "components/dashboard/Directory";
 import EmbedForm from "components/dashboard/embed-component/EmbedForm";
 import EmbedComponent from "components/dashboard/embed-component/EmbedComponent";
+import CalendarForm from "components/dashboard/calender-component/CalendarForm";
+import UpcomingEventsContainer from "components/dashboard/calender-component/UpcomingEventContainer";
 
 {
     /*TO BE DELETED */
 }
+
+const calenderData = [
+    {
+        displayNumber: 5,
+        eventName: "sladkfjlaskjdf",
+        fromDate: "2012-12-3",
+        toDate: "2023-12-4",
+        fromTime: "00:00",
+        toTime: "12:00",
+        isAllDay: false,
+        isCustom: true,
+        address: "526 Ponce De Leon Blvd, Atlanta, GA, USA",
+        description:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        repeatDays: ["Sunday"],
+        customEndOccurrences: 5,
+        isOn: true,
+        isAfter: false,
+    },
+    {
+        displayNumber: 5,
+        eventName: "sladkfjlaskjdf",
+        fromDate: "2012-12-3",
+        toDate: "2023-12-4",
+        fromTime: "00:00",
+        toTime: "12:00",
+        isAllDay: false,
+        isCustom: true,
+        address: "526 Ponce De Leon Blvd, Atlanta, GA, USA",
+        description:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        repeatDays: ["Sunday"],
+        customEndOccurrences: 5,
+        buttonText: "RSVP",
+        buttonLink: "https://www.google.com/",
+        isOn: true,
+        isAfter: false,
+    },
+];
+
 const galleryData = [
     {
         title: "Urban Tree Fundraiser",
         description:
             "Last Friday, we gathered for food, fun, and giving back at Urban Tree cidery. All proceeds from the evening went to our Bereavement fund. Everyone remembered to bring a sweater because the back deck got cold. We enjoyed drinks, games, and more!",
         imgLink:
-            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
+            "https://firebasestorage.googleapis.com/v0/b/gtbog-pacts.appspot.com/o/images%2FA5_5_3.png?alt=media&token=9b4befbc-5158-4de6-9f8f-fbe488e84703",
     },
     {
         title: "testVal2",
@@ -71,36 +113,36 @@ const galleryData = [
             "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
     },
 ];
-const directoryData =
-    [
-        {
-            name: "bob",
-            description: "firefighter",
-            details: "bob@gmail.com",
-            image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-        },
-        {
-            name: "bob",
-            description: "firefighter",
-            details: "bob@gmail.com",
-            image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-        },
-        {
-            name: "bob",
-            description: "firefighter",
-            details: "bob@gmail.com",
-            image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-        },
-        {
-            name: "bob",
-            description: "firefighter",
-            details: "bob@gmail.com",
-            image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-        },
+const directoryData = [
+    {
+        name: "bob",
+        description: "firefighter",
+        details: "bob@gmail.com",
+        image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
+    },
+    {
+        name: "bob",
+        description: "firefighter",
+        details: "bob@gmail.com",
+        image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
+    },
+    {
+        name: "bob",
+        description: "firefighter",
+        details: "bob@gmail.com",
+        image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
+    },
+    {
+        name: "bob",
+        description: "firefighter",
+        details: "bob@gmail.com",
+        image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
+    },
 ];
 const eventInfo = {
     title: "Tour Our Station",
-    videoUrl: "https://www.youtube.com/watch?v=oZcKTf4RLQ8&ab_channel=HorizonsHealth",
+    videoUrl:
+        "https://www.youtube.com/watch?v=oZcKTf4RLQ8&ab_channel=HorizonsHealth",
     thumbnail: "https://picsum.photos/200",
 };
 
@@ -115,7 +157,7 @@ const ProviderInfo = (props) => {
             try {
                 const res2 = await fetch(
                     `https://maps.googleapis.com/maps/api/staticmap?center=${props.item.latitude},${props.item.longitude}&zoom=16&scale=2&size=335x250&maptype=roadmap&key=${GOOGLE_API_KEY}&format=png&visual_refresh=true` +
-                    `&markers=${props.item.latitude},${props.item.longitude}`,
+                        `&markers=${props.item.latitude},${props.item.longitude}`
                 );
                 setStreetView(res2.url);
                 setImage(props.item.imageURL);
@@ -193,7 +235,7 @@ const ProviderInfo = (props) => {
                                         index ===
                                         props.item.address.toString().split(",")
                                             .length -
-                                        1
+                                            1
                                     ) {
                                         return (
                                             <div style={{ display: "inline" }}>
@@ -260,11 +302,41 @@ const ProviderInfo = (props) => {
             <Row className="info-rows">
                 <Col md={12}>
                     <Collapsible
+                        label={"Calendar"}
+                        style={{
+                            maxWidth: "1000px",
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                        }}
+                    >
+                        {/*TO BE DELETED */}
+                        <CalendarForm eventsArray={calenderData} />
+                    </Collapsible>
+                </Col>
+            </Row>
+            <Row className="info-rows">
+                <Col md={12}>
+                    <Collapsible
+                        label={"Upcoming Events"}
+                        style={{
+                            maxWidth: "1000px",
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                        }}
+                    >
+                        {/*TO BE DELETED */}
+                        <UpcomingEventsContainer events={calenderData} />
+                    </Collapsible>
+                </Col>
+            </Row>
+            <Row className="info-rows">
+                <Col md={12}>
+                    <Collapsible
                         label={"Gallery"}
                         style={{
                             maxWidth: "1000px",
                             marginLeft: "auto",
-                            marginRight: "auto"
+                            marginRight: "auto",
                         }}
                     >
                         {/*TO BE DELETED */}
@@ -279,12 +351,10 @@ const ProviderInfo = (props) => {
                         style={{
                             maxWidth: "1000px",
                             marginLeft: "auto",
-                            marginRight: "auto"
+                            marginRight: "auto",
                         }}
                     >
-                        <Directory
-                            directoryItems={directoryData}
-                        ></Directory>
+                        <Directory directoryItems={directoryData}></Directory>
                     </Collapsible>
                 </Col>
             </Row>
@@ -295,7 +365,7 @@ const ProviderInfo = (props) => {
                         style={{
                             maxWidth: "1000px",
                             marginLeft: "auto",
-                            marginRight: "auto"
+                            marginRight: "auto",
                         }}
                     >
                         <EmbedComponent eventInfo={eventInfo} />
@@ -307,7 +377,7 @@ const ProviderInfo = (props) => {
                     .filter(
                         (category) =>
                             props.item[category.id] &&
-                            props.item[category.id].length,
+                            props.item[category.id].length
                     )
                     .map((category) => (
                         <div>
@@ -320,7 +390,7 @@ const ProviderInfo = (props) => {
                                             if (
                                                 index !==
                                                 props.item[category.id].length -
-                                                1
+                                                    1
                                             ) {
                                                 return (
                                                     <div className="modal-text">
@@ -333,7 +403,7 @@ const ProviderInfo = (props) => {
                                                     {selected}
                                                 </div>
                                             );
-                                        },
+                                        }
                                     )
                                 ) : (
                                     <Linkify>
@@ -369,9 +439,9 @@ function calculateHours(props) {
                 !props.item.hours[days[i]] ||
                 !props.item.hours[days[i - 1]] ||
                 props.item.hours[days[i]][0] !==
-                props.item.hours[days[i - 1]][0] ||
+                    props.item.hours[days[i - 1]][0] ||
                 props.item.hours[days[i]][1] !==
-                props.item.hours[days[i - 1]][1]
+                    props.item.hours[days[i - 1]][1]
             ) {
                 startandFinish.push(i - 1);
                 startandFinish.push(i);
@@ -387,7 +457,7 @@ function calculateHours(props) {
             children.push(
                 <Col className="modal-col-flex-end" sm={5}>
                     {days[startandFinish[i]]}
-                </Col>,
+                </Col>
             );
         } else {
             const subchild = [
@@ -399,22 +469,22 @@ function calculateHours(props) {
             children.push(
                 <Col className="modal-col-flex-end" sm={5}>
                     {subchild}
-                </Col>,
+                </Col>
             );
         }
         children.push(
             <Col className="modal-col-flex-start">
                 {props.item.hours[days[startandFinish[i]]]
                     ? props.item.hours[days[startandFinish[i]]].map(
-                        (time, index) =>
-                            formatTime(
-                                props.item.hours[days[startandFinish[i]]],
-                                time,
-                                index,
-                            ),
-                    )
+                          (time, index) =>
+                              formatTime(
+                                  props.item.hours[days[startandFinish[i]]],
+                                  time,
+                                  index
+                              )
+                      )
                     : "CLOSED"}
-            </Col>,
+            </Col>
         );
         rows.push(<Row>{children}</Row>);
     }
@@ -472,5 +542,5 @@ export default compose<any>(
     connect((state: Storage) => ({
         providers: state.firestore.ordered.providers,
         firebase: state.firebase,
-    })),
+    }))
 )(ProviderInfo);
