@@ -1159,18 +1159,6 @@ const Map = (props) => {
                                                 <div className="padder d-flex flex-column" style={{ height: "calc(200vh - 70px)", overflowY: 'scroll' }}>
                                                     <div className="content d-flex flex-column">
                                                         <ProviderInfo item={activeProviders[selectedIndex]} categories={categories} />
-                                                        <div className="mt-2"> 
-                                                            <ProgressBar current={300} total={600} buttonLink={"google.com"} buttonLabel={"Donate Now"} />
-                                                        </div>
-                                                        <div className="mt-2"> 
-                                                            <DonutChart data={data} buttonLink={"https://google.com"} buttonLabel={"Donate Now"} />
-                                                        </div>
-                                                        <div className="mt-2"> 
-                                                            <LineChart title={"Total donations per month in 2023"} data={data2} />
-                                                        </div>
-                                                        <div className="mt-2">
-                                                            <LineChart title={"Total donations per month in 2023"} data={data2} />
-                                                        </div>
                                                         <div className="mt-2">
                                                             
                                                             <Collapsible label={"Graph"} containerStyle={{placeItems: "flex-start"}}>
