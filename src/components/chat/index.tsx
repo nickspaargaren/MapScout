@@ -75,7 +75,7 @@ function Chat({ firebase, newChat, updateNewChat }) {
                             marginBottom: 6
                         }}
                     >
-                        <div className="chat-message">Thanks for your feedback, we have recieved your review!</div>
+                        <div className="chat-message">Thanks for your feedback, we have recieved your message, our team will reach out to you shortely!</div>
                     </div>
                     )}
                     <Form onSubmit={formSubmit}>
