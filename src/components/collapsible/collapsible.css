@@ -42,7 +42,3 @@
     flex-grow: 0;
     width: 100%;
 }
-
-.collapsible .content::-webkit-scrollbar {
-    display: none;
-}
