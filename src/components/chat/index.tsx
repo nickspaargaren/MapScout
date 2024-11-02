@@ -7,6 +7,7 @@ import "firebase/database";
 import { chatRef } from "../../store";
 import Discussion from "./Discussion";
 import { updateNewChat as Update } from "../../functions/reduxActions";
+import ChatBubble from "./ChatBubble";
 
 async function sendSlackMessage(email, message) {
     const data = {
@@ -25,6 +26,7 @@ async function sendSlackMessage(email, message) {
 
 function Chat({ firebase, newChat, updateNewChat }) {
     const [message, setMessage] = useState("");
+    const [isSUbmitted, setIsSubmitted] = useState(false);
     const addToDo = async (newToDo) => {
         chatRef.push().set(newToDo);
     };
@@ -34,6 +36,7 @@ function Chat({ firebase, newChat, updateNewChat }) {
     };
 
     const formSubmit = (e) => {
+        setIsSubmitted(true);
         e.preventDefault();
         if (message !== "") {
             const currentdate = new Date();
@@ -58,6 +61,23 @@ function Chat({ firebase, newChat, updateNewChat }) {
                 </div>
                 <div className="mr-5 ml-5">
                     <Discussion />
+                    { isSUbmitted && (
+                        <div
+                        className="chat-bubble"
+                        style={{
+                            alignSelf: "flex-start",
+                            borderColor: "#E5E5E5",
+                            borderTopLeftRadius: 30,
+                            borderTopRightRadius: 30,
+                            borderTopWidth: 8,
+                            borderBottomLeftRadius: 0,
+                            borderBottomRightRadius: 30,
+                            marginBottom: 6
+                        }}
+                    >
+                        <div className="chat-message">Thanks for your feedback, we have recieved your review!</div>
+                    </div>
+                    )}
                     <Form onSubmit={formSubmit}>
                         <Form.Control
                             placeholder="Enter message"
