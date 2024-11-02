@@ -131,27 +131,6 @@ export default compose<any>(
         setDummy(newDummy);
     }, [categories]);
 
-    // async function fetchData() {
-    //   const collections = firestore.collection('categories');
-    //   const arr = [];
-    //   await collections
-    //     .where('team', '==', team.name)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //       querySnapshot.forEach((doc) => {
-    //         const data = doc.data();
-    //         if (!data.id) {
-    //           data.id = doc.id;
-    //         }
-    //         arr.push(data);
-    //       });
-    //     });
-    //   arr.sort((a, b) => a.priority - b.priority);
-    //   setCategories(arr);
-    //   setDefaultCategories(arr);
-    //   setIsLoading(false);
-    // }
-
     function onDragEnd(result) {
         if (!result.destination) {
             return;
@@ -485,10 +464,10 @@ export default compose<any>(
                 .then(async (querySnapshot) => {
                     promiseWithTimeout(
                         10000,
-                        providers.forEach((cat) => {
+                        providers.forEach((doc) => {
                             firestore.set(
-                                { collection: "providers", doc: cat.facilityName },
-                                cat,
+                                { collection: "providers", doc: doc.id },
+                                doc,
                             );
                         }),
                     ).then(
