@@ -18,6 +18,32 @@ import Button from "react-bootstrap/Button";
 import ActionForm from "./ActionForm";
 import ContentForm from "./ContentForm";
 
+const galleryData = [
+    {
+        title: "testVal1",
+        description: "testing testing",
+        imgLink:
+            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
+    },
+    {
+        title: "testVal2",
+        description: "testing testing",
+        imgLink:
+            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
+    },
+    {
+        title: "testVal3",
+        description: "testing testing",
+        imgLink:
+            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
+    },
+    {
+        title: "testVal4",
+        description: "testing testing",
+        imgLink:
+            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
+    },
+];
 
 function validURL(str) {
     const pattern = new RegExp(
@@ -27,7 +53,7 @@ function validURL(str) {
             "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
             "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
             "(\\#[-a-z\\d_]*)?$",
-        "i",
+        "i"
     ); // fragment locator
     return !!pattern.test(str);
 }
@@ -48,6 +74,7 @@ const RowForm = (props) => {
         image: "modalimage.png",
         imageURL: null,
         content: {},
+        filters: {},
     };
 
     const [item, setItem] = useState(
@@ -56,10 +83,6 @@ const RowForm = (props) => {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        const itemFields = Object.keys(props.filters);
-        itemFields.forEach((field) => {
-            defaultItem[field] = [];
-        });
         setItem(props.item.facilityName ? props.item : defaultItem);
     }, []);
 
@@ -248,9 +271,9 @@ const RowForm = (props) => {
                                     style={{
                                         color: isValidNumberForRegion(
                                             parseIncompletePhoneNumber(
-                                                item.phoneNum[0],
+                                                item.phoneNum[0]
                                             ),
-                                            "US",
+                                            "US"
                                         )
                                             ? "green"
                                             : "red",
@@ -258,9 +281,9 @@ const RowForm = (props) => {
                                 >
                                     {isValidNumberForRegion(
                                         parseIncompletePhoneNumber(
-                                            item.phoneNum[0],
+                                            item.phoneNum[0]
                                         ),
-                                        "US",
+                                        "US"
                                     )
                                         ? "Valid number"
                                         : "Invalid number"}
@@ -357,9 +380,6 @@ const RowForm = (props) => {
                             as="textarea"
                         />
                     </Form.Group>
-
-                    {/* <EmbedForm/> */}
-                    
                 </>
             );
 
@@ -379,18 +399,21 @@ const RowForm = (props) => {
                                 <Form.Label>{name}</Form.Label>
                                 <MultiSelect
                                     options={options}
-                                    selected={item[key] || []}
+                                    selected={item['filters'][key] || []}
                                     onSelectedChanged={(selected) => {
                                         const newItem = {
                                             ...item,
-                                            [key]: selected,
+                                            ['filters']: {
+                                                ...item['filters'],
+                                                [key]: selected,
+                                            }
                                         };
                                         setItem(newItem);
                                         props.setItem(newItem);
                                     }}
                                 />
                             </Form.Group>
-                        ),
+                        )
                     )}
                 </>
             );
@@ -403,18 +426,21 @@ const RowForm = (props) => {
                                 <Form.Label>{name}</Form.Label>
                                 <Form.Control
                                     as="textarea"
-                                    value={item[key]}
+                                    value={item['filters'][key]}
                                     onChange={(e: any) => {
                                         const newItem = {
                                             ...item,
-                                            [key]: e.target.value,
+                                            ['filters']: {
+                                                ...item['filters'],
+                                                [key]: e.target.value
+                                            }
                                         };
                                         setItem(newItem);
                                         props.setItem(newItem);
                                     }}
                                 />
                             </Form.Group>
-                        ),
+                        )
                     )}
                 </>
             );
@@ -440,7 +466,7 @@ const RowForm = (props) => {
                                     }}
                                 />
                             </Form.Group>
-                        ),
+                        )
                     )}
                 </>
             );

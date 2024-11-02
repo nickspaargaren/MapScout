@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
@@ -15,9 +14,8 @@ import promiseWithTimeout from "../../functions/promiseWithTimeout";
 import { Store } from "reducers/types";
 import { TempTutorial } from "./TempTutorial";
 import { TempTutorialTwo } from "./TempTutorialTwo";
-import { ToggleSlider }  from "react-toggle-slider";
 import { BsPlus } from "react-icons/bs";
-import { Card } from "react-bootstrap";
+const { v4: uuidv4 } = require("uuid");
 
 function reorder<T>(list: T[], startIndex: number, endIndex: number) {
     const result = Array.from(list);
@@ -34,12 +32,13 @@ export default compose<any>(
     withFirestore,
     connect(mapStateToProps, {}),
 )(({ team, firestore }) => {
+    let timerInterval: NodeJS.Timeout | null = null;
+    const [isLoading, setIsLoading] = useState(true);
+    const [providers, setProviders] = useState([]);
     const [categories, setCategories] = useState([]);
     const [message, setMessage] = useState(null);
     const [newCatName, setNewCatName] = useState("Please edit name of new category");
-    const [isLoading, setIsLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
-    const [, setDefaultCategories] = useState([]);
     const [usePrimary, setUsePrimary] = useState(false);
     const staticData = {
         id: "Preview",
@@ -66,31 +65,36 @@ export default compose<any>(
         team: team.name,
         website: ["https://www.mapscout.io"],
     };
+    const inputRef = useRef<HTMLInputElement | null>(null);
 
     const [dummy, setDummy] = useState(staticData);
 
     useEffect(() => {
         async function fetchData() {
-            const saved = localStorage.getItem("saved");
             const arr = [];
+            const arr2 = [];
             const collections = firestore.collection("categories");
+            const collections2 = firestore.collection("providers");
             // Note: this is a temperary workaround so the page does appears fine, however, further fix is neccessary to actually resolve the issue
             if (team.name === "") {
+                console.error("Team NOT FETCHED ERROR");
+            } else {
                 await collections
-                    .where("team", "==", saved)
+                    .where("team", "==", team.name)
                     .get()
                     .then((querySnapshot) => {
                         querySnapshot.forEach((doc) => {
                             const data = doc.data();
-                            if (!data.id) {
-                                data.id = doc.id;
-                            }
                             arr.push(data);
                         });
                     });
+            }
+            arr.sort((a, b) => a.priority - b.priority);
+            setCategories(arr);
+            if (team.name === "") {
+                console.error("Team NOT FETCHED ERROR");
             } else {
-                localStorage.setItem("saved", team.name);
-                await collections
+                await collections2
                     .where("team", "==", team.name)
                     .get()
                     .then((querySnapshot) => {
@@ -99,13 +103,11 @@ export default compose<any>(
                             if (!data.id) {
                                 data.id = doc.id;
                             }
-                            arr.push(data);
+                            arr2.push(data);
                         });
                     });
             }
-            arr.sort((a, b) => a.priority - b.priority);
-            setCategories(arr);
-            setDefaultCategories(arr);
+            setProviders(arr2)
             setIsLoading(false);
         }
         fetchData();
@@ -129,27 +131,6 @@ export default compose<any>(
         setDummy(newDummy);
     }, [categories]);
 
-    // async function fetchData() {
-    //   const collections = firestore.collection('categories');
-    //   const arr = [];
-    //   await collections
-    //     .where('team', '==', team.name)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //       querySnapshot.forEach((doc) => {
-    //         const data = doc.data();
-    //         if (!data.id) {
-    //           data.id = doc.id;
-    //         }
-    //         arr.push(data);
-    //       });
-    //     });
-    //   arr.sort((a, b) => a.priority - b.priority);
-    //   setCategories(arr);
-    //   setDefaultCategories(arr);
-    //   setIsLoading(false);
-    // }
-
     function onDragEnd(result) {
         if (!result.destination) {
             return;
@@ -170,7 +151,7 @@ export default compose<any>(
         setIsLoading(true);
         let index = 0;
         for (let i of categories) {
-            if(i.name === item.name) {
+            if(i.id === item.id) {
                 break;
             }
             index++;
@@ -182,10 +163,29 @@ export default compose<any>(
         saveChanges();
     }
 
+    function countdownTimer(seconds: number): void {
+        let remainingTime = seconds;
+      
+        if (timerInterval) {
+          clearInterval(timerInterval);
+        }
+      
+        timerInterval = setInterval(() => {
+          if (remainingTime > 0) {
+            console.log(`Time left: ${remainingTime} seconds`);
+            remainingTime--;
+          } else {
+            console.log("Time's up!");
+            clearInterval(timerInterval!);
+            saveChanges();
+          }
+        }, 1000);
+      }
+
     async function rename(e, item) {
         let index = 0;
         for (let i of categories) {
-            if(i.name === item.name) {
+            if(i.id === item.id) {
                 break;
             }
             index++;
@@ -193,17 +193,15 @@ export default compose<any>(
         const items = categories;
         const point = items[index];
         point.name = e.target.value;
-        point.id = e.target.value;
         setCategories(items);
-
-        saveChanges();
+        countdownTimer(3);
     }
 
     async function changeColor(color, name, item) {
         setIsLoading(true);
         let index = 0;
         for (let i of categories) {
-            if(i.name === item.name) {
+            if(i.id === item.id) {
                 break;
             }
             index++;
@@ -211,7 +209,6 @@ export default compose<any>(
         const point = categories[index];
         index = 0
         for (let i of point.options) {
-            console.log(i)
             if(i.value === name) {
                 break;
             }
@@ -228,7 +225,7 @@ export default compose<any>(
         setIsLoading(true);
         let index = 0;
         for (let i of categories) {
-            if(i.name === item.name) {
+            if(i.id === item.id) {
                 break;
             }
             index++;
@@ -253,7 +250,7 @@ export default compose<any>(
         setIsLoading(true);
         let index = 0;
         for (let i of categories) {
-            if(i.name === item.name) {
+            if(i.id === item.id) {
                 break;
             }
             index++;
@@ -264,7 +261,6 @@ export default compose<any>(
                 (x) => x.value.toLowerCase() === name.toLowerCase(),
             ) === -1
         ) {
-            console.log(item)
             await point.options.push({
                 color: colors,
                 value: name,
@@ -278,13 +274,25 @@ export default compose<any>(
     async function removeOption(i, item) {
         setIsLoading(true);
         let index = 0;
+        let index2 = 0;
         for (let i of categories) {
-            if(i.name === item.name) {
+            if(i.id === item.id) {
                 break;
             }
             index++;
         }
         const point = categories[index];
+        providers.forEach((val) => {
+            if (item.id in val) {
+                for (let curr of val[item.id as keyof typeof val]) {
+                    if (point.options[i].value == curr) {
+                        break;
+                    }
+                    index2++;
+                };
+            val[item.id as keyof typeof val].splice(index2, 1);
+            }
+        });
         await point.options.splice(i, 1);
         setIsLoading(false);
 
@@ -294,7 +302,7 @@ export default compose<any>(
     function disableCat(item) {
         let index = 0;
         for (let i of categories) {
-            if(i.name === item.name) {
+            if(i.id === item.id) {
                 break;
             }
             index++;
@@ -313,7 +321,7 @@ export default compose<any>(
         setIsLoading(true);
         let index = 0;
         for (let i of categories) {
-            if(i.name === item.name) {
+            if(i.id === item.id) {
                 break;
             }
             index++;
@@ -329,12 +337,21 @@ export default compose<any>(
         setIsLoading(true);
         let index = 0;
         for (let i of categories) {
-            if(i.name === item.name) {
+            if(i.id === item.id) {
                 break;
             }
             index++;
         }
+        providers.forEach((val) => {
+            if (item.id in val['filters']) {
+                delete val['filters'][item.id];
+            }
+        });
         await categories.splice(index, 1);
+        
+        categories.forEach((item: any, index) => {
+            item.priority = index;
+        });
         setIsLoading(false);
 
         saveChanges();
@@ -344,12 +361,15 @@ export default compose<any>(
         setIsLoading(true);
         let index = 0;
         for (let i of categories) {
-            if(i.name === item.name) {
+            if(i.id === item.id) {
                 break;
             }
             index++;
         }
         await categories.splice(index, 1);
+        categories.forEach((item: any, index) => {
+            item.priority = index;
+        });
         setIsLoading(false);
 
         saveChanges();
@@ -361,18 +381,18 @@ export default compose<any>(
         if (usePrimary) {
             type = 2
         }
-        await categories.unshift({
+        await categories.push({
             name: newCatName,
             select_type: type,
             options: [],
             active: true,
             team: team.name,
-            id: newCatName,
+            id: uuidv4(),
             isPrimary: usePrimary,
+            priority: categories.length
         });
-        console.log(categories)
-        
         setNewCatName("Please edit name of new category");
+        console.log(categories)
         setIsLoading(false);
 
         saveChanges();
@@ -434,6 +454,36 @@ export default compose<any>(
                 });
         } catch {
             alert("Unable to load categories");
+        }
+
+        try {
+            const collections = firestore.collection("providers");
+            await collections
+                .where("team", "==", team.name)
+                .get()
+                .then(async (querySnapshot) => {
+                    promiseWithTimeout(
+                        10000,
+                        providers.forEach((doc) => {
+                            firestore.set(
+                                { collection: "providers", doc: doc.id },
+                                doc,
+                            );
+                        }),
+                    ).then(
+                        (complete) => {
+                            setShowModal(false);
+                            setIsLoading(false);
+                        },
+                        () => {
+                            // code that takes care of the canceled promise.
+                            // Note that .then rather than .done should be used in this case.
+                            alert("Unable to save Providers");
+                        },
+                    );
+                });
+        } catch {
+            alert("Unable to load Providers");
         }
     }
 
@@ -502,6 +552,10 @@ export default compose<any>(
                     {categories
                     .filter(
                         (item, value) => item.isPrimary)
+                    .sort(
+                        ([aKey, aValue]: any[], [bKey, bValue]: any[]) =>
+                            aValue.priority - bValue.priority
+                    )
                     .map((item, index) => (
                         <p>
                             <PrimaryCell
@@ -509,7 +563,7 @@ export default compose<any>(
                                 index={index}
                                 disableCat={disableCat}
                                 enableCat={enableCat}
-                                deleteCat={deletePrim}
+                                deleteCat={deleteCat}
                                 changeType={changeType}
                                 rename={rename}
                                 addOption={addPrimOption}
@@ -530,6 +584,10 @@ export default compose<any>(
                                 {categories
                                 .filter(
                                     (item, value) => !item.isPrimary)
+                                // .sort(
+                                //     ([aKey, aValue]: any[], [bKey, bValue]: any[]) =>
+                                //         aValue.priority - bValue.priority
+                                // )
                                 .map((item, index) => (
                                     <Draggable
                                         key={item.name}
@@ -575,6 +633,8 @@ export default compose<any>(
                 }}>
                 <BsPlus /> Add Filter
                 </button>
+                {/* Bandaid fix for content showing below sticky button */}
+                <div style={{ marginBottom: "-18px", height: "18px", width: "100%", position: "sticky", bottom: "-28px", backgroundColor: "white", zIndex: "2" }} />
                 <Modal show={showModal} onHide={() => setShowModal(false)} dialogClassName="myModal" scrollable>
                     <Modal.Header style={{ backgroundColor: "#2F80ED" }}>
                         <div className="ml-auto">

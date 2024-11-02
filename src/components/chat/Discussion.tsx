@@ -15,7 +15,8 @@ function Discussion({ chatHistory }) {
     }, []);
 
     useEffect(() => {
-        setData(chatHistory);
+        console.log(chatHistory)
+        setData(chatHistory.slice().reverse());
     }, [chatHistory]);
 
     return (

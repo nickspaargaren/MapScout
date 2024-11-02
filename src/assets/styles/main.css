@@ -490,11 +490,14 @@ h2 {
     align-items: center;
     padding: 10px 16px;
     gap: 4px;
-    background: rgba(19, 70, 170, 0.06);
+    background: #f1f4fa;
     border: 2px dashed #226DFF;
     border-radius: 4px;
     color: #226DFF;
     width: 100%;
+    position: sticky;
+    bottom: -10px;
+    z-index: 2;
 }
 
 .reverse-column {
@@ -1409,14 +1412,18 @@ h2 {
 #discussion-root {
     margin-top: 12px;
     margin-bottom: 20px;
-}
+    }
 
 #discussion-scroll {
     display: flex;
     flex-direction: column-reverse;
     max-height: 440px;
-    width: 100%;
+    width: 60vw;
     overflow-y: scroll;
+}
+
+#discussion-scroll::-webkit-scrollbar {
+    display: none;
 }
 
 .chat-bubble {
@@ -1721,4 +1728,16 @@ h2 {
     max-height: 3vw;
     max-width: 3vw;
     margin-top: 35px;
+}
+
+.provider-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 635px;
+}
+
+.provider-entry {
+    height: 120px;
+    padding: 10px;
 }

@@ -41,7 +41,7 @@ let steps = [
     "Hours",
     "Tag",
     "Text",
-    // 'Toggle', disabled due to lack of use
+    // 'Toggle', disabled due to lack of use, this is designed for singleselect filters, feature however, is not implemented
     // 'Actions'
     "Content",
 ];
@@ -55,74 +55,12 @@ function AddProvider(props) {
     const [isLoading, setIsLoading] = useState(true);
     const [filters, setFilters] = useState(null);
     const [descriptions, setDescriptions] = useState(null);
-    const [categories, setCategories] = useState(null);
+    const [single, setSingle] = useState(null);
     const [error, setError] = useState("");
     const [content, setContent] = useState('ex. "Changing lives one bit at a time..."');
     const handleUpdate = (updatedContent: string) => {
         setContent(updatedContent);
     };
-
-    const eventInfo2 = {
-        title: "Introducing APFF",
-        description:
-          "Atlanta Professional Fire Foundation supports the firefighters of Atlanta and their families when they need assistance. Due to a growing number of hazards, our brothers & sisters are at greater risk than ever before while protecting the citizens of Atlanta. APFF provides assistance for Illness, Injury, PTSD, Line of Duty Death and Bereavement. APFF also funds Tuition Reimbursement, Tools & Equipment Purchases, Training Opportunities, Living Condition Improvements, Affordable Housing and Fellowship Events.",
-        highlight: "Our Foundation is run by Firefighters, for Firefighters!"
-    };
-
-    // async function fetchData() {
-    //   const collections = props.firestore.collection('categories');
-    //   const f = await collections
-    //     .where('team', '==', props.team.name)
-    //     .where('active', '==', true)
-    //     .where('select_type', '==', 2)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //       const idToData = {};
-    //       querySnapshot.forEach((doc) => {
-    //         const data = doc.data();
-    //         idToData[doc.id] = {
-    //           name: data.name,
-    //           options: data.options,
-    //         };
-    //       });
-    //       return idToData;
-    //     });
-    //   const d = await collections
-    //     .where('team', '==', props.team.name)
-    //     .where('active', '==', true)
-    //     .where('select_type', '==', 0)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //       const idToData = {};
-    //       querySnapshot.forEach((doc) => {
-    //         const data = doc.data();
-    //         idToData[doc.id] = {
-    //           name: data.name,
-    //           options: data.options,
-    //         };
-    //       });
-    //       return idToData;
-    //     });
-    //   const c = await collections
-    //     .where('team', '==', props.team.name)
-    //     .where('active', '==', true)
-    //     .where('select_type', '==', 1)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //       const idToData = {};
-    //       querySnapshot.forEach((doc) => {
-    //         const data = doc.data();
-    //         idToData[doc.id] = {
-    //           name: data.name,
-    //           options: data.options,
-    //         };
-    //       });
-    //       return idToData;
-    //     });
-    //   setFilters(f);
-    //   setDescriptions(d);
-    //   setCategories(c);
-    // }
 
     useEffect(() => {
         async function fetchData() {
@@ -130,7 +68,7 @@ function AddProvider(props) {
             const f = await collections
                 .where("team", "==", props.team.name)
                 .where("active", "==", true)
-                .where("select_type", "==", 2)
+                .where("select_type", "==", 1)
                 .get()
                 .then((querySnapshot) => {
                     const idToData = {};
@@ -162,7 +100,7 @@ function AddProvider(props) {
             const c = await collections
                 .where("team", "==", props.team.name)
                 .where("active", "==", true)
-                .where("select_type", "==", 1)
+                .where("select_type", "==", 2)
                 .get()
                 .then((querySnapshot) => {
                     const idToData = {};
@@ -177,16 +115,22 @@ function AddProvider(props) {
                 });
             setFilters(f);
             setDescriptions(d);
-            setCategories(c);
+            setSingle(c);
         }
         fetchData().then(() => setIsLoading(false));
     }, []);
 
     useEffect(() => {
         function updateSteps() {
+            console.log(filters)
             if (filters && !Object.keys(filters).length) {
                 const delIndex = steps.indexOf("Tag");
                 delIndex !== -1 && steps.splice(delIndex, 1);
+            }
+
+            if (filters && Object.keys(filters).length) {
+                const delIndex = steps.indexOf("Tag");
+                delIndex == -1 && steps.push("Tag");
             }
 
             if (descriptions && !Object.keys(descriptions).length) {
@@ -194,14 +138,23 @@ function AddProvider(props) {
                 delIndex !== -1 && steps.splice(delIndex, 1);
             }
 
-            if (categories && !Object.keys(categories).length) {
+            if (descriptions && Object.keys(descriptions).length) {
+                const delIndex = steps.indexOf("Text");
+                delIndex == -1 && steps.push("Text");
+            }
+
+            if (single && !Object.keys(single).length) {
                 const delIndex = steps.indexOf("Toggle");
                 delIndex !== -1 && steps.splice(delIndex, 1);
             }
+            
+            if (single && Object.keys(single).length) {
+                const delIndex = steps.indexOf("Toggle");
+                delIndex == -1 && steps.push("Toggle");
+            }
         }
-
         updateSteps();
-    }, [filters, descriptions, categories]);
+    }, [filters, descriptions, single]);
 
     // function updateSteps() {
     //   if (filters && !Object.keys(filters).length) {
@@ -267,7 +220,7 @@ function AddProvider(props) {
             await promiseWithTimeout(
                 5000,
                 props.firestore.set(
-                    { collection: "providers", doc: i.facilityName },
+                    { collection: "providers", doc: i.id },
                     i,
                 ),
             );
@@ -420,7 +373,7 @@ function AddProvider(props) {
                         )}
                     </div>
                 </Col>
-                <Col xs={12} md={8} lg={9}>
+                <Col xs={12} md={8} lg={9} style={{overflow: "scroll", height: "100vh"}}>
                     <Flipper flipKey={step}>
                         <Flipped flipId="form">
                             <div className="bg-white p-3">
@@ -497,7 +450,7 @@ function AddProvider(props) {
                                                     }}
                                                     filters={filters}
                                                     descriptions={descriptions}
-                                                    categories={categories}
+                                                    single={single}
                                                 />
 
                                                 <SimpleEditor/>
