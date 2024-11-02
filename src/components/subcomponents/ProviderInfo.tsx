@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { FaMapMarkerAlt, FaRegClock, FaPhone, FaGlobe } from "react-icons/fa";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -14,108 +14,89 @@ import Linkify from "react-linkify";
 import ProviderGalleryCarousel from "components/dashboard/ProviderGalleryCarousel";
 import Collapsible from "components/collapsible";
 import Directory from "components/dashboard/Directory";
-import EmbedForm from "components/dashboard/embed-component/EmbedForm";
 import EmbedComponent from "components/dashboard/embed-component/EmbedComponent";
+import DonutChart from "./chartcomponents/DonutChart";
+import ProgressBar from "./chartcomponents/ProgressBar";
+import LineChart from "./chartcomponents/LineChart";
 
-{
-    /*TO BE DELETED */
-}
-const galleryData = [
-    {
-        title: "Urban Tree Fundraiser",
-        description:
-            "Last Friday, we gathered for food, fun, and giving back at Urban Tree cidery. All proceeds from the evening went to our Bereavement fund. Everyone remembered to bring a sweater because the back deck got cold. We enjoyed drinks, games, and more!",
-        imgLink:
-            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-    },
-    {
-        title: "testVal2",
-        description: "testing testing",
-        imgLink:
-            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-    },
-    {
-        title: "testVal3",
-        description: "testing testing",
-        imgLink:
-            "https://static.vecteezy.com/system/resources/thumbnails/005/857/332/small_2x/funny-portrait-of-cute-corgi-dog-outdoors-free-photo.jpg",
-    },
-    {
-        title: "testVal4",
-        description: "testing testing",
-        imgLink:
-            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-    },
-    {
-        title: "testVal1",
-        description: "testing testing",
-        imgLink:
-            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-    },
-    {
-        title: "testVal2",
-        description: "testing testing",
-        imgLink:
-            "https://static.vecteezy.com/system/resources/thumbnails/005/857/332/small_2x/funny-portrait-of-cute-corgi-dog-outdoors-free-photo.jpg",
-    },
-    {
-        title: "testVal3",
-        description: "testing testing",
-        imgLink:
-            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-    },
-    {
-        title: "testVal4",
-        description: "testing testing",
-        imgLink:
-            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-    },
-];
-const directoryData =
-    [
-        {
-            name: "bob",
-            description: "firefighter",
-            details: "bob@gmail.com",
-            image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-        },
-        {
-            name: "bob",
-            description: "firefighter",
-            details: "bob@gmail.com",
-            image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-        },
-        {
-            name: "bob",
-            description: "firefighter",
-            details: "bob@gmail.com",
-            image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-        },
-        {
-            name: "bob",
-            description: "firefighter",
-            details: "bob@gmail.com",
-            image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-        },
-];
-const eventInfo = {
-    title: "Tour Our Station",
-    videoUrl: "https://www.youtube.com/watch?v=oZcKTf4RLQ8&ab_channel=HorizonsHealth",
-    thumbnail: "https://picsum.photos/200",
-};
+// const eventInfo = {
+//     title: "Tour Our Station",
+//     videoUrl:
+//         "https://www.youtube.com/watch?v=oZcKTf4RLQ8&ab_channel=HorizonsHealth",
+//     // thumbnail: "https://picsum.photos/200",
+// };
 
 const ProviderInfo = (props) => {
     const [image, setImage] = useState("bog");
     const [streetView, setStreetView] = useState("bog");
     const [isLoading, setIsLoading] = useState(true);
+    const sections = props.item.content?.sections ?? [];
+
+    const components = useMemo(() => {
+        return sections.flatMap((section) => section.components);
+    }, [sections]);
+
+    const renderComponent = (component) => {
+        const { data } = component;
+        // console.log(data);
+        switch (component.type) {
+            case "Chart":
+                switch (data.type) {
+                    case "donut":
+                        return (
+                            <DonutChart
+                                data={data.data.donutData}
+                                buttonLink={data.data.buttonLink}
+                                buttonLabel={data.data.buttonLabel}
+                            ></DonutChart>
+                        );
+                    case "progress":
+                        return (
+                            <ProgressBar
+                                current={data.data.current}
+                                total={data.data.total}
+                                units={data.data.units}
+                                buttonLink={data.data.buttonLink}
+                                buttonLabel={data.data.buttonLabel}
+                            ></ProgressBar>
+                        );
+                    case "line":
+                        return (
+                            <LineChart
+                                title={data.title}
+                                data={data.data.lineData}
+                            ></LineChart>
+                        );
+                    default:
+                        return <></>;
+                }
+            case "Gallery":
+                return (
+                    <ProviderGalleryCarousel
+                        slidesArray={data.slidesArray}
+                    ></ProviderGalleryCarousel>
+                );
+            case "Directory":
+                return <Directory directoryItems={data.items}></Directory>;
+            case "Embed":
+                const eventInfo = {
+                    title: data.title,
+                    videoUrl: data.embedLink,
+                }
+                return <EmbedComponent eventInfo={eventInfo}></EmbedComponent>;
+            default:
+                return <></>;
+        }
+    };
 
     useEffect(() => {
+        // console.log(props.item.content);
         async function fetchData() {
             setIsLoading(true);
             try {
                 const res2 = await fetch(
                     `https://maps.googleapis.com/maps/api/staticmap?center=${props.item.latitude},${props.item.longitude}&zoom=16&scale=2&size=335x250&maptype=roadmap&key=${GOOGLE_API_KEY}&format=png&visual_refresh=true` +
-                    `&markers=${props.item.latitude},${props.item.longitude}`,
+                        `&markers=${props.item.latitude},${props.item.longitude}`
                 );
                 setStreetView(res2.url);
                 setImage(props.item.imageURL);
@@ -193,7 +174,7 @@ const ProviderInfo = (props) => {
                                         index ===
                                         props.item.address.toString().split(",")
                                             .length -
-                                        1
+                                            1
                                     ) {
                                         return (
                                             <div style={{ display: "inline" }}>
@@ -255,59 +236,31 @@ const ProviderInfo = (props) => {
                     </Card>
                 </Col>
             </Row>
-            {/* Sample components that in the future should be added dynamically
-            based on the response from firebase */}
-            <Row className="info-rows">
-                <Col md={12}>
-                    <Collapsible
-                        label={"Gallery"}
-                        style={{
-                            maxWidth: "1000px",
-                            marginLeft: "auto",
-                            marginRight: "auto"
-                        }}
-                    >
-                        {/*TO BE DELETED */}
-                        <ProviderGalleryCarousel slidesArray={galleryData} />
-                    </Collapsible>
-                </Col>
-            </Row>
-            <Row className="info-rows">
-                <Col md={12}>
-                    <Collapsible
-                        label={"Directory"}
-                        style={{
-                            maxWidth: "1000px",
-                            marginLeft: "auto",
-                            marginRight: "auto"
-                        }}
-                    >
-                        <Directory
-                            directoryItems={directoryData}
-                        ></Directory>
-                    </Collapsible>
-                </Col>
-            </Row>
-            <Row className="info-rows">
-                <Col md={12}>
-                    <Collapsible
-                        label={"Sample Embedded title"}
-                        style={{
-                            maxWidth: "1000px",
-                            marginLeft: "auto",
-                            marginRight: "auto"
-                        }}
-                    >
-                        <EmbedComponent eventInfo={eventInfo} />
-                    </Collapsible>
-                </Col>
-            </Row>
+            {components.map((component) => {
+                // console.log(component);
+                return (
+                    <Row className="info-rows">
+                        <Col md={12}>
+                            <Collapsible
+                                label={component.type}
+                                style={{
+                                    maxWidth: "1000px",
+                                    marginLeft: "auto",
+                                    marginRight: "auto",
+                                }}
+                            >
+                                {renderComponent(component)}
+                            </Collapsible>
+                        </Col>
+                    </Row>
+                );
+            })}
             <div className="modalHeader">
                 {categoriesToUse
                     .filter(
                         (category) =>
                             props.item[category.id] &&
-                            props.item[category.id].length,
+                            props.item[category.id].length
                     )
                     .map((category) => (
                         <div>
@@ -320,7 +273,7 @@ const ProviderInfo = (props) => {
                                             if (
                                                 index !==
                                                 props.item[category.id].length -
-                                                1
+                                                    1
                                             ) {
                                                 return (
                                                     <div className="modal-text">
@@ -333,7 +286,7 @@ const ProviderInfo = (props) => {
                                                     {selected}
                                                 </div>
                                             );
-                                        },
+                                        }
                                     )
                                 ) : (
                                     <Linkify>
@@ -369,9 +322,9 @@ function calculateHours(props) {
                 !props.item.hours[days[i]] ||
                 !props.item.hours[days[i - 1]] ||
                 props.item.hours[days[i]][0] !==
-                props.item.hours[days[i - 1]][0] ||
+                    props.item.hours[days[i - 1]][0] ||
                 props.item.hours[days[i]][1] !==
-                props.item.hours[days[i - 1]][1]
+                    props.item.hours[days[i - 1]][1]
             ) {
                 startandFinish.push(i - 1);
                 startandFinish.push(i);
@@ -387,7 +340,7 @@ function calculateHours(props) {
             children.push(
                 <Col className="modal-col-flex-end" sm={5}>
                     {days[startandFinish[i]]}
-                </Col>,
+                </Col>
             );
         } else {
             const subchild = [
@@ -399,22 +352,22 @@ function calculateHours(props) {
             children.push(
                 <Col className="modal-col-flex-end" sm={5}>
                     {subchild}
-                </Col>,
+                </Col>
             );
         }
         children.push(
             <Col className="modal-col-flex-start">
                 {props.item.hours[days[startandFinish[i]]]
                     ? props.item.hours[days[startandFinish[i]]].map(
-                        (time, index) =>
-                            formatTime(
-                                props.item.hours[days[startandFinish[i]]],
-                                time,
-                                index,
-                            ),
-                    )
+                          (time, index) =>
+                              formatTime(
+                                  props.item.hours[days[startandFinish[i]]],
+                                  time,
+                                  index
+                              )
+                      )
                     : "CLOSED"}
-            </Col>,
+            </Col>
         );
         rows.push(<Row>{children}</Row>);
     }
@@ -472,5 +425,5 @@ export default compose<any>(
     connect((state: Storage) => ({
         providers: state.firestore.ordered.providers,
         firebase: state.firebase,
-    })),
+    }))
 )(ProviderInfo);

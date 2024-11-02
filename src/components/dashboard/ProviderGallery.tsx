@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Provider } from "react";
 import ProviderGallerySlide from "./ProviderGallerySlide";
 import { storage } from "../../store";
 
@@ -8,12 +8,22 @@ interface GallerySlide {
     imgLink: string;
 }
 
+interface GalleryState {
+    slidesArray: GallerySlide[];
+}
+
 export default function ProviderGallery({
-    slidesArray = [],
+    galleryState,
+    setGalleryState,
 }: {
-    slidesArray?: GallerySlide[];
+    galleryState: GalleryState;
+    setGalleryState: (newState: GalleryState) => void;
 }) {
-    const [slides, setSlides] = useState<GallerySlide[]>(slidesArray);
+    const { slidesArray: slides } = galleryState;
+
+    const setSlides = (newSlides) => {
+        setGalleryState({ ...galleryState, slidesArray: newSlides });
+    };
 
     const defaultSlide: GallerySlide = {
         title: "",
@@ -23,7 +33,7 @@ export default function ProviderGallery({
 
     useEffect(() => {
         if (!slides || slides.length === 0) {
-            setSlides([{ ...defaultSlide }]);
+            setGalleryState({ slidesArray: [{ ...defaultSlide }] });
         }
     }, [slides]);
 

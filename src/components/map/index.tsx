@@ -1171,9 +1171,9 @@ const Map = (props) => {
                                                         </div>
                                                         <div className="mt-2">
                                                             
-                                                            <Collapsible label={"Graph"}>
+                                                            {/* <Collapsible label={"Graph"}>
                                                                 <ChartComponentForm/>
-                                                            </Collapsible>
+                                                            </Collapsible> */}
                                                         </div>
                                                         
                                                     </div>

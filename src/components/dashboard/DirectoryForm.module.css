@@ -6,7 +6,6 @@
     background-color: transparent;
 }
 .directory::-webkit-scrollbar-thumb {
-    /* border: 15px solid transparent; */
     border-radius: 4px;
     background-color: #a9a9a9;
 }

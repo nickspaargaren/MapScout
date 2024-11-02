@@ -40,6 +40,7 @@ const DirectoryFormItem = ({
         updateItem({ ...item, details: e.target.value });
     };
     const handleUploadSuccess = async (file) => {
+        // console.log(file);
         const filename = file.name;
         await storage.ref("images").child(filename).put(file);
         let newItem = { ...item, image: filename };
@@ -48,6 +49,7 @@ const DirectoryFormItem = ({
             .child(filename)
             .getDownloadURL()
             .then((url) => {
+                console.log(url);
                 newItem = { ...newItem, image: url };
                 updateItem(newItem);
             });
@@ -75,7 +77,7 @@ const DirectoryFormItem = ({
                     placeholder="ex. Hannah"
                     value={item.name}
                     onChange={handleNameChange}
-                    style={{marginLeft: "2px"}}
+                    style={{ marginLeft: "2px" }}
                 />
             </Form.Group>
             <Form.Group>
@@ -121,9 +123,9 @@ const DirectoryFormItem = ({
                     fontWeight: "500",
                 }}
                 onClick={() => {
-                    setDirectoryItems((directoryItems) =>
-                        directoryItems.filter((_, i) => i !== index)
-                    );
+                    const filterItems = directoryItems.filter((_, i) => i !== index);
+                    // console.log(filterItems);
+                    setDirectoryItems(filterItems);
                 }}
             >
                 Delete
@@ -132,8 +134,17 @@ const DirectoryFormItem = ({
     );
 };
 
-const DirectoryForm = ({ items }) => {
-    const [isOpen, setIsOpen] = useState(false);
+interface DirectoryState {
+    items: DirectoryItem[];
+}
+
+const DirectoryForm = ({
+    directoryState,
+    setDirectoryState,
+}: {
+    directoryState: DirectoryState;
+    setDirectoryState: (newState: DirectoryState) => void;
+}) => {
     const defaultDirectoryItem: DirectoryItem = {
         name: "",
         description: "",
@@ -141,7 +152,16 @@ const DirectoryForm = ({ items }) => {
         image: "",
     };
     //might have to lift this state later to avoid one shared state
-    const [directoryItems, setDirectoryItems] = useState<DirectoryItem[]>(items);
+    // const [directoryItems, setDirectoryItems] = useState<DirectoryItem[]>(
+    //     data.items
+    // );
+    const { items: directoryItems } = directoryState;
+
+    const setDirectoryItems = (newItems) => {
+        // console.log(newItems);
+        setDirectoryState({ ...directoryState, items: newItems });
+    };
+
     /*
     directoryItem
     {
@@ -166,20 +186,22 @@ const DirectoryForm = ({ items }) => {
                 style={{
                     paddingRight: "5px",
                     marginTop: "16px",
-                    overflowY: "scroll",
+                    overflow: "auto",
                 }}
             >
                 {/* {directoryItems.length} */}
-                {directoryItems.map((directoryItem, index) => (
-                    // console.log()
-                    <DirectoryFormItem
-                        key={index}
-                        index={index}
-                        item={directoryItem}
-                        directoryItems={directoryItems}
-                        setDirectoryItems={setDirectoryItems}
-                    ></DirectoryFormItem>
-                ))}
+                {directoryItems.map((directoryItem, index) => {
+                    return (
+                        // console.log()
+                        <DirectoryFormItem
+                            key={index}
+                            index={index}
+                            item={directoryItem}
+                            directoryItems={directoryItems}
+                            setDirectoryItems={setDirectoryItems}
+                        ></DirectoryFormItem>
+                    );
+                })}
                 <button
                     className={`addButton ${styles.addButton}`}
                     type="button"
