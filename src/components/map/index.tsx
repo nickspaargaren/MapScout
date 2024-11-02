@@ -1052,7 +1052,7 @@ const Map = (props) => {
                         <div className="mb-3">
                             <div
                                 className="right-container"
-                                style={{ display: "flex" }}
+                                style={{ display: "flex"}}
                             >
                                 <div
                                     style={{
@@ -1061,11 +1061,20 @@ const Map = (props) => {
                                     }}
                                 >
                                     <div
-                                        style={{
-                                            marginRight: "10px",
-                                            fontWeight: "700",
-                                            fontFamily: "Inter, sans-serif",
-                                        }}
+                                        style={
+                                            isDesktop
+                                                ? {
+                                                    marginRight: "10px",
+                                                    fontWeight: "700",
+                                                    fontFamily: "Inter, sans-serif",
+                                                }
+                                                : {
+                                                    marginRight: "0px", 
+                                                    fontWeight: "600", 
+                                                    fontFamily: "Inter, sans-serif",
+                                                    fontSize: "12px", 
+                                                }
+                                        }
                                     >
                                         {isDesktop
                                             ? isToggled
@@ -1087,18 +1096,20 @@ const Map = (props) => {
                                         width={44}
                                     />
                                 </div>
-                                <Button
-                                    style={{
-                                        marginRight: "20px",
-                                        fontSize: "14px",
-                                        fontFamily: "Inter, sans-serif",
-                                    }}
-                                    className="button-tutorial"
-                                    variant="primary"
-                                    onClick={() => setIsOpen(true)}
-                                >
-                                    Start Tutorial
-                                </Button>
+                                {isDesktop && (
+                                    <Button
+                                        style={{
+                                            marginRight: "20px",
+                                            fontSize: "14px",
+                                            fontFamily: "Inter, sans-serif",
+                                        }}
+                                        className="button-tutorial"
+                                        variant="primary"
+                                        onClick={() => setIsOpen(true)}
+                                    >
+                                        Start Tutorial
+                                    </Button>
+                                )}
                             </div>
                         </div>
 
@@ -1149,7 +1160,6 @@ const Map = (props) => {
                             {!isEmpty(activeProviders) ? (
                                 <div className='container2'>
                                     {showInfo ? (
-                                        isDesktop &&
                                         activeProviders &&
                                         activeProviders[selectedIndex] &&
                                         (
