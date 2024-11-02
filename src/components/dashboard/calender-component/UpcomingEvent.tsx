@@ -126,9 +126,7 @@ export default function UpcomingEvent({ eventData }) {
                         justifyContent: "center",
                     }}
                 >
-                    <Button target="_blank" href={buttonLink}>
-                        {buttonText}
-                    </Button>
+                    <Button href={buttonLink}>{buttonText}</Button>
                 </div>
             )}
         </div>
