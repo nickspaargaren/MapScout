@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { compose } from "redux";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Steps, { Step } from "rc-steps";
 import "rc-steps/assets/index.css";
 import "rc-steps/assets/iconfont.css";
@@ -114,7 +114,7 @@ function AddProvider(props) {
     //   setDescriptions(d);
     //   setCategories(c);
     // }
-
+    const [lock, setLock]=useState(0);
     useEffect(() => {
         async function fetchData() {
             const collections = props.firestore.collection("categories");
@@ -169,15 +169,23 @@ function AddProvider(props) {
             setFilters(f);
             setDescriptions(d);
             setSingle(c);
+            setLock(1);
         }
+        console.log("updating")
         fetchData().then(() => setIsLoading(false));
     }, []);
 
     useEffect(() => {
         function updateSteps() {
+            console.log(filters)
             if (filters && !Object.keys(filters).length) {
                 const delIndex = steps.indexOf("Tag");
                 delIndex !== -1 && steps.splice(delIndex, 1);
+            }
+
+            if (filters && Object.keys(filters).length) {
+                const delIndex = steps.indexOf("Tag");
+                delIndex == -1 && steps.push("Tag");
             }
 
             if (descriptions && !Object.keys(descriptions).length) {
@@ -185,14 +193,24 @@ function AddProvider(props) {
                 delIndex !== -1 && steps.splice(delIndex, 1);
             }
 
+            if (descriptions && Object.keys(descriptions).length) {
+                const delIndex = steps.indexOf("Text");
+                delIndex == -1 && steps.push("Text");
+            }
+
             if (single && !Object.keys(single).length) {
                 const delIndex = steps.indexOf("Toggle");
                 delIndex !== -1 && steps.splice(delIndex, 1);
             }
+            
+            if (single && Object.keys(single).length) {
+                const delIndex = steps.indexOf("Toggle");
+                delIndex == -1 && steps.push("Toggle");
+            }
         }
-
-        updateSteps();
-    }, [filters, descriptions, single]);
+        if(lock!=0)
+            updateSteps();
+    }, [filters, descriptions, single, lock]);
 
     // function updateSteps() {
     //   if (filters && !Object.keys(filters).length) {
@@ -258,7 +276,7 @@ function AddProvider(props) {
             await promiseWithTimeout(
                 5000,
                 props.firestore.set(
-                    { collection: "providers", doc: i.facilityName },
+                    { collection: "providers", doc: i.id },
                     i,
                 ),
             );
