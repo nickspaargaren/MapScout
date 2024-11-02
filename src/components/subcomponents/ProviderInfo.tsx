@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { FaMapMarkerAlt, FaRegClock, FaPhone, FaGlobe } from "react-icons/fa";
+import { FaRegClock } from "react-icons/fa";
+import { SlGlobe } from "react-icons/sl";
+import { TbPlaystationCircle } from "react-icons/tb";
+import { IoPhonePortraitOutline } from "react-icons/io5";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -16,6 +19,7 @@ import Collapsible from "components/collapsible";
 import Directory from "components/dashboard/Directory";
 import EmbedForm from "components/dashboard/embed-component/EmbedForm";
 import EmbedComponent from "components/dashboard/embed-component/EmbedComponent";
+import { color } from "d3";
 
 {
     /*TO BE DELETED */
@@ -139,6 +143,7 @@ const ProviderInfo = (props) => {
     const iconStyle = {
         marginRight: "20px",
         verticalAlign: "middle",
+        color: "#226DFF",
     };
 
     const infoStyle = {
@@ -150,32 +155,81 @@ const ProviderInfo = (props) => {
     return (
         <Container fluid className="provider-info-container">
             <Row className="mb-3">
-                <Col md={5} className="modal-image-col">
-                    <Card>
+                    <Card style={{width: "100%"}}>
                         <LazyLoad debounce={false} offsetVertical={500}>
-                            <Card.Img src={image} />
+                            <Card.Img style={{maxHeight: "60vh", objectFit: "cover"}} src={image} />
                         </LazyLoad>
                     </Card>
-                </Col>
-                <Col md={7}>
+            </Row>
+            {/* Sample components that in the future should be added dynamically
+            based on the response from firebase */}
+            <Collapsible
+                label={"General Info"}
+                style={{
+                    maxWidth: "1000px",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                }}
+                containerStyle={{placeItems: "flex-start",}}
+                    >
+            <Row className="info-rows" style={{ justifyContent: "flex-start", maxWidth: "100%"}}>
+            <Col md={12}>
                     <div className="description-box">
-                        <h3>{props.item.facilityName}</h3>
                         {props.item.description !== undefined && (
-                            <ReadMoreAndLess
-                                charLimit={250}
-                                readMoreText="Read more"
-                                readLessText="Read less"
+                            <p
+                            style={{
+                                color: "rgba(148, 142, 142, 0.9)",
+                                fontFamily: "Inter",
+                                fontWeight: "500",
+                                fontSize: "16px",
+                                lineHeight: "19px"
+                                }}
                             >
-                                {`${props.item.description} `}
-                            </ReadMoreAndLess>
+                                {props.item.description}
+                            </p>
                         )}
                     </div>
                 </Col>
-            </Row>
-            <Row className="info-rows">
-                <Col md={7}>
+                <Col md={12}>
                     <div style={infoStyle}>
-                        <FaMapMarkerAlt style={iconStyle} />
+                        <IoPhonePortraitOutline size={20} style={iconStyle} />
+                        <div>
+                            {" "}
+                            {props.item.phoneNum &&
+                                props.item.phoneNum.join(", ")}
+                        </div>
+                    </div>
+                    <div style={infoStyle}>
+                        {props.item.website && props.item.website[0] && (
+                            <>
+                            {props.item.website[0].startsWith("http") ? (<>
+                                <SlGlobe size={20} style={iconStyle} />
+                                <div>
+                                    <a
+                                        href={props.item.website[0]}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        p{props.item.website[0]}
+                                    </a>
+                                </div>
+                            </>) : (<>
+                                <SlGlobe size={20} style={iconStyle} />
+                                <div>
+                                    <a
+                                        href={'//' + props.item.website[0]}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {props.item.website[0]}
+                                    </a>
+                                </div></>)}
+                                
+                            </>
+                        )} 
+                    </div>
+                    <div style={infoStyle}>
+                        <TbPlaystationCircle size={20} style={iconStyle} />
                         <div>
                             {" "}
                             {props.item.address
@@ -213,50 +267,14 @@ const ProviderInfo = (props) => {
                         </div>
                     </div>
                     <div style={infoStyle}>
-                        <FaPhone style={iconStyle} />
-                        <div>
-                            {" "}
-                            {props.item.phoneNum &&
-                                props.item.phoneNum.join(", ")}
-                        </div>
-                    </div>
-                    <div style={infoStyle}>
-                        {props.item.website && props.item.website[0] && (
-                            <>
-                                <FaGlobe style={iconStyle} />
-                                <div>
-                                    <a
-                                        href={props.item.website[0]}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        Visit Website
-                                    </a>
-                                </div>
-                            </>
-                        )}
-                    </div>
-                    <div style={infoStyle}>
-                        <FaRegClock style={iconStyle} />
+                        <FaRegClock size={20} style={iconStyle} />
                         <div className="modal-hours-container">
                             {props.item.hours && calculateHours(props)}
                         </div>
                     </div>
                 </Col>
-                <Col md={5}>
-                    <Card>
-                        <a
-                            href={`https://maps.google.com/?q=${props.item.address.toString()}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <Card.Img src={streetView} alt="Google Map" />
-                        </a>
-                    </Card>
-                </Col>
             </Row>
-            {/* Sample components that in the future should be added dynamically
-            based on the response from firebase */}
+                    </Collapsible>
             <Row className="info-rows">
                 <Col md={12}>
                     <Collapsible
@@ -285,20 +303,6 @@ const ProviderInfo = (props) => {
                         <Directory
                             directoryItems={directoryData}
                         ></Directory>
-                    </Collapsible>
-                </Col>
-            </Row>
-            <Row className="info-rows">
-                <Col md={12}>
-                    <Collapsible
-                        label={"Sample Embedded title"}
-                        style={{
-                            maxWidth: "1000px",
-                            marginLeft: "auto",
-                            marginRight: "auto"
-                        }}
-                    >
-                        <EmbedComponent eventInfo={eventInfo} />
                     </Collapsible>
                 </Col>
             </Row>

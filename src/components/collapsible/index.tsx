@@ -8,11 +8,13 @@ import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 interface Managed {
     style?: React.CSSProperties;
     titleStyle?: React.CSSProperties;
+    containerStyle?: React.CSSProperties;
     label: string;
     children: any;
 }
 interface Unmanaged {
     style?: React.CSSProperties;
+    containerStyle?: React.CSSProperties;
     title: React.ReactElement;
     children: any;
 }
@@ -43,7 +45,7 @@ const Collapsible = (props: PropTypes) => {
             <div ref={contentRef}
                 className={`content ${isOpen ? 'open' : ''}`}
                 style={{ height: isOpen ? `fit-content` : '0px' }}>
-                <div className="container">{props.children}</div>
+                <div className="container" style={props.containerStyle}>{props.children}</div>
             </div>
         </div >
     )

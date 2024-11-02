@@ -670,12 +670,16 @@ h2 {
     flex-direction: row;
 }
 
+.modal-image-col {
+    height: 50%;
+}
+
 .modal-hours-container {
     display: flex;
     flex-direction: column;
     font-size: 13px;
     padding-left: 15px;
-    width: 30vw;
+    width: 15vw;
 }
 
 .modal-hours-container h5 {
