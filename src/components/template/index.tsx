@@ -44,6 +44,7 @@ export default compose<any>(
         id: "Preview",
         address: ["123 Fake St, Philadelphia, PA 19133"],
         buildingNum: [],
+        stationNum: [45],
         description:
             "This is an example provider showcasing all enabled categories",
         facilityName: "Preview",
