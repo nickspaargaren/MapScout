@@ -16,10 +16,15 @@ import Collapsible from "components/collapsible";
 import Directory from "components/dashboard/Directory";
 import EmbedForm from "components/dashboard/embed-component/EmbedForm";
 import EmbedComponent from "components/dashboard/embed-component/EmbedComponent";
+import EventInfoComponent from "components/dashboard/EventInfoComponent";
 
 {
     /*TO BE DELETED */
 }
+const eventInfo2 = {
+    title: "Compnent TEXTTT",
+    description: "Sample content",
+};
 const galleryData = [
     {
         title: "Urban Tree Fundraiser",
@@ -299,6 +304,22 @@ const ProviderInfo = (props) => {
                         }}
                     >
                         <EmbedComponent eventInfo={eventInfo} />
+                    </Collapsible>
+                </Col>
+            </Row>
+            <Row className="info-rows">
+                <Col md={12}>
+                    <Collapsible
+                        label={eventInfo2.title}
+                        style={{
+                            maxWidth: "1000px",
+                            marginLeft: "auto",
+                            marginRight: "auto"
+                        }}
+                    >
+                        <EventInfoComponent
+                            description={eventInfo2.description}
+                        />
                     </Collapsible>
                 </Col>
             </Row>
