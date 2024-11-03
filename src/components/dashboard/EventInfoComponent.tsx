@@ -1,21 +1,14 @@
 import React from "react";
-import './EventInfoComponent.css'; 
-import Collapsible from 'components/collapsible'; 
+import './EventInfoComponent.css';
+import Collapsible from 'components/collapsible';
 
 interface EventInfoComponentProps {
-  title: string;
   description: string;
-  highlight: string;
 }
 
-const EventInfoComponent: React.FC<EventInfoComponentProps> = ({ title, description, highlight }) => {
+const EventInfoComponent: React.FC<EventInfoComponentProps> = ({ description }) => {
   return (
-    <Collapsible label={title}> 
-      <div className="event-info-container">
-        <p className="event-description">{description}</p>
-        <p className="event-description">{highlight}</p>
-      </div>
-    </Collapsible>
+      <p className="event-description">{description}</p>
   );
 };
 

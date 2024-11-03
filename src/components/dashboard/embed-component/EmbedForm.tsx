@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import InfoAlert from './InfoAlert';
 
 const EmbedForm: React.FC = () => {
   const [embedLink, setEmbedLink] = useState<string>('');

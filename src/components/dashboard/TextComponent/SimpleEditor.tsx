@@ -168,7 +168,7 @@ export function SimpleEditor() {
         </button>
       </BubbleMenu>
 
-      <div className="inner-box">
+      <div className="inner-box" style={{ overflow: "scroll" }}>
         
         <div className="menu">
           <button

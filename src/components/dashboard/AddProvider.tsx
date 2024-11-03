@@ -27,14 +27,7 @@ import { storage } from "../../store";
 import { Store } from "reducers/types";
 const { v4: uuidv4 } = require("uuid");
 
-import EventInfoComponent from "./EventInfoComponent";
 import { SimpleEditor } from "./TextComponent/SimpleEditor";
-
-// const eventInfo = {
-//     title: "Tour Our Station",
-//     videoUrl: "https://youtu.be/4rSOnKAnJ8M",
-//     thumbnail: "https://picsum.photos/200",
-// };
 
 let steps = [
     "Map",
@@ -452,13 +445,6 @@ function AddProvider(props) {
                                                     descriptions={descriptions}
                                                     single={single}
                                                 />
-
-                                                <SimpleEditor/>
-                                                {/* <EventInfoComponent
-                                                    title={eventInfo2.title}
-                                                    description={eventInfo2.description}
-                                                    highlight={eventInfo2.highlight}
-                                                /> */}
                                             </div>
                                         </div>
                                     </Form>

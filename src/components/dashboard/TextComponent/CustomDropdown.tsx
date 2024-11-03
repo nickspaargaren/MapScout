@@ -21,7 +21,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({ onChange, options, defa
   };
 
   return (
-    <div style={{ position: "relative", display: "inline-block" }}>
+    <div style={{ position: "relative", display: "inline-block"}}>
       <div
         onClick={() => setIsOpen(!isOpen)}
         style={{
@@ -31,6 +31,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({ onChange, options, defa
           padding: "4px 8px",
           color: "black",
           fontSize: "14px",
+          overflow: "scroll"
         }}
       >
         {labelType === "icon" && selectedOption.icon ? (
@@ -52,6 +53,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({ onChange, options, defa
       {isOpen && (
         <div
           style={{
+            overflow: "scroll",
             position: "absolute",
             top: "100%",
             left: 0,
