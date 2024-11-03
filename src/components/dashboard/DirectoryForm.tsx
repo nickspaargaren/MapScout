@@ -58,7 +58,7 @@ const DirectoryFormItem = ({
     return (
         <div
             className="directoryItem"
-            style={{ display: "flex", flexDirection: "column" }}
+            style={{ display: "flex", flexDirection: "column", marginBottom: "8px"}}
         >
             <div
                 style={{
@@ -123,7 +123,9 @@ const DirectoryFormItem = ({
                     fontWeight: "500",
                 }}
                 onClick={() => {
-                    const filterItems = directoryItems.filter((_, i) => i !== index);
+                    const filterItems = directoryItems.filter(
+                        (_, i) => i !== index
+                    );
                     // console.log(filterItems);
                     setDirectoryItems(filterItems);
                 }}
@@ -141,9 +143,11 @@ interface DirectoryState {
 const DirectoryForm = ({
     directoryState,
     setDirectoryState,
+    deleteComponent,
 }: {
     directoryState: DirectoryState;
     setDirectoryState: (newState: DirectoryState) => void;
+    deleteComponent: () => void;
 }) => {
     const defaultDirectoryItem: DirectoryItem = {
         name: "",
@@ -176,7 +180,6 @@ const DirectoryForm = ({
             style={{
                 width: "100%",
                 height: "100%",
-                padding: "16px",
                 display: "flex",
                 flexDirection: "column",
             }}
@@ -184,9 +187,9 @@ const DirectoryForm = ({
             <div
                 className={`${styles.directory}`}
                 style={{
-                    paddingRight: "5px",
-                    marginTop: "16px",
-                    overflow: "auto",
+                    // paddingRight: "5px",
+                    // marginTop: "16px",
+                    // overflow: "auto",
                 }}
             >
                 {/* {directoryItems.length} */}
@@ -202,18 +205,36 @@ const DirectoryForm = ({
                         ></DirectoryFormItem>
                     );
                 })}
-                <button
-                    className={`addButton ${styles.addButton}`}
-                    type="button"
-                    onClick={() => {
-                        setDirectoryItems([
-                            ...directoryItems,
-                            defaultDirectoryItem,
-                        ]);
-                    }}
+                {/* < */}
+                <div
+                    style={{ display: "flex", justifyContent: "space-between", marginTop: "16px"}}
                 >
-                    + Add Item
-                </button>
+                    <button
+                        className={`addButton ${styles.addButton}`}
+                        type="button"
+                        onClick={() => {
+                            setDirectoryItems([
+                                ...directoryItems,
+                                defaultDirectoryItem,
+                            ]);
+                        }}
+                    >
+                        + Add Item
+                    </button>
+                    <button
+                        type="button"
+                        id="delete"
+                        style={{
+                            color: "red",
+                            border: "1px solid red",
+                            padding: "5px",
+                            borderRadius: "4px",
+                        }}
+                        onClick={deleteComponent}
+                    >
+                        Delete Component
+                    </button>
+                </div>
             </div>
         </div>
     );

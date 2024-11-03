@@ -36,9 +36,11 @@ interface ChartForm {
 const ChartComponentForm = ({
     chartState,
     setChartState,
+    deleteComponent,
 }: {
     chartState: ChartForm;
     setChartState: (newState: ChartForm) => void;
+    deleteComponent: () => void;
 }) => {
     // const [chartState, setChartState] = useState<ChartForm>(data);
 
@@ -552,15 +554,19 @@ const ChartComponentForm = ({
             </div>
             {renderFields()}
             <div className="footer">
-                <button id="delete">Delete</button>
-            </div>
-            {/*
-                TO BE REMOVED
-                Used to see chartState state as you fill in form
-            */}
-            <div>
-                <h4>Current Data:</h4>
-                <pre>{JSON.stringify(chartState, null, 2)}</pre>
+                <button
+                    type="button"
+                    id="delete"
+                    style={{
+                        color: "red",
+                        border: "1px solid red",
+                        padding: "5px",
+                        borderRadius: "4px",
+                    }}
+                    onClick={deleteComponent}
+                >
+                    Delete Component
+                </button>
             </div>
         </div>
     );

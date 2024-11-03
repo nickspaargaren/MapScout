@@ -8,18 +8,20 @@ interface EmbedState {
 const EmbedForm = ({
     embedState,
     setEmbedState,
+    deleteComponent,
 }: {
     embedState: EmbedState;
     setEmbedState: (newState: EmbedState) => void;
+    deleteComponent: ()=>void;
 }) => {
-    const {embedLink, title} = embedState;
+    const { embedLink, title } = embedState;
 
     const setEmbedLink = (newEmbedLink) => {
-      setEmbedState({...embedState, embedLink: newEmbedLink});
-    }
+        setEmbedState({ ...embedState, embedLink: newEmbedLink });
+    };
     const setTitle = (newTitle) => {
-      setEmbedState({...embedState, title: newTitle});
-    }
+        setEmbedState({ ...embedState, title: newTitle });
+    };
 
     return (
         <div style={styles.formContainer}>
@@ -43,7 +45,9 @@ const EmbedForm = ({
                 />
             </div>
 
-            <label style={styles.deleteLabel}>Delete</label>
+            <button type="button" style={styles.deleteLabel} onClick={deleteComponent}>
+                Delete Component
+            </button>
         </div>
     );
 };
@@ -53,7 +57,9 @@ const styles: { [key: string]: React.CSSProperties } = {
         width: "100%",
         maxWidth: "800px",
         height: "220px",
-        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
     },
     header: {
         fontSize: "18px",
@@ -104,11 +110,14 @@ const styles: { [key: string]: React.CSSProperties } = {
         marginTop: "5px",
     },
     deleteLabel: {
-        position: "absolute",
-        bottom: "0px",
-        right: "20px",
         fontWeight: "500",
         cursor: "pointer",
+        alignSelf: "end",
+        padding: "5px",
+        background: "transparent",
+        borderRadius: "4px",
+        border: "1px solid red",
+        color: "red",
     },
 };
 

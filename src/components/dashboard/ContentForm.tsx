@@ -164,6 +164,12 @@ const SectionCard = ({
         });
         updateComponents(newComponents);
     };
+    const deleteIthComponent = (i) => {
+        const newComponents = components.filter((_, iterator) => {
+            return iterator !== i;
+        });
+        updateComponents(newComponents);
+    };
     const updateComponents = (newComponents) => {
         const newSections = sections.map((sec, i) => {
             return i === index
@@ -185,6 +191,9 @@ const SectionCard = ({
                         setChartState={(newState) => {
                             updateIthComponent(newState, i);
                         }}
+                        deleteComponent={() => {
+                            deleteIthComponent(i);
+                        }}
                     ></ChartComponentForm>
                 );
             case "Gallery":
@@ -193,6 +202,9 @@ const SectionCard = ({
                         galleryState={data}
                         setGalleryState={(newState) => {
                             updateIthComponent(newState, i);
+                        }}
+                        deleteComponent={() => {
+                            deleteIthComponent(i);
                         }}
                     ></ProviderGallery>
                 );
@@ -203,6 +215,9 @@ const SectionCard = ({
                         setDirectoryState={(newState) => {
                             updateIthComponent(newState, i);
                         }}
+                        deleteComponent={() => {
+                            deleteIthComponent(i);
+                        }}
                     ></DirectoryForm>
                 );
             case "Embed":
@@ -211,6 +226,9 @@ const SectionCard = ({
                         embedState={data}
                         setEmbedState={(newState) => {
                             updateIthComponent(newState, i);
+                        }}
+                        deleteComponent={() => {
+                            deleteIthComponent(i);
                         }}
                     ></EmbedForm>
                 );
@@ -221,7 +239,7 @@ const SectionCard = ({
     return (
         <Container
             fluid
-            className="p-0 h-100 d-flex flex-column"
+            className={`${styles.card} p-0 h-100 d-flex flex-column`}
             style={{ overflowY: "scroll" }}
         >
             <Row
@@ -231,6 +249,9 @@ const SectionCard = ({
                     margin: "0px 0px 16px 0px",
                     // whiteSpace: "nowrap",
                     // overflow: "hidden",
+                    paddingLeft: "5px",
+                    paddingTop: "5px",
+                    paddingRight: "5px",
                 }}
             >
                 <EditableText

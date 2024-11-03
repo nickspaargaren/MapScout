@@ -1,7 +1,6 @@
 .directory::-webkit-scrollbar {
     width: 5px;
 }
-
 .directory::-webkit-scrollbar-track {
     background-color: transparent;
 }
@@ -15,10 +14,9 @@
 
 .addButton {
     border: 1px solid #226dff;
-    background: var(--drop-down-fill, #1346aa0f);
+    background: transparent;
     color: #226dff;
     font-size: 16px;
-    margin-top: 16px;
     width: 100px;
     height: 40px;
     font-weight: 600;

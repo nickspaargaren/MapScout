@@ -37,9 +37,9 @@ const ProviderInfo = (props) => {
     }, [sections]);
 
     const renderComponent = (component) => {
-        const { data } = component;
+        const { type, data } = component;
         // console.log(data);
-        switch (component.type) {
+        switch (type) {
             case "Chart":
                 switch (data.type) {
                     case "donut":
