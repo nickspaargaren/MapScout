@@ -34,12 +34,6 @@ export default function ProviderGallery({
         imgLink: "",
     };
 
-    // useEffect(() => {
-    //     if (!slides || slides.length === 0) {
-    //         setGalleryState({ slidesArray: [{ ...defaultSlide }] });
-    //     }
-    // }, [slides]);
-
     const handleSlideDataChange = (
         index: number,
         field: keyof GallerySlide,
@@ -52,10 +46,8 @@ export default function ProviderGallery({
     };
 
     const handleDelete = (index: number) => {
-        // if (slides.length > 1) {
         const newSlides = slides.filter((_, i) => i !== index);
         setSlides(newSlides);
-        // }
     };
 
     const handleAdd = (index: number) => {

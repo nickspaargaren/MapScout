@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import InfoAlert from "./InfoAlert";
+import React from "react";
 interface EmbedState {
     embedLink: string;
     title: string;
@@ -12,7 +11,7 @@ const EmbedForm = ({
 }: {
     embedState: EmbedState;
     setEmbedState: (newState: EmbedState) => void;
-    deleteComponent: ()=>void;
+    deleteComponent: () => void;
 }) => {
     const { embedLink, title } = embedState;
 

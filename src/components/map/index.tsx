@@ -9,10 +9,8 @@ import Col from "react-bootstrap/Col";
 import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import Modal from "react-bootstrap/Modal";
 import Pagination from "react-bootstrap/Pagination";
 import Row from "react-bootstrap/Row";
-import { FaRegQuestionCircle, FaTimesCircle } from "react-icons/fa";
 import { connect } from "react-redux";
 import { isEmpty, isLoaded, withFirestore } from "react-redux-firebase";
 import { Store } from "reducers/types";
@@ -20,22 +18,17 @@ import { compose } from "redux";
 import { GOOGLE_API_KEY } from "../../config/keys";
 import localizationStrings from "../../utils/Localization";
 import ProviderInfo from "../subcomponents/ProviderInfo";
-import ProviderInfoMobile from "../subcomponents/ProviderInfoMobile";
 import GoogleMap from "./GoogleMap";
 import ProviderCell from "./ProviderCell";
-import { Tooltip as ReactTooltip } from "react-tooltip";
 import searchIcon from "../../assets/img/searchicon.png";
 import x from "../../assets/img/x.png";
 import dropdownIcon from "../../assets/svg/chevron-down.svg";
 import Switch from "react-switch";
-import { func } from "prop-types";
 import { MdChevronRight } from "react-icons/md";
 import ProgressBar from "components/subcomponents/chartcomponents/ProgressBar";
 import DonutChart from "components/subcomponents/chartcomponents/DonutChart";
 import LineChart from "components/subcomponents/chartcomponents/LineChart";
 import backArrow from '../../assets/img/back-arrow.png';
-import ChartComponentForm from "components/subcomponents/chartcomponents/ChartComponentForm";
-import Collapsible from "components/collapsible";
 
 const frame = require("../../assets/svg/Frame.svg");
 
@@ -77,11 +70,6 @@ const getWidth = () =>
 const Map = (props) => {
     const { setIsOpen } = useTour();
     const [upperPageBound, setUpperPageBound] = useState(PAGE_SIZE);
-    // const [filterActive, setFilterActive] = useState(false);
-    const [filtersActive, setFiltersActive] = useState({
-        filter1: [],
-        filter2: [],
-    });
     const [filterActiveState, setFilterActiveState] = useState({
         filter1: false,
         filter2: false,
@@ -89,8 +77,6 @@ const Map = (props) => {
     const [lowerPageBound, setLowerPageBound] = useState(0);
     const [currPage, setCurrPage] = useState(1);
     const [providers, setProviders] = useState([]);
-    const [showModal, setShowModal] = useState(false);
-    const [moreFilter, setMoreFilter] = useState(false);
     const [defaultView, setDefaultView] = useState(true);
     const [isLoading, setIsLoading] = useState(true);
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -99,12 +85,9 @@ const Map = (props) => {
     const [, setZipProviders] = useState([]);
     const [searchName, setSearchName] = useState("");
     const [searchZip, setSearchZip] = useState("");
-    // const [name, setName] = useState(null);
-    // const [markers, setMarkers] = useState(null);
     const [currmarker, setCurrmarker] = useState(-1);
     const [point, setPoint] = useState(true);
     const [distances, setDistances] = useState({});
-    //const [prevSearchLen, setPrevSearchLen] = useState(0);
 
     const [primaryColor, setPrimaryColor] = useState("");
     const [, setSecondaryColor] = useState("");
@@ -115,7 +98,6 @@ const Map = (props) => {
     const [filtersState, setFiltersState] = useState({});
     const [filtersData, setFiltersData] = useState({});
     const [categories, setCategories] = useState([]);
-    const [isOpen, setOpen] = useState(false);
 
     const [showInfo, setShowInfo] = useState(false)
 
@@ -1170,10 +1152,6 @@ const Map = (props) => {
                                                             <LineChart title={"Total donations per month in 2023"} data={data2} />
                                                         </div>
                                                         <div className="mt-2">
-                                                            
-                                                            {/* <Collapsible label={"Graph"}>
-                                                                <ChartComponentForm/>
-                                                            </Collapsible> */}
                                                         </div>
                                                         
                                                     </div>

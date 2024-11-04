@@ -40,7 +40,6 @@ const DirectoryFormItem = ({
         updateItem({ ...item, details: e.target.value });
     };
     const handleUploadSuccess = async (file) => {
-        // console.log(file);
         const filename = file.name;
         await storage.ref("images").child(filename).put(file);
         let newItem = { ...item, image: filename };

@@ -25,9 +25,7 @@ function isManaged(props: PropTypes): props is Managed {
 const Collapsible = (props: PropTypes) => {
     const [isOpen, setOpen] = useState(false);
     const contentRef = useRef(null);
-    const toogle = () => {
-        setOpen(!isOpen);
-    };
+    const toogle = () => { setOpen(!isOpen) };
     return (
         <div className="collapsible" style={props.style}>
             {/* Do not remove type="button". Otherwise the button
