@@ -4,7 +4,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { withFirestore, isEmpty } from "react-redux-firebase";
+import { withFirestore } from "react-redux-firebase";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import CategoryCell from "./CategoryCell";
@@ -12,8 +12,8 @@ import PrimaryCell from "./PrimaryCell";
 import ProviderInfo from "../subcomponents/ProviderInfo";
 import promiseWithTimeout from "../../functions/promiseWithTimeout";
 import { Store } from "reducers/types";
-import { TempTutorial } from "./TempTutorial";
-import { TempTutorialTwo } from "./TempTutorialTwo";
+// import { TempTutorial } from "./TempTutorial";
+// import { TempTutorialTwo } from "./TempTutorialTwo";
 import { BsPlus } from "react-icons/bs";
 const { v4: uuidv4 } = require("uuid");
 
@@ -152,7 +152,7 @@ export default compose<any>(
         setIsLoading(true);
         let index = 0;
         for (let i of categories) {
-            if(i.id === item.id) {
+            if (i.id === item.id) {
                 break;
             }
             index++;
@@ -166,30 +166,30 @@ export default compose<any>(
 
     function countdownTimer(seconds: number): void {
         let remainingTime = seconds;
-      
+
         if (timerInterval) {
-          clearInterval(timerInterval);
+            clearInterval(timerInterval);
         }
-      
+
         timerInterval = setInterval(() => {
-          if (remainingTime > 0) {
-            console.log(`Time left: ${remainingTime} seconds`);
-            remainingTime--;
-          } else {
-            console.log("Time's up!");
-            clearInterval(timerInterval!);
-            saveChanges();
-          }
+            if (remainingTime > 0) {
+                console.log(`Time left: ${remainingTime} seconds`);
+                remainingTime--;
+            } else {
+                console.log("Time's up!");
+                clearInterval(timerInterval!);
+                saveChanges();
+            }
         }, 1000);
-      }
+    }
 
     async function rename(e, item) {
         let index = 0;
         for (let i of categories) {
-            if(i.id === item.id) {
+            if (i.id === item.id) {
                 break;
             }
-            index++;
+            index+=1;
         }
         const items = categories;
         const point = items[index];
@@ -202,7 +202,7 @@ export default compose<any>(
         setIsLoading(true);
         let index = 0;
         for (let i of categories) {
-            if(i.id === item.id) {
+            if (i.id === item.id) {
                 break;
             }
             index++;
@@ -210,7 +210,7 @@ export default compose<any>(
         const point = categories[index];
         index = 0
         for (let i of point.options) {
-            if(i.value === name) {
+            if (i.value === name) {
                 break;
             }
             index++;
@@ -226,7 +226,7 @@ export default compose<any>(
         setIsLoading(true);
         let index = 0;
         for (let i of categories) {
-            if(i.id === item.id) {
+            if (i.id === item.id) {
                 break;
             }
             index++;
@@ -251,7 +251,7 @@ export default compose<any>(
         setIsLoading(true);
         let index = 0;
         for (let i of categories) {
-            if(i.id === item.id) {
+            if (i.id === item.id) {
                 break;
             }
             index++;
@@ -277,7 +277,7 @@ export default compose<any>(
         let index = 0;
         let index2 = 0;
         for (let i of categories) {
-            if(i.id === item.id) {
+            if (i.id === item.id) {
                 break;
             }
             index++;
@@ -291,7 +291,7 @@ export default compose<any>(
                     }
                     index2++;
                 };
-            val[item.id as keyof typeof val].splice(index2, 1);
+                val[item.id as keyof typeof val].splice(index2, 1);
             }
         });
         await point.options.splice(i, 1);
@@ -303,7 +303,7 @@ export default compose<any>(
     function disableCat(item) {
         let index = 0;
         for (let i of categories) {
-            if(i.id === item.id) {
+            if (i.id === item.id) {
                 break;
             }
             index++;
@@ -322,7 +322,7 @@ export default compose<any>(
         setIsLoading(true);
         let index = 0;
         for (let i of categories) {
-            if(i.id === item.id) {
+            if (i.id === item.id) {
                 break;
             }
             index++;
@@ -338,7 +338,7 @@ export default compose<any>(
         setIsLoading(true);
         let index = 0;
         for (let i of categories) {
-            if(i.id === item.id) {
+            if (i.id === item.id) {
                 break;
             }
             index++;
@@ -349,7 +349,7 @@ export default compose<any>(
             }
         });
         await categories.splice(index, 1);
-        
+
         categories.forEach((item: any, index) => {
             item.priority = index;
         });
@@ -362,7 +362,7 @@ export default compose<any>(
         setIsLoading(true);
         let index = 0;
         for (let i of categories) {
-            if(i.id === item.id) {
+            if (i.id === item.id) {
                 break;
             }
             index++;
@@ -549,33 +549,33 @@ export default compose<any>(
                     </InputGroup.Append> */}
                 </InputGroup>
                 <br />
-                {usePrimary? (
-                <div>
-                    {categories
-                    .filter(
-                        (item, value) => item.isPrimary)
-                    .sort(
-                        ([aKey, aValue]: any[], [bKey, bValue]: any[]) =>
-                            aValue.priority - bValue.priority
-                    )
-                    .map((item, index) => (
-                        <p>
-                            <PrimaryCell
-                                item={item}
-                                index={index}
-                                disableCat={disableCat}
-                                enableCat={enableCat}
-                                deleteCat={deleteCat}
-                                changeType={changeType}
-                                rename={rename}
-                                addOption={addPrimOption}
-                                changeColor={changeColor}
-                                removeOption={removeOption}
-                            />
-                        </p>
-                    ))
-                    }
-                </div>) :(<></>)}
+                {usePrimary ? (
+                    <div>
+                        {categories
+                            .filter(
+                                (item, value) => item.isPrimary)
+                            .sort(
+                                ([aKey, aValue]: any[], [bKey, bValue]: any[]) =>
+                                    aValue.priority - bValue.priority
+                            )
+                            .map((item, index) => (
+                                <p>
+                                    <PrimaryCell
+                                        item={item}
+                                        index={index}
+                                        // disableCat={disableCat}
+                                        enableCat={enableCat}
+                                        deleteCat={deleteCat}
+                                        changeType={changeType}
+                                        rename={rename}
+                                        addOption={addPrimOption}
+                                        changeColor={changeColor}
+                                        removeOption={removeOption}
+                                    />
+                                </p>
+                            ))
+                        }
+                    </div>) : (<></>)}
                 <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId="droppable">
                         {(provided, snapshot) => (
@@ -584,56 +584,56 @@ export default compose<any>(
                                 ref={provided.innerRef}
                             >
                                 {categories
-                                .filter(
-                                    (item, value) => !item.isPrimary)
-                                // .sort(
-                                //     ([aKey, aValue]: any[], [bKey, bValue]: any[]) =>
-                                //         aValue.priority - bValue.priority
-                                // )
-                                .map((item, index) => (
-                                    <Draggable
-                                        key={item.name}
-                                        draggableId={item.name}
-                                        index={index}
-                                    >
-                                        {(provided, snapshot) => (
-                                            <div
-                                                ref={provided.innerRef}
-                                                {...provided.draggableProps}
-                                                {...provided.dragHandleProps}
-                                                style={
-                                                    provided.draggableProps
-                                                        .style
-                                                }
-                                            >
-                                                <CategoryCell
-                                                    item={item}
-                                                    index={index}
-                                                    disableCat={disableCat}
-                                                    enableCat={enableCat}
-                                                    deleteCat={deleteCat}
-                                                    changeType={changeType}
-                                                    rename={rename}
-                                                    addOption={addOption}
-                                                    removeOption={removeOption}
-                                                    isDragged={
-                                                        snapshot.isDragging
+                                    .filter(
+                                        (item, value) => !item.isPrimary)
+                                    // .sort(
+                                    //     ([aKey, aValue]: any[], [bKey, bValue]: any[]) =>
+                                    //         aValue.priority - bValue.priority
+                                    // )
+                                    .map((item, index) => (
+                                        <Draggable
+                                            key={item.name}
+                                            draggableId={item.name}
+                                            index={index}
+                                        >
+                                            {(provided, snapshot) => (
+                                                <div
+                                                    ref={provided.innerRef}
+                                                    {...provided.draggableProps}
+                                                    {...provided.dragHandleProps}
+                                                    style={
+                                                        provided.draggableProps
+                                                            .style
                                                     }
-                                                />
-                                            </div>
-                                        )}
-                                    </Draggable>
-                                ))}
+                                                >
+                                                    <CategoryCell
+                                                        item={item}
+                                                        index={index}
+                                                        disableCat={disableCat}
+                                                        enableCat={enableCat}
+                                                        deleteCat={deleteCat}
+                                                        changeType={changeType}
+                                                        rename={rename}
+                                                        addOption={addOption}
+                                                        removeOption={removeOption}
+                                                        isDragged={
+                                                            snapshot.isDragging
+                                                        }
+                                                    />
+                                                </div>
+                                            )}
+                                        </Draggable>
+                                    ))}
                                 {provided.placeholder}
                             </div>
                         )}
                     </Droppable>
                 </DragDropContext>
                 <button className="template-add"
-                onClick={(e) => {
-                    createNewCat();
-                }}>
-                <BsPlus /> Add Filter
+                    onClick={(e) => {
+                        createNewCat();
+                    }}>
+                    <BsPlus /> Add Filter
                 </button>
                 {/* Bandaid fix for content showing below sticky button */}
                 <div style={{ marginBottom: "-18px", height: "18px", width: "100%", position: "sticky", bottom: "-28px", backgroundColor: "white", zIndex: "2" }} />
