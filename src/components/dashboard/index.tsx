@@ -154,7 +154,7 @@ function Dashboard({ firestore, team, selectItem }) {
                 className="admin-list-container"
             >
                 <div className="list-wrapper">
-                    <img src={dash} alt="empty dash" />
+                    {/* <img src={dash} alt="empty dash" /> */}
                     <h1
                         style={{
                             textAlign: "center",

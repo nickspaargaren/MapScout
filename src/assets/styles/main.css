@@ -1420,14 +1420,18 @@ h2 {
 #discussion-root {
     margin-top: 12px;
     margin-bottom: 20px;
-}
+    }
 
 #discussion-scroll {
     display: flex;
     flex-direction: column-reverse;
     max-height: 440px;
-    width: 100%;
+    width: 60vw;
     overflow-y: scroll;
+}
+
+#discussion-scroll::-webkit-scrollbar {
+    display: none;
 }
 
 .chat-bubble {

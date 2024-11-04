@@ -15,7 +15,6 @@ import GoogleSuggest from "./GoogleSuggest";
 import ImageModal from "./ImageModal";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-
 import ActionForm from "./ActionForm";
 import ContentForm from "./ContentForm";
 
