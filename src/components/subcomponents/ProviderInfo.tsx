@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -12,126 +12,156 @@ import Linkify from "react-linkify";
 import ProviderGalleryCarousel from "components/dashboard/ProviderGalleryCarousel";
 import Collapsible from "components/collapsible";
 import Directory from "components/dashboard/Directory";
-import EmbedForm from "components/dashboard/embed-component/EmbedForm";
 import EmbedComponent from "components/dashboard/embed-component/EmbedComponent";
-import EventInfoComponent from "components/dashboard/EventInfoComponent";
+import DonutChart from "./chartcomponents/DonutChart";
+import ProgressBar from "./chartcomponents/ProgressBar";
+import LineChart from "./chartcomponents/LineChart";
 import GeneralInfo from "components/dashboard/GeneralInfo";
-
-{
-    /*TO BE DELETED */
-}
-const eventInfo2 = {
-    title: "Compnent TEXTTT",
-    description: "Sample content",
-};
-const galleryData = [
-    {
-        title: "Urban Tree Fundraiser",
-        description:
-            "Last Friday, we gathered for food, fun, and giving back at Urban Tree cidery. All proceeds from the evening went to our Bereavement fund. Everyone remembered to bring a sweater because the back deck got cold. We enjoyed drinks, games, and more!",
-        imgLink:
-            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-    },
-    {
-        title: "testVal2",
-        description: "testing testing",
-        imgLink:
-            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-    },
-    {
-        title: "testVal3",
-        description: "testing testing",
-        imgLink:
-            "https://static.vecteezy.com/system/resources/thumbnails/005/857/332/small_2x/funny-portrait-of-cute-corgi-dog-outdoors-free-photo.jpg",
-    },
-    {
-        title: "testVal4",
-        description: "testing testing",
-        imgLink:
-            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-    },
-    {
-        title: "testVal1",
-        description: "testing testing",
-        imgLink:
-            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-    },
-    {
-        title: "testVal2",
-        description: "testing testing",
-        imgLink:
-            "https://static.vecteezy.com/system/resources/thumbnails/005/857/332/small_2x/funny-portrait-of-cute-corgi-dog-outdoors-free-photo.jpg",
-    },
-    {
-        title: "testVal3",
-        description: "testing testing",
-        imgLink:
-            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-    },
-    {
-        title: "testVal4",
-        description: "testing testing",
-        imgLink:
-            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-    },
-];
-const directoryData =
-    [
-        {
-            name: "bob",
-            description: "firefighter",
-            details: "bob@gmail.com",
-            image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-        },
-        {
-            name: "bob",
-            description: "firefighter",
-            details: "bob@gmail.com",
-            image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-        },
-        {
-            name: "bob",
-            description: "firefighter",
-            details: "bob@gmail.com",
-            image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-        },
-        {
-            name: "bob",
-            description: "firefighter",
-            details: "bob@gmail.com",
-            image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-        },
-        {
-            name: "bob",
-            description: "firefighter",
-            details: "bob@gmail.com",
-            image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-        },
-        {
-            name: "bob",
-            description: "firefighter",
-            details: "bob@gmail.com",
-            image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-        }
-    ];
-const eventInfo = {
-    title: "Tour Our Station",
-    videoUrl: "https://www.youtube.com/watch?v=oZcKTf4RLQ8&ab_channel=HorizonsHealth",
-    thumbnail: "https://picsum.photos/200",
-};
+import ReadMoreAndLess from "react-read-more-less";
+import EventInfoComponent from "components/dashboard/EventInfoComponent";
 
 const ProviderInfo = (props) => {
     const [image, setImage] = useState("bog");
     const [streetView, setStreetView] = useState("bog");
     const [isLoading, setIsLoading] = useState(true);
+    const sections = props.item.content?.sections ?? [];
+
+    const components = useMemo(() => {
+        return sections.flatMap((section) => section.components);
+    }, [sections]);
+
+    const renderComponent = (component) => {
+        const { type, data } = component;
+        // console.log(data);
+        switch (type) {
+            case "Chart":
+                switch (data.type) {
+                    case "donut":
+                        return (
+                            <Collapsible
+                                label={type}
+                                style={{
+                                    maxWidth: "1000px",
+                                    marginLeft: "auto",
+                                    marginRight: "auto",
+                                }}
+                            >
+                                <DonutChart
+                                    data={data.data.donutData}
+                                    buttonLink={data.data.buttonLink}
+                                    buttonLabel={data.data.buttonLabel}
+                                ></DonutChart>
+                            </Collapsible>
+                        );
+                    case "progress":
+                        return (
+                            <Collapsible
+                                label={type}
+                                style={{
+                                    maxWidth: "1000px",
+                                    marginLeft: "auto",
+                                    marginRight: "auto",
+                                }}
+                            >
+                                <ProgressBar
+                                    current={data.data.current}
+                                    total={data.data.total}
+                                    units={data.data.units}
+                                    buttonLink={data.data.buttonLink}
+                                    buttonLabel={data.data.buttonLabel}
+                                ></ProgressBar>
+                            </Collapsible>
+                        );
+                    case "line":
+                        return (
+                            <Collapsible
+                                label={type}
+                                style={{
+                                    maxWidth: "1000px",
+                                    marginLeft: "auto",
+                                    marginRight: "auto",
+                                }}
+                            >
+                                <LineChart
+                                    title={data.title}
+                                    data={data.data.lineData}
+                                ></LineChart>
+                            </Collapsible>
+                        );
+                    default:
+                        return <></>;
+                }
+            case "Gallery":
+                return (
+                    <Collapsible
+                        label={type}
+                        style={{
+                            maxWidth: "1000px",
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                        }}
+                    >
+                        <ProviderGalleryCarousel
+                            slidesArray={data.slidesArray}
+                        ></ProviderGalleryCarousel>
+                    </Collapsible>
+                );
+            case "Directory":
+                return (
+                    <Collapsible
+                        label={type}
+                        style={{
+                            maxWidth: "1000px",
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                        }}
+                    >
+                        <Directory directoryItems={data.items}></Directory>
+                    </Collapsible>
+                );
+            case "Embed":
+                const eventInfo = {
+                    title: data.title,
+                    videoUrl: data.embedLink,
+                }
+                return (
+                    <Collapsible
+                        label={eventInfo.title}
+                        style={{
+                            maxWidth: "1000px",
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                        }}
+                    >
+                        <EmbedComponent eventInfo={eventInfo}></EmbedComponent>
+                    </Collapsible>
+                );
+            case "Text":
+                return (
+                    <Collapsible
+                        label={data.title}
+                        style={{
+                            maxWidth: "1000px",
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                        }}
+                    >
+                        <EventInfoComponent description={data.description}></EventInfoComponent>
+                    </Collapsible>
+                );
+            default:
+                return <></>;
+        }
+    };
 
     useEffect(() => {
+        // console.log(props.item.content);
         async function fetchData() {
             setIsLoading(true);
             try {
                 const res2 = await fetch(
                     `https://maps.googleapis.com/maps/api/staticmap?center=${props.item.latitude},${props.item.longitude}&zoom=16&scale=2&size=335x250&maptype=roadmap&key=${GOOGLE_API_KEY}&format=png&visual_refresh=true` +
-                    `&markers=${props.item.latitude},${props.item.longitude}`,
+                    `&markers=${props.item.latitude},${props.item.longitude}`
                 );
                 setStreetView(res2.url);
                 setImage(props.item.imageURL);
@@ -153,7 +183,7 @@ const ProviderInfo = (props) => {
 
     const categoriesToUse = props.categories || [];
 
-    
+
 
     return (
         <Container fluid className="provider-info-container">
@@ -164,8 +194,6 @@ const ProviderInfo = (props) => {
                     </LazyLoad>
                 </Card>
             </Row>
-            {/* Sample components that in the future should be added dynamically
-            based on the response from firebase */}
             <Row className="info-rows">
                 <Col md={12}>
                     <Collapsible
@@ -181,75 +209,22 @@ const ProviderInfo = (props) => {
                     </Collapsible>
                 </Col>
             </Row>
-            {/* Sample components that in the future should be added dynamically
-            based on the response from firebase */}
-            <Row className="info-rows" >
-                <Col md={12} >
-                    <Collapsible
-                        label={"Gallery"}
-                        style={{
-                            maxWidth: "1000px",
-                            marginLeft: "auto",
-                            marginRight: "auto"
-                        }}
-                    >
-                        {/*TO BE DELETED */}
-                        <ProviderGalleryCarousel slidesArray={galleryData} />
-                    </Collapsible>
-                </Col>
-            </Row>
-            <Row className="info-rows">
-                <Col md={12}>
-                    <Collapsible
-                        label={"Directory"}
-                        style={{
-                            maxWidth: "1000px",
-                            marginLeft: "auto",
-                            marginRight: "auto"
-                        }}
-                    >
-                        <Directory
-                            directoryItems={directoryData}
-                        ></Directory>
-                    </Collapsible>
-                </Col>
-            </Row>
-            <Row className="info-rows">
-                <Col md={12}>
-                    <Collapsible
-                        label={"Sample Embedded title"}
-                        style={{
-                            maxWidth: "1000px",
-                            marginLeft: "auto",
-                            marginRight: "auto"
-                        }}
-                    >
-                        <EmbedComponent eventInfo={eventInfo} />
-                    </Collapsible>
-                </Col>
-            </Row>
-            <Row className="info-rows">
-                <Col md={12}>
-                    <Collapsible
-                        label={eventInfo2.title}
-                        style={{
-                            maxWidth: "1000px",
-                            marginLeft: "auto",
-                            marginRight: "auto"
-                        }}
-                    >
-                        <EventInfoComponent
-                            description={eventInfo2.description}
-                        />
-                    </Collapsible>
-                </Col>
-            </Row>
+            {components.map((component) => {
+                // console.log(component);
+                return (
+                    <Row className="info-rows">
+                        <Col md={12}>
+                            {renderComponent(component)}
+                        </Col>
+                    </Row>
+                );
+            })}
             <div className="modalHeader">
                 {categoriesToUse
                     .filter(
                         (category) =>
                             props.item[category.id] &&
-                            props.item[category.id].length,
+                            props.item[category.id].length
                     )
                     .map((category) => (
                         <div>
@@ -275,7 +250,7 @@ const ProviderInfo = (props) => {
                                                     {selected}
                                                 </div>
                                             );
-                                        },
+                                        }
                                     )
                                 ) : (
                                     <Linkify>
@@ -287,7 +262,7 @@ const ProviderInfo = (props) => {
                         </div>
                     ))}
             </div>
-        </Container>
+        </Container >
     );
 };
 
@@ -296,5 +271,5 @@ export default compose<any>(
     connect((state: Storage) => ({
         providers: state.firestore.ordered.providers,
         firebase: state.firebase,
-    })),
+    }))
 )(ProviderInfo);

@@ -1,4 +1,4 @@
-import React, { useCallback, useState} from "react";
+import React, { useCallback, useState } from "react";
 import classNames from "classnames";
 import "./styles.css";
 import { useEditor, EditorContent, Editor, BubbleMenu } from "@tiptap/react";
@@ -17,7 +17,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import * as Icons from "./Icons";
 import { LinkModal } from "./LinkModal";
 import CustomDropdown from "./CustomDropdown";
-import { TextColor } from "./TextColor/TextColor"; 
+import { TextColor } from "./TextColor/TextColor";
 import ColorPickerButton from "./TextColor/ColorPickerButton";
 import BulletList from "@tiptap/extension-bullet-list";
 import ListItem from "@tiptap/extension-list-item";
@@ -26,8 +26,18 @@ import Image from "@tiptap/extension-image";
 import Blockquote from "@tiptap/extension-blockquote";
 import bqSVG from "../../../assets/svg/blockquote.svg"
 
+interface EditorState {
+  title: string;
+  description: string;
+};
 
-export function SimpleEditor() {
+export function SimpleEditor(
+  { editorState, setEditorState, deleteComponent }:
+    {
+      editorState: EditorState;
+      setEditorState: (newState: EditorState) => void;
+      deleteComponent: () => void;
+    }) {
   const CustomImage = Image.extend({
     addAttributes() {
       return {
@@ -60,7 +70,13 @@ export function SimpleEditor() {
       CustomImage,
       Blockquote
     ],
-    content: '<p>ex. "Changing lives one bit at a time..."</p>',
+    content: editorState.description,
+    onUpdate: ({ editor }) => {
+      setEditorState({
+        ...editorState,
+        description: editor.getHTML()
+      });
+    }
   }) as Editor;
 
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -129,7 +145,7 @@ export function SimpleEditor() {
   const addImage = useCallback(() => {
     const imageUrl: string | null = prompt("Enter the image URL");
     if (imageUrl) {
-      editor.chain().focus().setImage({ src: imageUrl }).run(); 
+      editor.chain().focus().setImage({ src: imageUrl }).run();
     }
   }, [editor]);
 
@@ -169,7 +185,7 @@ export function SimpleEditor() {
       </BubbleMenu>
 
       <div className="inner-box" style={{ overflow: "scroll" }}>
-        
+
         <div className="menu">
           <button
             type="button"
@@ -182,7 +198,7 @@ export function SimpleEditor() {
           >
             <Icons.RotateLeft />
           </button>
-          
+
           <button
             type="button"
             className="menu-button"
@@ -296,7 +312,7 @@ export function SimpleEditor() {
               editor.chain().focus().toggleBulletList().run();
             }}
           >
-            <Icons.BulletListIcon /> 
+            <Icons.BulletListIcon />
           </button>
 
           <button
@@ -306,7 +322,7 @@ export function SimpleEditor() {
             })}
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
           >
-            <Icons.NumberedListIcon /> 
+            <Icons.NumberedListIcon />
           </button>
 
           <button
@@ -323,9 +339,9 @@ export function SimpleEditor() {
           </button>
 
           <button
-          type="button"
-          className="menu-button"
-          onClick={addImage}
+            type="button"
+            className="menu-button"
+            onClick={addImage}
           >
             <Icons.ImageIcon />
           </button>
@@ -341,8 +357,8 @@ export function SimpleEditor() {
             }}
           >
             <img src={bqSVG} alt="Blockquote" style={{ width: 20, height: 20 }} />
-            </button>
-            
+          </button>
+
         </div>
         <EditorContent editor={editor} />
       </div>
@@ -357,6 +373,24 @@ export function SimpleEditor() {
         onSaveLink={saveLink}
         onRemoveLink={removeLink}
       />
+
+      <div
+        style={{ display: "flex", justifyContent: "end", marginTop: "16px" }}
+      >
+        <button
+          type="button"
+          id="delete"
+          style={{
+            color: "red",
+            border: "1px solid red",
+            padding: "5px",
+            borderRadius: "4px",
+          }}
+          onClick={deleteComponent}
+        >
+          Delete Component
+        </button>
+      </div>
     </div>
   );
 }

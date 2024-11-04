@@ -1,6 +1,5 @@
 import React from "react";
 import './EventInfoComponent.css';
-import Collapsible from 'components/collapsible';
 
 interface EventInfoComponentProps {
   description: string;
@@ -8,7 +7,7 @@ interface EventInfoComponentProps {
 
 const EventInfoComponent: React.FC<EventInfoComponentProps> = ({ description }) => {
   return (
-      <p className="event-description">{description}</p>
+    <p dangerouslySetInnerHTML={{ __html: description }} className="event-description"/>
   );
 };
 
