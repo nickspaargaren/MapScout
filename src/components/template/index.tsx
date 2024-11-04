@@ -505,7 +505,7 @@ export default compose<any>(
                 !document.cookie.includes("tut2") && <TempTutorialTwo />}
             <Container className="box">
                 <div className="row-spaced">
-                    <h2 className="template-title">Template Builder</h2>
+                    <h2 className="template-title">Filter Builder</h2>
                 </div>
                 {/* <div className="primary-slider">
                     <div className="primary-slider-button">
