@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./styles/ChartComponentForm.css";
 
 type ChartType = "donut" | "progress" | "line";
@@ -37,30 +37,7 @@ const ChartComponentForm = ({
     chartState,
     setChartState,
     deleteComponent,
-}: {
-    chartState: ChartForm;
-    setChartState: (newState: ChartForm) => void;
-    deleteComponent: () => void;
 }) => {
-    // const [chartState, setChartState] = useState<ChartForm>(data);
-
-    // useEffect(() => {
-    //     setData(chartState);
-    // }, [chartState]);
-
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth <= 768);
-        };
-
-        window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
-
     const handleTypeChange = (type: ChartType) => {
         setChartState({
             type,
@@ -80,6 +57,9 @@ const ChartComponentForm = ({
         });
     };
 
+    /*
+        Sets the showNumber flag to its opposite on click of the radio button
+    */
     const handleDataViewChange = () => {
         setChartState({
             ...chartState,
@@ -90,6 +70,9 @@ const ChartComponentForm = ({
         });
     };
 
+    /*
+        Sets the donutData or lineData property in the chartState with the new data whenever a input in either table is changed
+    */
     const handleArrayDataChange = (
         index: number,
         key: string,
@@ -111,7 +94,6 @@ const ChartComponentForm = ({
                 row.percentage = ((row.number / sum) * 100).toFixed(1) + "%";
             });
         }
-
         setChartState({
             ...chartState,
             data: {
@@ -122,6 +104,9 @@ const ChartComponentForm = ({
         });
     };
 
+    /*
+        Function to add a data "row", another object, to the DonutData[] or LineData[] and sets the object with respective default values
+    */
     const addDataRow = () => {
         if (chartState.type === "donut") {
             const donutData = [
@@ -148,7 +133,7 @@ const ChartComponentForm = ({
         switch (chartState.type) {
             case "donut":
                 return (
-                    <table className="data-table" style={{ width: "100%" }}>
+                    <table className="data-table">
                         <thead>
                             <tr>
                                 <th>Label</th>
@@ -170,11 +155,6 @@ const ChartComponentForm = ({
                                                     e.target.value
                                                 )
                                             }
-                                            style={{
-                                                width: "100%",
-                                                padding: isMobile ? "6px" : "8px",
-                                                fontSize: isMobile ? "14px" : "16px",
-                                            }}
                                             required
                                         />
                                     </td>
@@ -189,11 +169,6 @@ const ChartComponentForm = ({
                                                     parseFloat(e.target.value)
                                                 )
                                             }
-                                            style={{
-                                                width: "100%",
-                                                padding: isMobile ? "6px" : "8px",
-                                                fontSize: isMobile ? "14px" : "16px",
-                                            }}
                                             required
                                         />
                                     </td>
@@ -209,12 +184,6 @@ const ChartComponentForm = ({
                                                 )
                                             }
                                             disabled
-                                            style={{
-                                                width: "100%",
-                                                padding: isMobile ? "6px" : "8px",
-                                                fontSize: isMobile ? "14px" : "16px",
-                                                backgroundColor: "#e9e9e9",
-                                            }}
                                         />
                                     </td>
                                 </tr>
@@ -245,11 +214,6 @@ const ChartComponentForm = ({
                                                     e.target.value
                                                 )
                                             }
-                                            style={{
-                                                width: "100%",
-                                                padding: isMobile ? "6px" : "8px",
-                                                fontSize: isMobile ? "14px" : "16px",
-                                            }}
                                             required
                                         />
                                     </td>
@@ -264,11 +228,6 @@ const ChartComponentForm = ({
                                                     parseFloat(e.target.value)
                                                 )
                                             }
-                                            style={{
-                                                width: "100%",
-                                                padding: isMobile ? "6px" : "8px",
-                                                fontSize: isMobile ? "14px" : "16px",
-                                            }}
                                             required
                                         />
                                     </td>
@@ -285,35 +244,255 @@ const ChartComponentForm = ({
     const renderFields = () => {
         switch (chartState.type) {
             case "donut":
-            case "line":
                 return (
-                    <div>
-                        {renderDataTable()}
-                        <button
-                            onClick={addDataRow}
-                            style={{
-                                backgroundColor: "#226DFF",
-                                color: "#fff",
-                                padding: "10px 20px",
-                                border: "none",
-                                borderRadius: "4px",
-                                cursor: "pointer",
-                                marginTop: "16px",
-                                // width: "100%",
-                            }}
+                    <div className="chart-container">
+                        <div
+                            className="chart-container"
+                            style={{ flexDirection: "row" }}
                         >
-                            +
-                        </button>
+                            <div className="field" style={{ width: "60%" }}>
+                                <label htmlFor="buttonLabel">
+                                    Button Label
+                                </label>
+                                <input
+                                    id="buttonLabel"
+                                    type="text"
+                                    value={chartState.data.buttonLabel || ""}
+                                    onChange={(e) =>
+                                        handleDataChange(
+                                            "buttonLabel",
+                                            e.target.value
+                                        )
+                                    }
+                                    placeholder="ex. Donations"
+                                />
+                            </div>
+                            <div className="field" style={{ width: "75%" }}>
+                                <label htmlFor="buttonLink">Button Link</label>
+                                <input
+                                    id="buttonLink"
+                                    type="text"
+                                    value={chartState.data.buttonLink || ""}
+                                    onChange={(e) =>
+                                        handleDataChange(
+                                            "buttonLink",
+                                            e.target.value
+                                        )
+                                    }
+                                    placeholder="ex. donations.com"
+                                />
+                            </div>
+                        </div>
+                        <div className="chart-container" style={{ gap: "8px" }}>
+                            <p style={{ margin: "0" }}>
+                                Data <span style={{ color: "#EB5757" }}>*</span>
+                            </p>
+                            <div className="radio-group">
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="donutType"
+                                        value="number"
+                                        checked={chartState.data.showNumber}
+                                        onChange={(e) => {
+                                            handleDataViewChange();
+                                        }}
+                                    />
+                                    Show Number
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="donutType"
+                                        value="percentage"
+                                        checked={!chartState.data.showNumber}
+                                        onChange={(e) => {
+                                            handleDataViewChange();
+                                        }}
+                                    />
+                                    Show Percentage
+                                </label>
+                            </div>
+                            <div className="chart-table-container">
+                                {renderDataTable()}
+                                <button
+                                    type="button"
+                                    onClick={addDataRow}
+                                    className="add-button"
+                                >
+                                    +
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 );
             case "progress":
                 return (
-                    <div>
-                        {/* Progress form fields go here */}
+                    <div className="chart-container">
+                        <div className="field" style={{ width: "30%" }}>
+                            <label htmlFor="current">
+                                Current
+                                <span style={{ color: "#EB5757" }}> *</span>
+                            </label>
+                            <input
+                                id="current"
+                                type="number"
+                                value={chartState.data.current || ""}
+                                onChange={(e) =>
+                                    handleDataChange(
+                                        "current",
+                                        parseFloat(e.target.value)
+                                    )
+                                }
+                                placeholder="ex. 10"
+                            />
+                        </div>
+                        <div className="field" style={{ width: "30%" }}>
+                            <label htmlFor="goal">
+                                Goal<span style={{ color: "#EB5757" }}> *</span>
+                            </label>
+                            <input
+                                id="goal"
+                                type="number"
+                                value={chartState.data.total || ""}
+                                onChange={(e) =>
+                                    handleDataChange(
+                                        "total",
+                                        parseFloat(e.target.value)
+                                    )
+                                }
+                                placeholder="ex. 1000"
+                            />
+                        </div>
+                        <div className="radio-group">
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="progressType"
+                                    value="number"
+                                    checked={chartState.data.showNumber}
+                                    onChange={(e) => {
+                                        handleDataViewChange();
+                                    }}
+                                />
+                                Show Number
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="progressType"
+                                    value="percentage"
+                                    checked={!chartState.data.showNumber}
+                                    onChange={(e) => {
+                                        handleDataViewChange();
+                                    }}
+                                />
+                                Show Percentage
+                            </label>
+                        </div>
+                        <div className="field" style={{ width: "40%" }}>
+                            <label htmlFor="units">Units</label>
+                            <input
+                                id="units"
+                                type="text"
+                                value={chartState.data.units || ""}
+                                onChange={(e) =>
+                                    handleDataChange("units", e.target.value)
+                                }
+                                placeholder="ex. dollars"
+                            />
+                        </div>
+                        <div
+                            className="chart-container"
+                            style={{ flexDirection: "row" }}
+                        >
+                            <div className="field" style={{ width: "60%" }}>
+                                <label htmlFor="buttonLabel">
+                                    Button Label
+                                </label>
+                                <input
+                                    id="buttonLabel"
+                                    type="text"
+                                    value={chartState.data.buttonLabel || ""}
+                                    onChange={(e) =>
+                                        handleDataChange(
+                                            "buttonLabel",
+                                            e.target.value
+                                        )
+                                    }
+                                    placeholder="ex. Donations"
+                                />
+                            </div>
+                            <div className="field" style={{ width: "75%" }}>
+                                <label htmlFor="buttonLink">Button Link</label>
+                                <input
+                                    id="buttonLink"
+                                    type="text"
+                                    value={chartState.data.buttonLink || ""}
+                                    onChange={(e) =>
+                                        handleDataChange(
+                                            "buttonLink",
+                                            e.target.value
+                                        )
+                                    }
+                                    placeholder="ex. donations.com"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                );
+            case "line":
+                return (
+                    <div className="chart-container" style={{ width: "100%" }}>
+                        <div className="field" style={{ width: "100%" }}>
+                            <label htmlFor="xLabel">X-axis label</label>
+                            <input
+                                id="xLabel"
+                                type="text"
+                                placeholder="Title"
+                                value={chartState.data.xLabel || ""}
+                                onChange={(e) =>
+                                    handleDataChange("xLabel", e.target.value)
+                                }
+                            />
+                        </div>
+                        <div className="field" style={{ width: "100%" }}>
+                            <label htmlFor="yLabel">Y-axis label</label>
+                            <input
+                                id="yLabel"
+                                type="text"
+                                placeholder="Title"
+                                value={chartState.data.yLabel || ""}
+                                onChange={(e) =>
+                                    handleDataChange("yLabel", e.target.value)
+                                }
+                            />
+                        </div>
+                        <div
+                            className="chart-container"
+                            style={{ width: "100%" }}
+                        >
+                            <p style={{ margin: "0" }}>
+                                Data <span style={{ color: "#EB5757" }}>*</span>
+                            </p>
+                            <div
+                                className="chart-table-container"
+                                style={{ width: "30%" }}
+                            >
+                                {renderDataTable()}
+                                <button
+                                    type="button"
+                                    onClick={addDataRow}
+                                    className="add-button"
+                                >
+                                    +
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 );
             default:
-                return null;
+                return <></>
         }
     };
 
@@ -359,11 +538,6 @@ const ChartComponentForm = ({
                     value={chartState.title}
                     onChange={handleTitleChange}
                     placeholder="Title"
-                    style={{
-                        width: "100%",
-                        padding: isMobile ? "6px" : "8px",
-                        fontSize: isMobile ? "14px" : "16px",
-                    }}
                 />
             </div>
             {renderFields()}
