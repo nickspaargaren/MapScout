@@ -12,6 +12,7 @@ import ChartComponentForm from "components/subcomponents/chartcomponents/ChartCo
 import Collapsible from "components/collapsible";
 import ProviderGallery from "./ProviderGallery";
 import EmbedForm from "./embed-component/EmbedForm";
+import { SimpleEditor } from "./TextComponent/SimpleEditor";
 
 const EditableText = ({ text, setText, isEditing, setIsEditing }) => {
     const inputRef = useRef(null);
@@ -223,6 +224,21 @@ const SectionCard = ({
                                 <EmbedForm/>
                             </Collapsible>
                             ])}>Embed</Dropdown.Item>
+                        <Dropdown.Item onClick={() =>
+                            setComponents([...components,
+                            <Collapsible
+                                style={{ width: "100%" }}
+                                titleStyle={{
+                                    background: "white",
+                                    color: "var(--chart-blue)",
+                                    fontSize: "1.25rem",
+                                    fontStyle: "normal",
+                                    lineHeight: "24px"
+                                }}
+                                label={"Text"}>
+                                <SimpleEditor />
+                            </Collapsible>
+                            ])}>Text</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
             </Row>

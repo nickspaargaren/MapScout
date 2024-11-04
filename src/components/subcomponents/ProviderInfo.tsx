@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { FaMapMarkerAlt, FaRegClock, FaPhone, FaGlobe } from "react-icons/fa";
+import { FaRegClock } from "react-icons/fa";
+import { SlGlobe } from "react-icons/sl";
+import { TbPlaystationCircle } from "react-icons/tb";
+import { IoPhonePortraitOutline } from "react-icons/io5";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -7,7 +10,6 @@ import Card from "react-bootstrap/Card";
 import { withFirestore } from "react-redux-firebase";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import ReadMoreAndLess from "react-read-more-less";
 import LazyLoad from "react-lazy-load";
 import { GOOGLE_API_KEY } from "../../config/keys";
 import Linkify from "react-linkify";
@@ -16,10 +18,15 @@ import Collapsible from "components/collapsible";
 import Directory from "components/dashboard/Directory";
 import EmbedForm from "components/dashboard/embed-component/EmbedForm";
 import EmbedComponent from "components/dashboard/embed-component/EmbedComponent";
+import EventInfoComponent from "components/dashboard/EventInfoComponent";
 
 {
     /*TO BE DELETED */
 }
+const eventInfo2 = {
+    title: "Compnent TEXTTT",
+    description: "Sample content",
+};
 const galleryData = [
     {
         title: "Urban Tree Fundraiser",
@@ -109,7 +116,7 @@ const directoryData =
             details: "bob@gmail.com",
             image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
         }
-];
+    ];
 const eventInfo = {
     title: "Tour Our Station",
     videoUrl: "https://www.youtube.com/watch?v=oZcKTf4RLQ8&ab_channel=HorizonsHealth",
@@ -138,7 +145,7 @@ const ProviderInfo = (props) => {
         }
         fetchData();
     }, [props.item]);
-    
+
     if (isLoading) {
         return (
             <div className="spinner-wrap">
@@ -151,6 +158,7 @@ const ProviderInfo = (props) => {
     const iconStyle = {
         marginRight: "20px",
         verticalAlign: "middle",
+        color: "#226DFF",
     };
 
     const infoStyle = {
@@ -162,111 +170,126 @@ const ProviderInfo = (props) => {
     return (
         <Container fluid className="provider-info-container">
             <Row className="mb-3">
-                <Col md={5} className="modal-image-col">
-                    <Card>
-                        <LazyLoad debounce={false} offsetVertical={500}>
-                            <Card.Img src={image} />
-                        </LazyLoad>
-                    </Card>
-                </Col>
-                <Col md={7}>
-                    <div className="description-box">
-                        <h3>{props.item.facilityName}</h3>
-                        {props.item.description !== undefined && (
-                            <ReadMoreAndLess
-                                charLimit={250}
-                                readMoreText="Read more"
-                                readLessText="Read less"
-                            >
-                                {`${props.item.description} `}
-                            </ReadMoreAndLess>
-                        )}
-                    </div>
-                </Col>
+                <Card style={{ width: "100%" }}>
+                    <LazyLoad debounce={false} offsetVertical={500}>
+                        <Card.Img style={{ maxHeight: "60vh", objectFit: "cover" }} src={image} />
+                    </LazyLoad>
+                </Card>
             </Row>
-            <Row className="info-rows">
-                <Col md={7}>
-                    <div style={infoStyle}>
-                        <FaMapMarkerAlt style={iconStyle} />
-                        <div>
-                            {" "}
-                            {props.item.address
-                                .toString()
-                                .split(",")
-                                .map((value, index) => {
-                                    if (index === 0) {
-                                        return (
-                                            <div style={{ display: "inline" }}>
-                                                {value},
-                                            </div>
-                                        );
-                                    }
-                                    if (
-                                        index ===
-                                        props.item.address.toString().split(",")
-                                            .length -
-                                        1
-                                    ) {
-                                        return (
-                                            <div style={{ display: "inline" }}>
-                                                {value}
-                                            </div>
-                                        );
-                                    }
-                                    if (index === 1) {
-                                        return (
-                                            <div
-                                                style={{ display: "inline" }}
-                                            >{`${value},`}</div>
-                                        );
-                                    }
-                                    return `${value},`;
-                                })}
+            {/* Sample components that in the future should be added dynamically
+            based on the response from firebase */}
+            <Collapsible
+                label={"General Info"}
+                style={{
+                    maxWidth: "1000px",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                }}
+                containerStyle={{ placeItems: "flex-start", }}
+            >
+                <Row className="info-rows" style={{ justifyContent: "flex-start", maxWidth: "100%" }}>
+                    <Col md={12}>
+                        <div className="description-box">
+                            {props.item.description !== undefined && (
+                                <p
+                                    style={{
+                                        color: "rgba(148, 142, 142, 0.9)",
+                                        fontFamily: "Inter",
+                                        fontWeight: "500",
+                                        fontSize: "16px",
+                                        lineHeight: "19px"
+                                    }}
+                                >
+                                    {props.item.description}
+                                </p>
+                            )}
                         </div>
-                    </div>
-                    <div style={infoStyle}>
-                        <FaPhone style={iconStyle} />
-                        <div>
-                            {" "}
-                            {props.item.phoneNum &&
-                                props.item.phoneNum.join(", ")}
+                    </Col>
+                    <Col md={12}>
+                        <div style={infoStyle}>
+                            <IoPhonePortraitOutline size={20} style={iconStyle} />
+                            <div>
+                                {" "}
+                                {props.item.phoneNum &&
+                                    props.item.phoneNum.join(", ")}
+                            </div>
                         </div>
-                    </div>
-                    <div style={infoStyle}>
-                        {props.item.website && props.item.website[0] && (
-                            <>
-                                <FaGlobe style={iconStyle} />
-                                <div>
-                                    <a
-                                        href={props.item.website[0]}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        Visit Website
-                                    </a>
-                                </div>
-                            </>
-                        )}
-                    </div>
-                    <div style={infoStyle}>
-                        <FaRegClock style={iconStyle} />
-                        <div className="modal-hours-container">
-                            {props.item.hours && calculateHours(props)}
+                        <div style={infoStyle}>
+                            {props.item.website && props.item.website[0] && (
+                                <>
+                                    {props.item.website[0].startsWith("http") ? (<>
+                                        <SlGlobe size={20} style={iconStyle} />
+                                        <div>
+                                            <a
+                                                href={props.item.website[0]}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                p{props.item.website[0]}
+                                            </a>
+                                        </div>
+                                    </>) : (<>
+                                        <SlGlobe size={20} style={iconStyle} />
+                                        <div>
+                                            <a
+                                                href={'//' + props.item.website[0]}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                {props.item.website[0]}
+                                            </a>
+                                        </div></>)}
+
+                                </>
+                            )}
                         </div>
-                    </div>
-                </Col>
-                <Col md={5}>
-                    <Card>
-                        <a
-                            href={`https://maps.google.com/?q=${props.item.address.toString()}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <Card.Img src={streetView} alt="Google Map" />
-                        </a>
-                    </Card>
-                </Col>
-            </Row>
+                        <div style={infoStyle}>
+                            <TbPlaystationCircle size={20} style={iconStyle} />
+                            <div>
+                                {" "}
+                                {props.item.address
+                                    .toString()
+                                    .split(",")
+                                    .map((value, index) => {
+                                        if (index === 0) {
+                                            return (
+                                                <div style={{ display: "inline" }}>
+                                                    {value},
+                                                </div>
+                                            );
+                                        }
+                                        if (
+                                            index ===
+                                            props.item.address.toString().split(",")
+                                                .length -
+                                            1
+                                        ) {
+                                            return (
+                                                <div style={{ display: "inline" }}>
+                                                    {value}
+                                                </div>
+                                            );
+                                        }
+                                        if (index === 1) {
+                                            return (
+                                                <div
+                                                    style={{ display: "inline" }}
+                                                >{`${value},`}</div>
+                                            );
+                                        }
+                                        return `${value},`;
+                                    })}
+                            </div>
+                        </div>
+                        <div style={infoStyle}>
+                            <FaRegClock size={20} style={iconStyle} />
+                            <div className="modal-hours-container">
+                                {props.item.hours && calculateHours(props)}
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
+            </Collapsible>
             {/* Sample components that in the future should be added dynamically
             based on the response from firebase */}
             <Row className="info-rows" >
@@ -311,6 +334,22 @@ const ProviderInfo = (props) => {
                         }}
                     >
                         <EmbedComponent eventInfo={eventInfo} />
+                    </Collapsible>
+                </Col>
+            </Row>
+            <Row className="info-rows">
+                <Col md={12}>
+                    <Collapsible
+                        label={eventInfo2.title}
+                        style={{
+                            maxWidth: "1000px",
+                            marginLeft: "auto",
+                            marginRight: "auto"
+                        }}
+                    >
+                        <EventInfoComponent
+                            description={eventInfo2.description}
+                        />
                     </Collapsible>
                 </Col>
             </Row>

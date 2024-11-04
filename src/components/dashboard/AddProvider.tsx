@@ -27,6 +27,8 @@ import { storage } from "../../store";
 import { Store } from "reducers/types";
 const { v4: uuidv4 } = require("uuid");
 
+import { SimpleEditor } from "./TextComponent/SimpleEditor";
+
 let steps = [
     "Map",
     "Hours",
@@ -52,68 +54,6 @@ function AddProvider(props) {
     const handleUpdate = (updatedContent: string) => {
         setContent(updatedContent);
     };
-
-    // const eventInfo2 = {
-    //     title: "Introducing APFF",
-    //     description:
-    //       "Atlanta Professional Fire Foundation supports the firefighters of Atlanta and their families when they need assistance. Due to a growing number of hazards, our brothers & sisters are at greater risk than ever before while protecting the citizens of Atlanta. APFF provides assistance for Illness, Injury, PTSD, Line of Duty Death and Bereavement. APFF also funds Tuition Reimbursement, Tools & Equipment Purchases, Training Opportunities, Living Condition Improvements, Affordable Housing and Fellowship Events.",
-    //     highlight: "Our Foundation is run by Firefighters, for Firefighters!"
-    // };
-
-    // async function fetchData() {
-    //   const collections = props.firestore.collection('categories');
-    //   const f = await collections
-    //     .where('team', '==', props.team.name)
-    //     .where('active', '==', true)
-    //     .where('select_type', '==', 2)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //       const idToData = {};
-    //       querySnapshot.forEach((doc) => {
-    //         const data = doc.data();
-    //         idToData[doc.id] = {
-    //           name: data.name,
-    //           options: data.options,
-    //         };
-    //       });
-    //       return idToData;
-    //     });
-    //   const d = await collections
-    //     .where('team', '==', props.team.name)
-    //     .where('active', '==', true)
-    //     .where('select_type', '==', 0)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //       const idToData = {};
-    //       querySnapshot.forEach((doc) => {
-    //         const data = doc.data();
-    //         idToData[doc.id] = {
-    //           name: data.name,
-    //           options: data.options,
-    //         };
-    //       });
-    //       return idToData;
-    //     });
-    //   const c = await collections
-    //     .where('team', '==', props.team.name)
-    //     .where('active', '==', true)
-    //     .where('select_type', '==', 1)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //       const idToData = {};
-    //       querySnapshot.forEach((doc) => {
-    //         const data = doc.data();
-    //         idToData[doc.id] = {
-    //           name: data.name,
-    //           options: data.options,
-    //         };
-    //       });
-    //       return idToData;
-    //     });
-    //   setFilters(f);
-    //   setDescriptions(d);
-    //   setCategories(c);
-    // }
 
     useEffect(() => {
         async function fetchData() {
@@ -175,9 +115,15 @@ function AddProvider(props) {
 
     useEffect(() => {
         function updateSteps() {
+            console.log(filters)
             if (filters && !Object.keys(filters).length) {
                 const delIndex = steps.indexOf("Tag");
                 delIndex !== -1 && steps.splice(delIndex, 1);
+            }
+
+            if (filters && Object.keys(filters).length) {
+                const delIndex = steps.indexOf("Tag");
+                delIndex == -1 && steps.push("Tag");
             }
 
             if (descriptions && !Object.keys(descriptions).length) {
@@ -185,12 +131,21 @@ function AddProvider(props) {
                 delIndex !== -1 && steps.splice(delIndex, 1);
             }
 
+            if (descriptions && Object.keys(descriptions).length) {
+                const delIndex = steps.indexOf("Text");
+                delIndex == -1 && steps.push("Text");
+            }
+
             if (single && !Object.keys(single).length) {
                 const delIndex = steps.indexOf("Toggle");
                 delIndex !== -1 && steps.splice(delIndex, 1);
             }
+            
+            if (single && Object.keys(single).length) {
+                const delIndex = steps.indexOf("Toggle");
+                delIndex == -1 && steps.push("Toggle");
+            }
         }
-
         updateSteps();
     }, [filters, descriptions, single]);
 
@@ -258,7 +213,7 @@ function AddProvider(props) {
             await promiseWithTimeout(
                 5000,
                 props.firestore.set(
-                    { collection: "providers", doc: i.facilityName },
+                    { collection: "providers", doc: i.id },
                     i,
                 ),
             );

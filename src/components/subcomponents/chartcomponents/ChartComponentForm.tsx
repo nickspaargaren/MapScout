@@ -360,10 +360,6 @@ const ChartComponentForm = () => {
             <div className="footer">
                 <button id="delete">Delete</button>
             </div>
-            <div>
-                <h4>Current Data:</h4>
-                <pre>{JSON.stringify(chartState, null, 2)}</pre>
-            </div>
         </div>
     );
 };

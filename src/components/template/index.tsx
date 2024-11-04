@@ -72,27 +72,14 @@ export default compose<any>(
 
     useEffect(() => {
         async function fetchData() {
-            const saved = localStorage.getItem("saved");
             const arr = [];
             const arr2 = [];
             const collections = firestore.collection("categories");
             const collections2 = firestore.collection("providers");
             // Note: this is a temperary workaround so the page does appears fine, however, further fix is neccessary to actually resolve the issue
             if (team.name === "") {
-                await collections
-                    .where("team", "==", saved)
-                    .get()
-                    .then((querySnapshot) => {
-                        querySnapshot.forEach((doc) => {
-                            const data = doc.data();
-                            if (!data.id) {
-                                data.id = doc.id;
-                            }
-                            arr.push(data);
-                        });
-                    });
+                console.error("Team NOT FETCHED ERROR");
             } else {
-                localStorage.setItem("saved", team.name);
                 await collections
                     .where("team", "==", team.name)
                     .get()
@@ -106,17 +93,8 @@ export default compose<any>(
             arr.sort((a, b) => a.priority - b.priority);
             setCategories(arr);
             if (team.name === "") {
-                await collections2
-                    .where("team", "==", saved)
-                    .get()
-                    .then((querySnapshot) => {
-                        querySnapshot.forEach((doc) => {
-                            const data = doc.data();
-                            arr2.push(data);
-                        });
-                    });
+                console.error("Team NOT FETCHED ERROR");
             } else {
-                localStorage.setItem("saved", team.name);
                 await collections2
                     .where("team", "==", team.name)
                     .get()
@@ -153,27 +131,6 @@ export default compose<any>(
         });
         setDummy(newDummy);
     }, [categories]);
-
-    // async function fetchData() {
-    //   const collections = firestore.collection('categories');
-    //   const arr = [];
-    //   await collections
-    //     .where('team', '==', team.name)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //       querySnapshot.forEach((doc) => {
-    //         const data = doc.data();
-    //         if (!data.id) {
-    //           data.id = doc.id;
-    //         }
-    //         arr.push(data);
-    //       });
-    //     });
-    //   arr.sort((a, b) => a.priority - b.priority);
-    //   setCategories(arr);
-    //   setDefaultCategories(arr);
-    //   setIsLoading(false);
-    // }
 
     function onDragEnd(result) {
         if (!result.destination) {
@@ -508,10 +465,10 @@ export default compose<any>(
                 .then(async (querySnapshot) => {
                     promiseWithTimeout(
                         10000,
-                        providers.forEach((cat) => {
+                        providers.forEach((doc) => {
                             firestore.set(
-                                { collection: "providers", doc: cat.facilityName },
-                                cat,
+                                { collection: "providers", doc: doc.id },
+                                doc,
                             );
                         }),
                     ).then(
