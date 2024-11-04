@@ -52,7 +52,7 @@ export function SimpleEditor(
   const editor = useEditor({
     extensions: [
       Document,
-      History,
+      // History,
       Paragraph,
       Text,
       Heading.configure({ levels: [1, 2, 3, 4, 5, 6] }),
@@ -155,7 +155,7 @@ export function SimpleEditor(
 
 
   return (
-    <div className="editor">
+    <div className="editor" style={{width: "100%"}}>
       <BubbleMenu
         className="bubble-menu-light"
         tippyOptions={{ duration: 150 }}
@@ -187,7 +187,7 @@ export function SimpleEditor(
       <div className="inner-box" style={{ overflow: "scroll" }}>
 
         <div className="menu">
-          <button
+          {/* <button
             type="button"
             className="menu-button"
             onClick={(event) => {
@@ -209,7 +209,7 @@ export function SimpleEditor(
             disabled={!editor.can().redo()}
           >
             <Icons.RotateRight />
-          </button>
+          </button> */}
 
           <ColorPickerButton editor={editor} />
 
