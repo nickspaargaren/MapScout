@@ -1,6 +1,5 @@
 import React from "react";
 import './EventInfoComponent.css';
-import Collapsible from 'components/collapsible';
 
 interface EventInfoComponentProps {
   description: string;

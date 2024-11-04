@@ -27,8 +27,6 @@ import { storage } from "../../store";
 import { Store } from "reducers/types";
 const { v4: uuidv4 } = require("uuid");
 
-import { SimpleEditor } from "./TextComponent/SimpleEditor";
-
 let steps = [
     "Map",
     "Hours",

@@ -122,16 +122,6 @@ const SectionCard = ({
                         showNumber: true,
                     },
                 };
-            case "Gallery":
-                return {
-                    slidesArray: [
-                        {
-                            title: "",
-                            description: "",
-                            imgLink: "",
-                        },
-                    ],
-                };
             case "Directory":
                 return {
                     items: [
@@ -143,6 +133,20 @@ const SectionCard = ({
                     embedLink: "",
                     title: "",
                 };
+            case "Gallery":
+                return {
+                    slidesArray: [
+                        {
+                            title: "",
+                            description: "",
+                            imgLink: "",
+                        },
+                    ],
+                };
+            case "Text":
+                return {
+                    
+                }
             default:
                 return {};
         }
@@ -326,10 +330,6 @@ const SectionCard = ({
                         >
                             Chart
                         </Dropdown.Item>
-
-                        <Dropdown.Item onClick={() => addComponent("Gallery")}>
-                            Gallery
-                        </Dropdown.Item>
                         <Dropdown.Item
                             onClick={() => addComponent("Directory")}
                         >
@@ -337,6 +337,12 @@ const SectionCard = ({
                         </Dropdown.Item>
                         <Dropdown.Item onClick={() => addComponent("Embed")}>
                             Embed
+                        </Dropdown.Item>
+                        <Dropdown.Item onClick={() => addComponent("Gallery")}>
+                            Gallery
+                        </Dropdown.Item>
+                        <Dropdown.Item onClick={() => addComponent("Text")}>
+                            Text
                         </Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
@@ -375,9 +381,8 @@ const SectionButton = ({
                         maxWidth: "12px",
                         borderTopLeftRadius: "8px",
                         borderBottomLeftRadius: "8px",
-                        backgroundColor: `${
-                            isSelected ? "#226DFF" : "transparent"
-                        }`,
+                        backgroundColor: `${isSelected ? "#226DFF" : "transparent"
+                            }`,
                     }}
                 ></Col>
                 <Col
