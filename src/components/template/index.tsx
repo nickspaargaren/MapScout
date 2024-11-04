@@ -497,12 +497,13 @@ export default compose<any>(
     }
     return (
         <div id="template-root">
-            {(document.cookie == "" || document.cookie == null) && (
+            {/* Uncomment to enable tutorial. Should be adapted to the new UI */}
+            {/* {(document.cookie == "" || document.cookie == null) && (
                 <TempTutorial />
             )}
             {document.cookie.includes("tut=true") &&
                 !isEmpty(categories) &&
-                !document.cookie.includes("tut2") && <TempTutorialTwo />}
+                !document.cookie.includes("tut2") && <TempTutorialTwo />} */}
             <Container className="box">
                 <div className="row-spaced">
                     <h2 className="template-title">Filter Builder</h2>
