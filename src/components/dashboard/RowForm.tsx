@@ -64,7 +64,7 @@ const RowForm = (props) => {
         address: [],
         description: "",
         buildingNum: [],
-        stationNum: [],
+        stationNum: "",
         childcare: [false],
         epic: [false],
         hours: {},
@@ -386,7 +386,7 @@ const RowForm = (props) => {
                                 <Form.Control
                                     name="stationNum"
                                     type="number"
-                                    value={item.stationNum[0]}
+                                    value={item.stationNum}
                                     onChange={handleInputChange}
                                     placeholder="#"
                                     style={{ width: '100px' }}
