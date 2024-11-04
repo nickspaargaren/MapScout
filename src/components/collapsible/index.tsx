@@ -9,13 +9,17 @@ import { Collapse } from "react-bootstrap";
 interface Managed {
     style?: React.CSSProperties;
     titleStyle?: React.CSSProperties;
+    containerStyle?: React.CSSProperties;
     label: string;
     children: any;
+    defaultState?: boolean;
 }
 interface Unmanaged {
     style?: React.CSSProperties;
+    containerStyle?: React.CSSProperties;
     title: React.ReactElement;
     children: any;
+    defaultState?: boolean;
 }
 type PropTypes = Managed | Unmanaged;
 function isManaged(props: PropTypes): props is Managed {
@@ -23,37 +27,28 @@ function isManaged(props: PropTypes): props is Managed {
 }
 
 const Collapsible = (props: PropTypes) => {
-    const [isOpen, setOpen] = useState(false);
-    const contentRef = useRef(null);
-    const toogle = () => { setOpen(!isOpen) };
+    const [isOpen, setOpen] = useState(props?.defaultState ?? true);
+    const contentRef = useRef(null)
+    const toogle = () => { setOpen(!isOpen) }
     return (
         <div className="collapsible" style={props.style}>
             {/* Do not remove type="button". Otherwise the button
             will do a form submission on click and cause the page to refresh */}
-            {isManaged(props) ? (
-                <button
-                    type="button"
-                    onClick={toogle}
-                    className="title"
-                    style={props.titleStyle}
-                >
-                    {props.label}
-                    {!isOpen ? <FaAngleDown /> : <FaAngleUp />}
-                </button>
-            ) : (
-                <div onClick={toogle}>{props.title}</div>
-            )}
-
-            <div
-                ref={contentRef}
-                className={`content ${isOpen ? "open" : ""}`}
-                style={{
-                    height: isOpen ? `fit-content` : "0px",
-                }}
-            >
-                {/* <Collapse in={isOpen}> */}
-                    <div className="container">{props.children}</div>
-                {/* </Collapse> */}
+            {isManaged(props) ?
+                <button type="button" onClick={toogle} className="title" style={props.titleStyle}>{props.label}{!isOpen ? (
+                    <FaAngleDown />
+                ) : (
+                    <FaAngleUp />
+                )}</button>
+                :
+                <div onClick={toogle}>
+                    {props.title}
+                </div>
+            }
+            <div ref={contentRef}
+                className={`content ${isOpen ? 'open' : ''}`}
+                style={{ height: isOpen ? `fit-content` : '0px' }}>
+                <div className="container" style={props.containerStyle}>{props.children}</div>
             </div>
         </div>
     );

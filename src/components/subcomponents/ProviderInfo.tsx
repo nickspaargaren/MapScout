@@ -7,7 +7,6 @@ import Card from "react-bootstrap/Card";
 import { withFirestore } from "react-redux-firebase";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import ReadMoreAndLess from "react-read-more-less";
 import LazyLoad from "react-lazy-load";
 import { GOOGLE_API_KEY } from "../../config/keys";
 import Linkify from "react-linkify";
@@ -18,6 +17,8 @@ import EmbedComponent from "components/dashboard/embed-component/EmbedComponent"
 import DonutChart from "./chartcomponents/DonutChart";
 import ProgressBar from "./chartcomponents/ProgressBar";
 import LineChart from "./chartcomponents/LineChart";
+import GeneralInfo from "components/dashboard/GeneralInfo";
+import ReadMoreAndLess from "react-read-more-less";
 
 // const eventInfo = {
 //     title: "Tour Our Station",
@@ -117,16 +118,8 @@ const ProviderInfo = (props) => {
     }
 
     const categoriesToUse = props.categories || [];
-    const iconStyle = {
-        marginRight: "20px",
-        verticalAlign: "middle",
-    };
 
-    const infoStyle = {
-        display: "flex",
-        alignItems: "center",
-        marginBottom: "10px",
-    };
+    
 
     return (
         <Container fluid className="provider-info-container">
@@ -154,86 +147,18 @@ const ProviderInfo = (props) => {
                 </Col>
             </Row>
             <Row className="info-rows">
-                <Col md={7}>
-                    <div style={infoStyle}>
-                        <FaMapMarkerAlt style={iconStyle} />
-                        <div>
-                            {" "}
-                            {props.item.address
-                                .toString()
-                                .split(",")
-                                .map((value, index) => {
-                                    if (index === 0) {
-                                        return (
-                                            <div style={{ display: "inline" }}>
-                                                {value},
-                                            </div>
-                                        );
-                                    }
-                                    if (
-                                        index ===
-                                        props.item.address.toString().split(",")
-                                            .length -
-                                            1
-                                    ) {
-                                        return (
-                                            <div style={{ display: "inline" }}>
-                                                {value}
-                                            </div>
-                                        );
-                                    }
-                                    if (index === 1) {
-                                        return (
-                                            <div
-                                                style={{ display: "inline" }}
-                                            >{`${value},`}</div>
-                                        );
-                                    }
-                                    return `${value},`;
-                                })}
-                        </div>
-                    </div>
-                    <div style={infoStyle}>
-                        <FaPhone style={iconStyle} />
-                        <div>
-                            {" "}
-                            {props.item.phoneNum &&
-                                props.item.phoneNum.join(", ")}
-                        </div>
-                    </div>
-                    <div style={infoStyle}>
-                        {props.item.website && props.item.website[0] && (
-                            <>
-                                <FaGlobe style={iconStyle} />
-                                <div>
-                                    <a
-                                        href={props.item.website[0]}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        Visit Website
-                                    </a>
-                                </div>
-                            </>
-                        )}
-                    </div>
-                    <div style={infoStyle}>
-                        <FaRegClock style={iconStyle} />
-                        <div className="modal-hours-container">
-                            {props.item.hours && calculateHours(props)}
-                        </div>
-                    </div>
-                </Col>
-                <Col md={5}>
-                    <Card>
-                        <a
-                            href={`https://maps.google.com/?q=${props.item.address.toString()}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <Card.Img src={streetView} alt="Google Map" />
-                        </a>
-                    </Card>
+                <Col md={12}>
+                    <Collapsible
+                        label={"General Info"}
+                        style={{
+                            maxWidth: "1000px",
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                        }}
+                        containerStyle={{ placeItems: "flex-start", }}
+                    >
+                        <GeneralInfo item={props.item} />
+                    </Collapsible>
                 </Col>
             </Row>
             {components.map((component) => {

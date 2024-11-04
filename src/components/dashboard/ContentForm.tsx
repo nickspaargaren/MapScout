@@ -12,6 +12,7 @@ import ChartComponentForm from "components/subcomponents/chartcomponents/ChartCo
 import Collapsible from "components/collapsible";
 import ProviderGallery from "./ProviderGallery";
 import EmbedForm from "./embed-component/EmbedForm";
+import { SimpleEditor } from "./TextComponent/SimpleEditor";
 
 const EditableText = ({ text, setText, isEditing, setIsEditing }) => {
     const inputRef = useRef(null);

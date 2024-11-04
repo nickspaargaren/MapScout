@@ -1003,13 +1003,15 @@ const Map = (props) => {
                                     }}
                                 >
                                     {showInfo ? (
-                                            <Button
+                                        <div style={{display: "flex", flexDirection: "row", alignItems: "center",}}>
+                                            <a
                                                 onClick={() => setShowInfo(false)}
-                                                style={{ display: 'flex', alignItems: 'center', fontFamily: 'Inter, sans-serif', fontWeight: '700', backgroundColor: '#ffffff', border: 'none' }}
+                                                style={{ cursor: "pointer", marginRight: "10px", marginLeft: "10px",}}
                                             >
-                                                <img src={backArrow} alt="Back" style={{ width: '24px', height: '24px', marginRight: '8px' }} />
-                                                Back
-                                            </Button>
+                                                <img src={backArrow} alt="Back" style={{ width: '80%', height: '80%', marginBottom: '8px' }} />      
+                                            </a>                                          
+                                            <h4 style={{fontWeight: "bold",}}>{providers[selectedIndex].facilityName}</h4>
+                                            </div>
                                         ) : (
                                             <InputGroup className="mb-3">
                                                 <InputGroup.Text id="search-addon" className="search">
@@ -1034,7 +1036,7 @@ const Map = (props) => {
                         <div className="mb-3">
                             <div
                                 className="right-container"
-                                style={{ display: "flex" }}
+                                style={{ display: "flex"}}
                             >
                                 <div
                                     style={{
@@ -1043,11 +1045,20 @@ const Map = (props) => {
                                     }}
                                 >
                                     <div
-                                        style={{
-                                            marginRight: "10px",
-                                            fontWeight: "700",
-                                            fontFamily: "Inter, sans-serif",
-                                        }}
+                                        style={
+                                            isDesktop
+                                                ? {
+                                                    marginRight: "10px",
+                                                    fontWeight: "700",
+                                                    fontFamily: "Inter, sans-serif",
+                                                }
+                                                : {
+                                                    marginRight: "0px", 
+                                                    fontWeight: "600", 
+                                                    fontFamily: "Inter, sans-serif",
+                                                    fontSize: "12px", 
+                                                }
+                                        }
                                     >
                                         {isDesktop
                                             ? isToggled
@@ -1069,18 +1080,20 @@ const Map = (props) => {
                                         width={44}
                                     />
                                 </div>
-                                <Button
-                                    style={{
-                                        marginRight: "20px",
-                                        fontSize: "14px",
-                                        fontFamily: "Inter, sans-serif",
-                                    }}
-                                    className="button-tutorial"
-                                    variant="primary"
-                                    onClick={() => setIsOpen(true)}
-                                >
-                                    Start Tutorial
-                                </Button>
+                                {isDesktop && (
+                                    <Button
+                                        style={{
+                                            marginRight: "20px",
+                                            fontSize: "14px",
+                                            fontFamily: "Inter, sans-serif",
+                                        }}
+                                        className="button-tutorial"
+                                        variant="primary"
+                                        onClick={() => setIsOpen(true)}
+                                    >
+                                        Start Tutorial
+                                    </Button>
+                                )}
                             </div>
                         </div>
 
@@ -1131,7 +1144,6 @@ const Map = (props) => {
                             {!isEmpty(activeProviders) ? (
                                 <div className='container2'>
                                     {showInfo ? (
-                                        isDesktop &&
                                         activeProviders &&
                                         activeProviders[selectedIndex] &&
                                         (
@@ -1139,21 +1151,8 @@ const Map = (props) => {
                                                 <div className="padder d-flex flex-column" style={{ height: "calc(200vh - 70px)", overflowY: 'scroll' }}>
                                                     <div className="content d-flex flex-column">
                                                         <ProviderInfo item={activeProviders[selectedIndex]} categories={categories} />
-                                                        <div className="mt-2"> 
-                                                            <ProgressBar current={300} total={600} buttonLink={"google.com"} buttonLabel={"Donate Now"} />
-                                                        </div>
-                                                        <div className="mt-2"> 
-                                                            <DonutChart data={data} buttonLink={"https://google.com"} buttonLabel={"Donate Now"} />
-                                                        </div>
-                                                        <div className="mt-2"> 
-                                                            <LineChart title={"Total donations per month in 2023"} data={data2} />
-                                                        </div>
                                                         <div className="mt-2">
-                                                            <LineChart title={"Total donations per month in 2023"} data={data2} />
-                                                        </div>
-                                                        <div className="mt-2">
-                                                        </div>
-                                                        
+                                                        </div>                              
                                                     </div>
                                                 </div>
                                             </div>
