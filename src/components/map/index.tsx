@@ -1010,7 +1010,7 @@ const Map = (props) => {
                                             >
                                                 <img src={backArrow} alt="Back" style={{ width: '80%', height: '80%', marginBottom: '8px' }} />      
                                             </a>                                          
-                                            <h4 style={{fontWeight: "bold",}}>{providers[selectedIndex].facilityName}</h4>
+                                            <h4 style={{ fontWeight: "bold", }}>{providers[selectedIndex].facilityName + " #" + providers[selectedIndex].stationNum}</h4>
                                             </div>
                                         ) : (
                                             <InputGroup className="mb-3">

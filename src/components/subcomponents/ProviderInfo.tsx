@@ -188,27 +188,11 @@ const ProviderInfo = (props) => {
     return (
         <Container fluid className="provider-info-container">
             <Row className="mb-3">
-                <Col md={5} className="modal-image-col">
-                    <Card>
-                        <LazyLoad debounce={false} offsetVertical={500}>
-                            <Card.Img src={image} />
-                        </LazyLoad>
-                    </Card>
-                </Col>
-                <Col md={7}>
-                    <div className="description-box">
-                        <h3>{props.item.facilityName}</h3>
-                        {props.item.description !== undefined && (
-                            <ReadMoreAndLess
-                                charLimit={250}
-                                readMoreText="Read more"
-                                readLessText="Read less"
-                            >
-                                {`${props.item.description} `}
-                            </ReadMoreAndLess>
-                        )}
-                    </div>
-                </Col>
+                <Card style={{ width: "100%" }}>
+                    <LazyLoad debounce={false} offsetVertical={500}>
+                        <Card.Img style={{ maxHeight: "60vh", objectFit: "cover" }} src={image} />
+                    </LazyLoad>
+                </Card>
             </Row>
             <Row className="info-rows">
                 <Col md={12}>
