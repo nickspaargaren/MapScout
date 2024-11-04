@@ -8,13 +8,17 @@ import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 interface Managed {
     style?: React.CSSProperties;
     titleStyle?: React.CSSProperties;
+    containerStyle?: React.CSSProperties;
     label: string;
     children: any;
+    defaultState?: boolean;
 }
 interface Unmanaged {
     style?: React.CSSProperties;
+    containerStyle?: React.CSSProperties;
     title: React.ReactElement;
     children: any;
+    defaultState?: boolean;
 }
 type PropTypes = Managed | Unmanaged;
 function isManaged(props: PropTypes): props is Managed {
@@ -22,7 +26,7 @@ function isManaged(props: PropTypes): props is Managed {
 }
 
 const Collapsible = (props: PropTypes) => {
-    const [isOpen, setOpen] = useState(false)
+    const [isOpen, setOpen] = useState(props?.defaultState ?? true);
     const contentRef = useRef(null)
     const toogle = () => { setOpen(!isOpen) }
     return (
@@ -43,7 +47,7 @@ const Collapsible = (props: PropTypes) => {
             <div ref={contentRef}
                 className={`content ${isOpen ? 'open' : ''}`}
                 style={{ height: isOpen ? `fit-content` : '0px' }}>
-                <div className="container">{props.children}</div>
+                <div className="container" style={props.containerStyle}>{props.children}</div>
             </div>
         </div >
     )

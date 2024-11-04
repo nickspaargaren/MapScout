@@ -1021,13 +1021,15 @@ const Map = (props) => {
                                     }}
                                 >
                                     {showInfo ? (
-                                            <Button
+                                        <div style={{display: "flex", flexDirection: "row", alignItems: "center",}}>
+                                            <a
                                                 onClick={() => setShowInfo(false)}
-                                                style={{ display: 'flex', alignItems: 'center', fontFamily: 'Inter, sans-serif', fontWeight: '700', backgroundColor: '#ffffff', border: 'none' }}
+                                                style={{ cursor: "pointer", marginRight: "10px", marginLeft: "10px",}}
                                             >
-                                                <img src={backArrow} alt="Back" style={{ width: '24px', height: '24px', marginRight: '8px' }} />
-                                                Back
-                                            </Button>
+                                                <img src={backArrow} alt="Back" style={{ width: '80%', height: '80%', marginBottom: '8px' }} />      
+                                            </a>                                          
+                                            <h4 style={{fontWeight: "bold",}}>{providers[selectedIndex].facilityName}</h4>
+                                            </div>
                                         ) : (
                                             <InputGroup className="mb-3">
                                                 <InputGroup.Text id="search-addon" className="search">
@@ -1157,21 +1159,9 @@ const Map = (props) => {
                                                 <div className="padder d-flex flex-column" style={{ height: "calc(200vh - 70px)", overflowY: 'scroll' }}>
                                                     <div className="content d-flex flex-column">
                                                         <ProviderInfo item={activeProviders[selectedIndex]} categories={categories} />
-                                                        <div className="mt-2"> 
-                                                            <ProgressBar current={300} total={600} buttonLink={"google.com"} buttonLabel={"Donate Now"} />
-                                                        </div>
-                                                        <div className="mt-2"> 
-                                                            <DonutChart data={data} buttonLink={"https://google.com"} buttonLabel={"Donate Now"} />
-                                                        </div>
-                                                        <div className="mt-2"> 
-                                                            <LineChart title={"Total donations per month in 2023"} data={data2} />
-                                                        </div>
-                                                        <div className="mt-2">
-                                                            <LineChart title={"Total donations per month in 2023"} data={data2} />
-                                                        </div>
                                                         <div className="mt-2">
                                                             
-                                                            <Collapsible label={"Graph"}>
+                                                            <Collapsible label={"Graph"} containerStyle={{placeItems: "flex-start"}}>
                                                                 <ChartComponentForm/>
                                                             </Collapsible>
                                                         </div>

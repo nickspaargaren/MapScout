@@ -547,14 +547,6 @@ const ChartComponentForm = () => {
             <div className="footer">
                 <button id="delete">Delete</button>
             </div>
-            {/*
-                TO BE REMOVED
-                Used to see chartState state as you fill in form
-            */}
-            <div>
-                <h4>Current Data:</h4>
-                <pre>{JSON.stringify(chartState, null, 2)}</pre>
-            </div>
         </div>
     );
 };
