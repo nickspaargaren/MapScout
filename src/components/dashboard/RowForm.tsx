@@ -64,6 +64,7 @@ const RowForm = (props) => {
         address: [],
         description: "",
         buildingNum: [],
+        stationNum: [],
         childcare: [false],
         epic: [false],
         hours: {},
@@ -379,6 +380,17 @@ const RowForm = (props) => {
                             rows="4"
                             as="textarea"
                         />
+                    </Form.Group>
+                    <Form.Group>
+                                <Form.Label >Station #</Form.Label>
+                                <Form.Control
+                                    name="stationNum"
+                                    type="number"
+                                    value={item.stationNum[0]}
+                                    onChange={handleInputChange}
+                                    placeholder="#"
+                                    style={{ width: '100px' }}
+                                />
                     </Form.Group>
                 </>
             );
