@@ -83,6 +83,7 @@ function ProviderEntry({ provider, setLoading, resetIndex, firestore, selectItem
                 </div>
             </div>
         }
+        defaultState={false}
     >
         <Container>
             <ProviderInfo item={provider} categories={categories} />

@@ -10,16 +10,12 @@ import Card from "react-bootstrap/Card";
 import { withFirestore } from "react-redux-firebase";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import ReadMoreAndLess from "react-read-more-less";
 import LazyLoad from "react-lazy-load";
 import { GOOGLE_API_KEY } from "../../config/keys";
 import Linkify from "react-linkify";
 import ProviderGalleryCarousel from "components/dashboard/ProviderGalleryCarousel";
 import Collapsible from "components/collapsible";
 import Directory from "components/dashboard/Directory";
-import EmbedForm from "components/dashboard/embed-component/EmbedForm";
-import EmbedComponent from "components/dashboard/embed-component/EmbedComponent";
-import { color } from "d3";
 
 {
     /*TO BE DELETED */
