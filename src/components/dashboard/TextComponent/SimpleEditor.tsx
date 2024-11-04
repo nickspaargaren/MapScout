@@ -373,6 +373,24 @@ export function SimpleEditor(
         onSaveLink={saveLink}
         onRemoveLink={removeLink}
       />
+
+      <div
+        style={{ display: "flex", justifyContent: "end", marginTop: "16px" }}
+      >
+        <button
+          type="button"
+          id="delete"
+          style={{
+            color: "red",
+            border: "1px solid red",
+            padding: "5px",
+            borderRadius: "4px",
+          }}
+          onClick={deleteComponent}
+        >
+          Delete Component
+        </button>
+      </div>
     </div>
   );
 }

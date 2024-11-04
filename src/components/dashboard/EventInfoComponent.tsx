@@ -7,7 +7,7 @@ interface EventInfoComponentProps {
 
 const EventInfoComponent: React.FC<EventInfoComponentProps> = ({ description }) => {
   return (
-      <p className="event-description">{description}</p>
+    <p dangerouslySetInnerHTML={{ __html: description }} className="event-description"/>
   );
 };
 
