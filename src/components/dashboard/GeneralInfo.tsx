@@ -95,7 +95,7 @@ export default function GeneralInfo(props) {
                         : "CLOSED"}
                 </Col>,
             );
-            rows.push(<Row>{children}</Row>);
+            rows.push(<Row style={{flexWrap: "nowrap"}}>{children}</Row>);
         }
         return rows;
     }
