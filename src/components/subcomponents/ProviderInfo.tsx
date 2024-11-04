@@ -16,51 +16,114 @@ import Collapsible from "components/collapsible";
 import Directory from "components/dashboard/Directory";
 import EmbedForm from "components/dashboard/embed-component/EmbedForm";
 import EmbedComponent from "components/dashboard/embed-component/EmbedComponent";
-import CalendarForm from "components/dashboard/calender-component/CalendarForm";
+import CalendarForm, {
+    ICalendarData,
+} from "components/dashboard/calender-component/CalendarForm";
 import UpcomingEventsContainer from "components/dashboard/calender-component/UpcomingEventContainer";
 
-{
-    /*TO BE DELETED */
-}
-
-const calenderData = [
-    {
-        displayNumber: 5,
-        eventName: "sladkfjlaskjdf",
-        fromDate: "2012-12-3",
-        toDate: "2023-12-4",
-        fromTime: "00:00",
-        toTime: "12:00",
-        isAllDay: false,
-        isCustom: true,
-        address: "526 Ponce De Leon Blvd, Atlanta, GA, USA",
-        description:
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        repeatDays: ["Sunday"],
-        customEndOccurrences: 5,
-        isOn: true,
-        isAfter: false,
-    },
-    {
-        displayNumber: 5,
-        eventName: "sladkfjlaskjdf",
-        fromDate: "2012-12-3",
-        toDate: "2023-12-4",
-        fromTime: "00:00",
-        toTime: "12:00",
-        isAllDay: false,
-        isCustom: true,
-        address: "526 Ponce De Leon Blvd, Atlanta, GA, USA",
-        description:
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        repeatDays: ["Sunday"],
-        customEndOccurrences: 5,
-        buttonText: "RSVP",
-        buttonLink: "https://www.google.com/",
-        isOn: true,
-        isAfter: false,
-    },
-];
+const calenderData: ICalendarData = {
+    displayNumber: 5,
+    events: [
+        //NON-CUSTOM, EXPIRED EVENT DATE CASE (SHOULD NOT BE SHOWN)
+        {
+            eventName: "Morning Yoga Class",
+            fromDate: "2024-11-01", // Start date
+            toDate: "2024-11-01", // End date (same as start date)
+            fromTime: "07:00",
+            toTime: "08:30",
+            isAllDay: false,
+            isCustom: false,
+            address: "Community Center, Main Hall",
+            description: "Start your day with a refreshing yoga class.",
+            repeatDays: ["Monday", "Wednesday", "Friday"],
+            customEndDate: "",
+            customEndOccurrences: 1,
+            isOn: true,
+            isAfter: false,
+            buttonLink: "https://yogaclass.com/register",
+            buttonText: "Register",
+        },
+        //CUSTOM, ON, NON-EXPIRED CUSTOM DATE, NON-EXPIRED EVENT DATE, NON-CURRENT DAY CASE (may be subject to IRL day rn!!!!) (SHOULD ONLY BE SHOWN ON TUESDAY, THURSDAY)
+        {
+            eventName: "Tech Conference 2024",
+            fromDate: "2024-11-10", // Start date
+            toDate: "2024-11-29", // End date
+            fromTime: "09:00",
+            toTime: "17:00",
+            isAllDay: false,
+            isCustom: true,
+            address: "Tech Park Auditorium",
+            description:
+                "A 3-day conference with keynotes and workshops on technology trends.",
+            repeatDays: ["Tuesday", "Thursday"],
+            customEndDate: "2024-11-12",
+            customEndOccurrences: 1,
+            isOn: true,
+            isAfter: false,
+            buttonLink: "https://techconf2024.com",
+            buttonText: "Get Tickets",
+        },
+        //CUSTOM, ON, EXPIRED CUSTOM END DATE, NON-EXPIRED EVENT END DATE (SHOULD BE SHOWN ON ANY DAY SINCE THE CUSTOM END DATE IS PAST AND NOT EXPIRED EVENT DATE)
+        {
+            eventName: "Weekly Community Meetup",
+            fromDate: "2024-10-15", // Start date
+            toDate: "2024-12-15", // End date
+            fromTime: "18:00",
+            toTime: "20:00",
+            isAllDay: false,
+            isCustom: true,
+            address: "Local Library, Meeting Room 2",
+            description:
+                "A weekly gathering for community discussions and activities.",
+            repeatDays: ["Sunday", "Tuesday"],
+            customEndDate: "2024-11-2",
+            customEndOccurrences: 8,
+            isOn: true,
+            isAfter: false,
+            buttonLink: "https://communitymeetup.org",
+            buttonText: "Join Us",
+        },
+        //NON-CUSTOM, NON-EXPIRED EVENT DATE CASE (SHOULD BE SHOWN AND SHOULD SHOW ALL DAY IN EVENT TILE)
+        {
+            eventName: "Art Workshop for Beginners",
+            fromDate: "2024-11-05", // Start date
+            toDate: "2024-11-29", // End date (same as start date)
+            fromTime: "00:00",
+            toTime: "23:59",
+            isAllDay: true,
+            isCustom: false,
+            address: "Downtown Art Studio",
+            description:
+                "Learn the basics of painting in a supportive group setting.",
+            repeatDays: [],
+            customEndDate: "",
+            customEndOccurrences: 1,
+            isOn: true,
+            isAfter: false,
+            buttonLink: "https://artworkshop.com/signup",
+            buttonText: "Sign Up",
+        },
+        //CUSTOM, AFTER 2 OCCURRANCES, NON-EXPIRED EVENT CASE (SHOULD BE SHOWN ON SET WEEKDAY(S) UNTIL OCCURANCES HAVE BEEN ACCOUNTED FOR)
+        {
+            eventName: "Monthly Board Game Night",
+            fromDate: "2024-10-26",
+            toDate: "2024-11-29",
+            fromTime: "19:00",
+            toTime: "23:00",
+            isAllDay: false,
+            isCustom: true,
+            address: "The Game Lounge",
+            description: "Join us for an evening of board games and fun!",
+            repeatDays: ["Saturday"],
+            customEndDate: "2025-01-18",
+            customEndOccurrences: 2,
+            isOn: false,
+            isAfter: true,
+            buttonLink: "https://gamenight.com",
+            buttonText: "Reserve Your Spot",
+        },
+    ],
+};
 
 const galleryData = [
     {
@@ -310,7 +373,7 @@ const ProviderInfo = (props) => {
                         }}
                     >
                         {/*TO BE DELETED */}
-                        <CalendarForm eventsArray={calenderData as any} />
+                        <CalendarForm calendarData={calenderData} />
                     </Collapsible>
                 </Col>
             </Row>
@@ -325,7 +388,10 @@ const ProviderInfo = (props) => {
                         }}
                     >
                         {/*TO BE DELETED */}
-                        <UpcomingEventsContainer events={calenderData} />
+                        <UpcomingEventsContainer
+                            events={calenderData.events}
+                            displayNumber={calenderData.displayNumber}
+                        />
                     </Collapsible>
                 </Col>
             </Row>

@@ -3,27 +3,20 @@ import { Button } from "react-bootstrap";
 
 export default function UpcomingEvent({ eventData }) {
     const {
-        displayNumber,
+        isAllDay,
         eventName,
         fromDate,
         toDate,
         fromTime,
         toTime,
-        isAllDay,
-        isCustom,
         address,
         description,
         buttonText,
         buttonLink,
-        repeatDays,
-        customEndDate,
-        customEndOccurrences,
-        isOn,
-        isAfter,
     } = eventData;
 
     function formatDate(dateStr) {
-        const date = new Date(dateStr);
+        const date = new Date(dateStr + "T00:00:00");
         const options: Intl.DateTimeFormatOptions = {
             weekday: "long",
             month: "long",
@@ -46,7 +39,6 @@ export default function UpcomingEvent({ eventData }) {
                 paddingBottom: "10px",
                 paddingTop: "10px",
                 width: "100%",
-                gap: "12px",
                 borderBottom: "solid",
                 borderColor: "#DFDFDF",
                 borderWidth: "1px",
@@ -64,9 +56,11 @@ export default function UpcomingEvent({ eventData }) {
                 <p
                     style={{ fontWeight: "bold", fontSize: "1.1rem" }}
                 >{`${formatDate(fromDate)} to ${formatDate(toDate)}`}</p>
-                <p style={{ color: "rgba(148, 142, 142,0.9)" }}>{`${formatTime(
-                    fromTime
-                )} - ${formatTime(toTime)}`}</p>
+                <p style={{ color: "rgba(148, 142, 142,0.9)" }}>
+                    {isAllDay
+                        ? "All Day"
+                        : `${formatTime(fromTime)} - ${formatTime(toTime)}`}
+                </p>
             </div>
             <div
                 style={{

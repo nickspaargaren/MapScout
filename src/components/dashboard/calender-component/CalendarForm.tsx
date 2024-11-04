@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CalendarEvent from "./CalendarEvent";
 
-interface CalendarEvent {
-    displayNumber: number;
+export interface ICalendarEvent {
     eventName: string;
     fromDate: string;
     toDate: string;
@@ -29,13 +28,17 @@ interface CalendarEvent {
     buttonLink?: string;
 }
 
+export interface ICalendarData {
+    events: ICalendarEvent[];
+    displayNumber: number;
+}
+
 export default function CalendarForm({
-    eventsArray = [],
+    calendarData,
 }: {
-    eventsArray: CalendarEvent[];
+    calendarData: ICalendarData;
 }) {
-    const defaultEvent: CalendarEvent = {
-        displayNumber: 5,
+    const defaultEvent: ICalendarEvent = {
         eventName: "",
         fromDate: "",
         toDate: "",
@@ -50,17 +53,25 @@ export default function CalendarForm({
         customEndOccurrences: 1,
         isOn: true,
         isAfter: false,
+        buttonLink: "",
+        buttonText: "",
     };
 
-    const [events, setEvents] = useState<CalendarEvent[]>(
-        eventsArray.length > 0 ? eventsArray : [{ ...defaultEvent }]
+    const [events, setEvents] = useState<ICalendarEvent[]>(
+        calendarData.events.length > 0
+            ? calendarData.events
+            : [{ ...defaultEvent }]
+    );
+
+    const [displayNumber, setDisplayNumber] = useState<number>(
+        calendarData.displayNumber
     );
 
     const handleEventDataChange = (
         index: number,
-        field: keyof CalendarEvent,
+        field: keyof ICalendarEvent,
         value: string | number | boolean | string[],
-        additionalUpdates: Partial<CalendarEvent> = {}
+        additionalUpdates: Partial<ICalendarEvent> = {}
     ) => {
         setEvents((prevEvents) => {
             return prevEvents.map((event, i) =>
@@ -69,6 +80,10 @@ export default function CalendarForm({
                     : event
             );
         });
+    };
+
+    const handleDisplayNumberChange = (value: number) => {
+        setDisplayNumber(value);
     };
 
     const handleAllDayUpdate = (index: number, isAllDay: boolean) => {
@@ -106,13 +121,15 @@ export default function CalendarForm({
         });
     };
 
-    const renderevents = () => {
+    const renderEvents = () => {
         return events.map((event, i) => (
             <CalendarEvent
+                displayNumber={displayNumber}
                 eventData={{ ...event }}
                 index={i}
                 key={i}
                 handleEventDataChange={handleEventDataChange}
+                handleDisplayNumberChange={handleDisplayNumberChange}
                 handleAllDayUpdate={handleAllDayUpdate}
                 handleDelete={handleDelete}
                 handleAdd={handleAdd}
@@ -122,10 +139,10 @@ export default function CalendarForm({
 
     return (
         <div style={{ width: "100%", margin: "0px" }}>
-            {renderevents()}
+            {renderEvents()}
             <div>
                 <h4>Current Data:</h4>
-                <pre>{JSON.stringify(events, null, 2)}</pre>
+                <pre>{JSON.stringify({ displayNumber, events }, null, 2)}</pre>
             </div>
         </div>
     );

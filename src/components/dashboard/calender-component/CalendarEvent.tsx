@@ -4,14 +4,15 @@ import Form from "react-bootstrap/Form";
 
 export default function CalendarEvent({
     index,
+    displayNumber,
     eventData,
     handleEventDataChange,
+    handleDisplayNumberChange,
     handleDelete,
     handleAdd,
     handleAllDayUpdate,
 }) {
     const {
-        displayNumber,
         eventName,
         fromDate,
         toDate,
@@ -229,11 +230,11 @@ export default function CalendarEvent({
                             max={10}
                             min={1}
                             onChange={(e) => {
-                                handleEventDataChange(
-                                    index,
-                                    "displayNumber",
-                                    Number((e.target as HTMLInputElement).value)
+                                const num = Number(
+                                    (e.target as HTMLInputElement).value
                                 );
+                                if (num > 10 || num < 1) return;
+                                handleDisplayNumberChange(num);
                             }}
                             style={{ maxWidth: "7%" }}
                         />
