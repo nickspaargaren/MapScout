@@ -148,23 +148,6 @@ function AddProvider(props) {
         updateSteps();
     }, [filters, descriptions, single]);
 
-    // function updateSteps() {
-    //   if (filters && !Object.keys(filters).length) {
-    //     const delIndex = steps.indexOf("Tag");
-    //     delIndex !== -1 && steps.splice(delIndex, 1);
-    //   }
-
-    //   if (descriptions && !Object.keys(descriptions).length) {
-    //     const delIndex = steps.indexOf("Text");
-    //     delIndex !== -1 && steps.splice(delIndex, 1);
-    //   }
-
-    //   if (categories && !Object.keys(categories).length) {
-    //     const delIndex = steps.indexOf("Toggle");
-    //     delIndex !== -1 && steps.splice(delIndex, 1);
-    //   }
-    // }
-
     const validateComponents = (i) => {
         if (!i.content) {
             return true;

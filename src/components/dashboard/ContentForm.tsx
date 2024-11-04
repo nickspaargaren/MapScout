@@ -145,7 +145,8 @@ const SectionCard = ({
                 };
             case "Text":
                 return {
-                    
+                    title: "Text",
+                    description: '<p>ex. "Changing lives one bit at a time..."</p>'
                 }
             default:
                 return {};
@@ -201,18 +202,6 @@ const SectionCard = ({
                         }}
                     ></ChartComponentForm>
                 );
-            case "Gallery":
-                return (
-                    <ProviderGallery
-                        galleryState={data}
-                        setGalleryState={(newState) => {
-                            updateIthComponent(newState, i);
-                        }}
-                        deleteComponent={() => {
-                            deleteIthComponent(i);
-                        }}
-                    ></ProviderGallery>
-                );
             case "Directory":
                 return (
                     <DirectoryForm
@@ -236,6 +225,30 @@ const SectionCard = ({
                             deleteIthComponent(i);
                         }}
                     ></EmbedForm>
+                );
+            case "Gallery":
+                return (
+                    <ProviderGallery
+                        galleryState={data}
+                        setGalleryState={(newState) => {
+                            updateIthComponent(newState, i);
+                        }}
+                        deleteComponent={() => {
+                            deleteIthComponent(i);
+                        }}
+                    ></ProviderGallery>
+                );
+            case "Text":
+                return (
+                    <SimpleEditor
+                        editorState={data}
+                        setEditorState={(newState) => {
+                            updateIthComponent(newState, i);
+                        }}
+                        deleteComponent={() => {
+                            deleteIthComponent(i);
+                        }}
+                    ></SimpleEditor>
                 );
             default:
                 return <></>;
@@ -282,7 +295,7 @@ const SectionCard = ({
                     }}
                     onClick={() => {
                         setSelectedSection(null);
-                        setSections((sections) =>
+                        setSections(
                             sections.filter((_, i) => i !== index)
                         );
                     }}
@@ -427,6 +440,7 @@ const ContentForm = ({ content, onChange }) => {
 
     const updateSections = (newSections) => {
         setSections(newSections);
+        console.log("Sections:", newSections);
         onChange(newSections);
     };
 
