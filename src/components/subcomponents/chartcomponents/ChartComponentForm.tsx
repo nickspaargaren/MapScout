@@ -443,7 +443,7 @@ const ChartComponentForm = ({
                 );
             case "line":
                 return (
-                    <div className="chart-container" style={{ width: "100%" }}>
+                    <div className="chart-container">
                         <div className="field" style={{ width: "100%" }}>
                             <label htmlFor="xLabel">X-axis label</label>
                             <input
