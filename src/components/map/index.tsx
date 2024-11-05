@@ -25,39 +25,12 @@ import x from "../../assets/img/x.png";
 import dropdownIcon from "../../assets/svg/chevron-down.svg";
 import Switch from "react-switch";
 import { MdChevronRight } from "react-icons/md";
-import ProgressBar from "components/subcomponents/chartcomponents/ProgressBar";
-import DonutChart from "components/subcomponents/chartcomponents/DonutChart";
-import LineChart from "components/subcomponents/chartcomponents/LineChart";
 import backArrow from '../../assets/img/back-arrow.png';
 
 const frame = require("../../assets/svg/Frame.svg");
 
 const debounce = require("lodash/debounce");
 const classNames = require("classnames");
-
-//TO BE REMOVED
-const data = [
-    { label: "Equipment", number: 7140, percentage: "34%" },
-    { label: "Programs", number: 5670, percentage: "27%" },
-    { label: "Technology", number: 4410, percentage: "21%" },
-    { label: "Uniforms", number: 3780, percentage: "18%" },
-];
-
-//TO BE REMOVED
-const data2 = [
-    { x: "Jan", y: 2500 },
-    { x: "Feb", y: 4500 },
-    { x: "Mar", y: 1050 },
-    { x: "Apr", y: 500 },
-    { x: "May", y: 2305 },
-    { x: "Jun", y: 3846 },
-    { x: "Jul", y: 4628 },
-    { x: "Aug", y: 678 },
-    { x: "Sep", y: 1835 },
-    { x: "Oct", y: 5084 },
-    { x: "Nov", y: 5943 },
-    { x: "Dec", y: 2085 },
-];
 
 const FILTER_CUTOFF = 3;
 const PAGE_SIZE = 100;
@@ -985,9 +958,10 @@ const Map = (props) => {
             className={classNames("bg-white", {
                 "overflow-scroll": !isDesktop,
             })}
+            style={{ "height": "100vh" }}
         >
             {/* <NavBar /> */}
-            <div>
+            <div style={{ "height": "100%" }}>
                 <div>
                     <div
                         className={classNames("row-spaced", "ml-2", "pt-3", {
@@ -1099,7 +1073,7 @@ const Map = (props) => {
 
                     </div>
                 </div>
-                <div className={classNames({ "row-nowrap": isDesktop })}>
+                <div className={classNames({ "row-nowrap": isDesktop })} style={{ "height": "calc(100% - 70px)" }}>
                     <div
                         className={classNames("map-list")}
                         style={{
@@ -1112,10 +1086,11 @@ const Map = (props) => {
                                 ? "100vw"
                                 : 0,
                             display: !isDesktop && !defaultView && "none",
+                            "height": "100%"
                         }}
                     >
                         {!showInfo && renderTagControl()}
-                        <div>
+                        <div style={{ "height": "calc(100% - 43px)", "overflowY": "scroll" }}>
                             <div
                                 className={classNames("tag-row padder", {
                                     "result-tutorial": isEmpty(activeProviders),
@@ -1167,9 +1142,9 @@ const Map = (props) => {
                                                 .slice(lowerPageBound, upperPageBound)
                                                 .map((i, index) => (
                                                     <div
-                                                        className={classNames({
-                                                            "result-tutorial": index == 0,
-                                                        })}
+                                                        // className={classNames({
+                                                        //     "result-tutorial": index == 0,
+                                                        // })}
                                                         key={i.id}
                                                     >   
                                                         <ProviderCell
