@@ -91,11 +91,11 @@ export default function CalendarForm({
             return prevEvents.map((event, i) =>
                 i === index
                     ? {
-                          ...event,
-                          isAllDay,
-                          fromTime: isAllDay ? "00:00" : "",
-                          toTime: isAllDay ? "23:59" : "",
-                      }
+                        ...event,
+                        isAllDay,
+                        fromTime: isAllDay ? "00:00" : "",
+                        toTime: isAllDay ? "23:59" : "",
+                    }
                     : event
             );
         });
@@ -128,6 +128,7 @@ export default function CalendarForm({
                 eventData={{ ...event }}
                 index={i}
                 key={i}
+                length={events.length}
                 handleEventDataChange={handleEventDataChange}
                 handleDisplayNumberChange={handleDisplayNumberChange}
                 handleAllDayUpdate={handleAllDayUpdate}

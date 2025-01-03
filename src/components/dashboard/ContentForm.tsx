@@ -12,6 +12,111 @@ import ChartComponentForm from "components/subcomponents/chartcomponents/ChartCo
 import Collapsible from "components/collapsible";
 import ProviderGallery from "./ProviderGallery";
 import EmbedForm from "./embed-component/EmbedForm";
+import CalendarForm, { ICalendarData } from "components/dashboard/calender-component/CalendarForm";
+
+const calenderData: ICalendarData = {
+    displayNumber: 5,
+    events: [
+        //NON-CUSTOM, EXPIRED EVENT DATE CASE (SHOULD NOT BE SHOWN)
+        {
+            eventName: "Morning Yoga Class",
+            fromDate: "2024-11-01", // Start date
+            toDate: "2024-11-01", // End date (same as start date)
+            fromTime: "07:00",
+            toTime: "08:30",
+            isAllDay: false,
+            isCustom: false,
+            address: "Community Center, Main Hall",
+            description: "Start your day with a refreshing yoga class.",
+            repeatDays: ["Monday", "Wednesday", "Friday"],
+            customEndDate: "",
+            customEndOccurrences: 1,
+            isOn: true,
+            isAfter: false,
+            buttonLink: "https://yogaclass.com/register",
+            buttonText: "Register",
+        },
+        //CUSTOM, ON, NON-EXPIRED CUSTOM DATE, NON-EXPIRED EVENT DATE, NON-CURRENT DAY CASE (may be subject to IRL day rn!!!!) (SHOULD ONLY BE SHOWN ON TUESDAY, THURSDAY)
+        {
+            eventName: "Tech Conference 2024",
+            fromDate: "2024-11-10", // Start date
+            toDate: "2024-11-29", // End date
+            fromTime: "09:00",
+            toTime: "17:00",
+            isAllDay: false,
+            isCustom: true,
+            address: "Tech Park Auditorium",
+            description:
+                "A 3-day conference with keynotes and workshops on technology trends.",
+            repeatDays: ["Tuesday", "Thursday"],
+            customEndDate: "2024-11-12",
+            customEndOccurrences: 1,
+            isOn: true,
+            isAfter: false,
+            buttonLink: "https://techconf2024.com",
+            buttonText: "Get Tickets",
+        },
+        //CUSTOM, ON, EXPIRED CUSTOM END DATE, NON-EXPIRED EVENT END DATE (SHOULD BE SHOWN ON ANY DAY SINCE THE CUSTOM END DATE IS PAST AND NOT EXPIRED EVENT DATE)
+        {
+            eventName: "Weekly Community Meetup",
+            fromDate: "2024-10-15", // Start date
+            toDate: "2024-12-15", // End date
+            fromTime: "18:00",
+            toTime: "20:00",
+            isAllDay: false,
+            isCustom: true,
+            address: "Local Library, Meeting Room 2",
+            description:
+                "A weekly gathering for community discussions and activities.",
+            repeatDays: ["Sunday", "Tuesday"],
+            customEndDate: "2024-11-2",
+            customEndOccurrences: 8,
+            isOn: true,
+            isAfter: false,
+            buttonLink: "https://communitymeetup.org",
+            buttonText: "Join Us",
+        },
+        //NON-CUSTOM, NON-EXPIRED EVENT DATE CASE (SHOULD BE SHOWN AND SHOULD SHOW ALL DAY IN EVENT TILE)
+        {
+            eventName: "Art Workshop for Beginners",
+            fromDate: "2024-11-05", // Start date
+            toDate: "2024-11-29", // End date (same as start date)
+            fromTime: "00:00",
+            toTime: "23:59",
+            isAllDay: true,
+            isCustom: false,
+            address: "Downtown Art Studio",
+            description:
+                "Learn the basics of painting in a supportive group setting.",
+            repeatDays: [],
+            customEndDate: "",
+            customEndOccurrences: 1,
+            isOn: true,
+            isAfter: false,
+            buttonLink: "https://artworkshop.com/signup",
+            buttonText: "Sign Up",
+        },
+        //CUSTOM, AFTER 2 OCCURRANCES, NON-EXPIRED EVENT CASE (SHOULD BE SHOWN ON SET WEEKDAY(S) UNTIL OCCURANCES HAVE BEEN ACCOUNTED FOR)
+        {
+            eventName: "Monthly Board Game Night",
+            fromDate: "2024-10-26",
+            toDate: "2024-11-29",
+            fromTime: "19:00",
+            toTime: "23:00",
+            isAllDay: false,
+            isCustom: true,
+            address: "The Game Lounge",
+            description: "Join us for an evening of board games and fun!",
+            repeatDays: ["Saturday"],
+            customEndDate: "2025-01-18",
+            customEndOccurrences: 2,
+            isOn: false,
+            isAfter: true,
+            buttonLink: "https://gamenight.com",
+            buttonText: "Reserve Your Spot",
+        },
+    ],
+};
 
 const EditableText = ({ text, setText, isEditing, setIsEditing }) => {
     const inputRef = useRef(null);
@@ -223,6 +328,21 @@ const SectionCard = ({
                                 <EmbedForm/>
                             </Collapsible>
                             ])}>Embed</Dropdown.Item>
+                        <Dropdown.Item onClick={() =>
+                            setComponents([...components,
+                            <Collapsible
+                                style={{ width: "100%" }}
+                                titleStyle={{
+                                    background: "white",
+                                    color: "var(--chart-blue)",
+                                    fontSize: "1.25rem",
+                                    fontStyle: "normal",
+                                    lineHeight: "24px"
+                                }}
+                                label={"Calendar"}>
+                                <CalendarForm calendarData={calenderData} />
+                            </Collapsible>
+                            ])}>Calendar</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
             </Row>

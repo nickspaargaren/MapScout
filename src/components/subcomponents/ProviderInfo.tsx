@@ -27,8 +27,8 @@ const calenderData: ICalendarData = {
         //NON-CUSTOM, EXPIRED EVENT DATE CASE (SHOULD NOT BE SHOWN)
         {
             eventName: "Morning Yoga Class",
-            fromDate: "2024-11-01", // Start date
-            toDate: "2024-11-01", // End date (same as start date)
+            fromDate: "2025-01-01", // Start date
+            toDate: "2025-11-01", // End date (same as start date)
             fromTime: "07:00",
             toTime: "08:30",
             isAllDay: false,
@@ -46,8 +46,8 @@ const calenderData: ICalendarData = {
         //CUSTOM, ON, NON-EXPIRED CUSTOM DATE, NON-EXPIRED EVENT DATE, NON-CURRENT DAY CASE (may be subject to IRL day rn!!!!) (SHOULD ONLY BE SHOWN ON TUESDAY, THURSDAY)
         {
             eventName: "Tech Conference 2024",
-            fromDate: "2024-11-10", // Start date
-            toDate: "2024-11-29", // End date
+            fromDate: "2025-01-01", // Start date
+            toDate: "2025-11-29", // End date
             fromTime: "09:00",
             toTime: "17:00",
             isAllDay: false,
@@ -56,7 +56,7 @@ const calenderData: ICalendarData = {
             description:
                 "A 3-day conference with keynotes and workshops on technology trends.",
             repeatDays: ["Tuesday", "Thursday"],
-            customEndDate: "2024-11-12",
+            customEndDate: "2025-11-12",
             customEndOccurrences: 1,
             isOn: true,
             isAfter: false,
@@ -66,8 +66,8 @@ const calenderData: ICalendarData = {
         //CUSTOM, ON, EXPIRED CUSTOM END DATE, NON-EXPIRED EVENT END DATE (SHOULD BE SHOWN ON ANY DAY SINCE THE CUSTOM END DATE IS PAST AND NOT EXPIRED EVENT DATE)
         {
             eventName: "Weekly Community Meetup",
-            fromDate: "2024-10-15", // Start date
-            toDate: "2024-12-15", // End date
+            fromDate: "2025-01-01", // Start date
+            toDate: "2025-12-15", // End date
             fromTime: "18:00",
             toTime: "20:00",
             isAllDay: false,
@@ -76,7 +76,7 @@ const calenderData: ICalendarData = {
             description:
                 "A weekly gathering for community discussions and activities.",
             repeatDays: ["Sunday", "Tuesday"],
-            customEndDate: "2024-11-2",
+            customEndDate: "2025-11-02",
             customEndOccurrences: 8,
             isOn: true,
             isAfter: false,
@@ -86,8 +86,8 @@ const calenderData: ICalendarData = {
         //NON-CUSTOM, NON-EXPIRED EVENT DATE CASE (SHOULD BE SHOWN AND SHOULD SHOW ALL DAY IN EVENT TILE)
         {
             eventName: "Art Workshop for Beginners",
-            fromDate: "2024-11-05", // Start date
-            toDate: "2024-11-29", // End date (same as start date)
+            fromDate: "2025-01-01", // Start date
+            toDate: "2025-11-29", // End date (same as start date)
             fromTime: "00:00",
             toTime: "23:59",
             isAllDay: true,
@@ -176,36 +176,36 @@ const galleryData = [
             "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
     },
 ];
-const directoryData = [
-    {
-        name: "bob",
-        description: "firefighter",
-        details: "bob@gmail.com",
-        image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-    },
-    {
-        name: "bob",
-        description: "firefighter",
-        details: "bob@gmail.com",
-        image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-    },
-    {
-        name: "bob",
-        description: "firefighter",
-        details: "bob@gmail.com",
-        image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-    },
-    {
-        name: "bob",
-        description: "firefighter",
-        details: "bob@gmail.com",
-        image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-    },
+const directoryData =
+    [
+        {
+            name: "bob",
+            description: "firefighter",
+            details: "bob@gmail.com",
+            image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
+        },
+        {
+            name: "bob",
+            description: "firefighter",
+            details: "bob@gmail.com",
+            image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
+        },
+        {
+            name: "bob",
+            description: "firefighter",
+            details: "bob@gmail.com",
+            image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
+        },
+        {
+            name: "bob",
+            description: "firefighter",
+            details: "bob@gmail.com",
+            image: "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
+        },
 ];
 const eventInfo = {
     title: "Tour Our Station",
-    videoUrl:
-        "https://www.youtube.com/watch?v=oZcKTf4RLQ8&ab_channel=HorizonsHealth",
+    videoUrl: "https://www.youtube.com/watch?v=oZcKTf4RLQ8&ab_channel=HorizonsHealth",
     thumbnail: "https://picsum.photos/200",
 };
 
@@ -220,7 +220,7 @@ const ProviderInfo = (props) => {
             try {
                 const res2 = await fetch(
                     `https://maps.googleapis.com/maps/api/staticmap?center=${props.item.latitude},${props.item.longitude}&zoom=16&scale=2&size=335x250&maptype=roadmap&key=${GOOGLE_API_KEY}&format=png&visual_refresh=true` +
-                        `&markers=${props.item.latitude},${props.item.longitude}`
+                    `&markers=${props.item.latitude},${props.item.longitude}`,
                 );
                 setStreetView(res2.url);
                 setImage(props.item.imageURL);
@@ -298,7 +298,7 @@ const ProviderInfo = (props) => {
                                         index ===
                                         props.item.address.toString().split(",")
                                             .length -
-                                            1
+                                        1
                                     ) {
                                         return (
                                             <div style={{ display: "inline" }}>
@@ -362,21 +362,6 @@ const ProviderInfo = (props) => {
             </Row>
             {/* Sample components that in the future should be added dynamically
             based on the response from firebase */}
-            <Row className="info-rows">
-                <Col md={12}>
-                    <Collapsible
-                        label={"Calendar"}
-                        style={{
-                            maxWidth: "1000px",
-                            marginLeft: "auto",
-                            marginRight: "auto",
-                        }}
-                    >
-                        {/*TO BE DELETED */}
-                        <CalendarForm calendarData={calenderData} />
-                    </Collapsible>
-                </Col>
-            </Row>
             <Row className="info-rows">
                 <Col md={12}>
                     <Collapsible
@@ -456,7 +441,7 @@ const ProviderInfo = (props) => {
                                             if (
                                                 index !==
                                                 props.item[category.id].length -
-                                                    1
+                                                1
                                             ) {
                                                 return (
                                                     <div className="modal-text">
@@ -505,9 +490,9 @@ function calculateHours(props) {
                 !props.item.hours[days[i]] ||
                 !props.item.hours[days[i - 1]] ||
                 props.item.hours[days[i]][0] !==
-                    props.item.hours[days[i - 1]][0] ||
+                props.item.hours[days[i - 1]][0] ||
                 props.item.hours[days[i]][1] !==
-                    props.item.hours[days[i - 1]][1]
+                props.item.hours[days[i - 1]][1]
             ) {
                 startandFinish.push(i - 1);
                 startandFinish.push(i);
@@ -542,13 +527,13 @@ function calculateHours(props) {
             <Col className="modal-col-flex-start">
                 {props.item.hours[days[startandFinish[i]]]
                     ? props.item.hours[days[startandFinish[i]]].map(
-                          (time, index) =>
-                              formatTime(
-                                  props.item.hours[days[startandFinish[i]]],
-                                  time,
-                                  index
-                              )
-                      )
+                        (time, index) =>
+                            formatTime(
+                                props.item.hours[days[startandFinish[i]]],
+                                time,
+                                index
+                            )
+                    )
                     : "CLOSED"}
             </Col>
         );

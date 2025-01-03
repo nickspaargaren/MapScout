@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 
 export default function CalendarEvent({
     index,
+    length,
     displayNumber,
     eventData,
     handleEventDataChange,
@@ -158,7 +159,7 @@ export default function CalendarEvent({
                                 display: "flex",
                                 justifyContent: "space-between",
                                 alignItems: "center",
-                                maxWidth: "35%",
+                                maxWidth: "43%",
                             }}
                         >
                             <Form.Check
@@ -236,7 +237,7 @@ export default function CalendarEvent({
                                 if (num > 10 || num < 1) return;
                                 handleDisplayNumberChange(num);
                             }}
-                            style={{ maxWidth: "7%" }}
+                            style={{ width: "65px" }}
                         />
                     </Form.Group>
                 )}
@@ -473,22 +474,41 @@ export default function CalendarEvent({
                         Delete
                     </Button>
                 </div>
-                <Button
-                    onClick={() => handleAdd(index)}
-                    style={{
-                        backgroundColor: "white",
-                        color: "#226DFF",
-                        fontWeight: "500",
-                        letterSpacing: "-0.176px",
-                        lineHeight: "150%",
-                        fontSize: "1rem",
-                        padding: "8px",
-                        border: "border: 1px solid #226DFF",
-                        width: "fit-content",
-                    }}
-                >
-                    + Add event
-                </Button>
+
+
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <Button
+                        onClick={() => handleAdd(index)}
+                        style={{
+                            backgroundColor: "white",
+                            color: "#226DFF",
+                            fontWeight: "500",
+                            letterSpacing: "-0.176px",
+                            lineHeight: "150%",
+                            fontSize: "1rem",
+                            padding: "8px",
+                            border: "border: 1px solid #226DFF",
+                            width: "fit-content",
+                        }}
+                    >
+                        + Add event
+                    </Button>
+                    {index == length - 1 &&
+                        <button
+                            type="button"
+                            id="delete"
+                            style={{
+                                color: "red",
+                                border: "1px solid red",
+                                padding: "5px",
+                                borderRadius: "4px",
+                            }}
+                            // onClick={deleteComponent}
+                        >
+                            Delete Component
+                        </button>
+                    }
+                </div>
             </div>
         </div>
     );
