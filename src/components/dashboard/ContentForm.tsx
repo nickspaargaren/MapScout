@@ -13,7 +13,7 @@ import Collapsible from "components/collapsible";
 import ProviderGallery from "./ProviderGallery";
 import EmbedForm from "./embed-component/EmbedForm";
 import { SimpleEditor } from "./TextComponent/SimpleEditor";
-import CalendarForm, { ICalendarData } from "components/dashboard/calender-component/CalendarForm";
+import CalendarForm from "components/dashboard/calender-component/CalendarForm";
 
 const EditableText = ({ text, setText, isEditing, setIsEditing }) => {
     const inputRef = useRef(null);

@@ -17,8 +17,8 @@ import DonutChart from "./chartcomponents/DonutChart";
 import ProgressBar from "./chartcomponents/ProgressBar";
 import LineChart from "./chartcomponents/LineChart";
 import GeneralInfo from "components/dashboard/GeneralInfo";
-import EventInfoComponent from "components/dashboard/EventInfoComponent";
 import UpcomingEventsContainer from "components/dashboard/calender-component/UpcomingEventContainer";
+import EventInfoComponent from "components/dashboard/EventInfoComponent";
 
 const ProviderInfo = (props) => {
     const [image, setImage] = useState("bog");
