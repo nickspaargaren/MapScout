@@ -15,7 +15,6 @@ import GoogleSuggest from "./GoogleSuggest";
 import ImageModal from "./ImageModal";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-
 import ActionForm from "./ActionForm";
 import ContentForm from "./ContentForm";
 
@@ -65,6 +64,7 @@ const RowForm = (props) => {
         address: [],
         description: "",
         buildingNum: [],
+        stationNum: "",
         childcare: [false],
         epic: [false],
         hours: {},
@@ -381,6 +381,17 @@ const RowForm = (props) => {
                             as="textarea"
                         />
                     </Form.Group>
+                    <Form.Group>
+                                <Form.Label >Station #</Form.Label>
+                                <Form.Control
+                                    name="stationNum"
+                                    type="number"
+                                    value={item.stationNum}
+                                    onChange={handleInputChange}
+                                    placeholder="#"
+                                    style={{ width: '100px' }}
+                                />
+                    </Form.Group>
                 </>
             );
 
@@ -391,6 +402,7 @@ const RowForm = (props) => {
                     onChange={onTimeChange}
                 />
             );
+        
         case "Tag":
             return (
                 <>
@@ -418,6 +430,7 @@ const RowForm = (props) => {
                     )}
                 </>
             );
+        
         case "Text":
             return (
                 <>
@@ -445,6 +458,7 @@ const RowForm = (props) => {
                     )}
                 </>
             );
+   
         case "Toggle":
             return (
                 <>
@@ -471,6 +485,7 @@ const RowForm = (props) => {
                     )}
                 </>
             );
+            
         case "Actions":
             return (
                 <ActionForm
@@ -479,6 +494,7 @@ const RowForm = (props) => {
                     onChange={onActionTableChange}
                 />
             );
+     
         case "Content":
             return (
                 <ContentForm
