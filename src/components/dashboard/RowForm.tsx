@@ -84,8 +84,8 @@ const RowForm = (props) => {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        setItem(props.item.facilityName ? props.item : defaultItem);
-    }, []);
+        props.setItem(item);
+    }, [item]);
 
     function handleInputChange(e) {
         let newItem = {};
@@ -96,7 +96,6 @@ const RowForm = (props) => {
             setItem({ ...item, [e.target.name]: [e.target.value] });
             newItem = { ...item, [e.target.name]: [e.target.value] };
         }
-        props.setItem(newItem);
     }
 
     function onPhoneChange(e) {
@@ -114,7 +113,6 @@ const RowForm = (props) => {
                 phoneNum: [new AsYouType("US").input(e.target.value)],
             };
         }
-        props.setItem(newItem);
     }
 
     function onTimeChange(hours) {
@@ -145,7 +143,6 @@ const RowForm = (props) => {
             },
         };
         setItem(newItem);
-        props.setItem(newItem);
     }
 
     function onActionTableChange(links) {
@@ -161,7 +158,6 @@ const RowForm = (props) => {
             },
         };
         setItem(newItem);
-        props.setItem(newItem);
     }
 
     const onContentChange = (content) => {
@@ -172,7 +168,6 @@ const RowForm = (props) => {
             },
         };
         setItem(newItem);
-        props.setItem(newItem);
     };
 
     const handleUploadSuccess = async (file) => {
@@ -187,7 +182,6 @@ const RowForm = (props) => {
                 newItem = { ...newItem, imageURL: url };
                 setItem(newItem);
             });
-        props.setItem(newItem);
         setShowModal(false);
     };
 
@@ -201,7 +195,6 @@ const RowForm = (props) => {
         }
         let newItem = { ...item, image: "", imageURL: null };
         setItem(newItem);
-        props.setItem(newItem);
     };
 
     switch (props.step) {
@@ -220,12 +213,6 @@ const RowForm = (props) => {
                                         e.target as HTMLInputElement
                                     ).value,
                                 });
-                                props.setItem({
-                                    ...item,
-                                    [(e.target as HTMLInputElement).name]: (
-                                        e.target as HTMLInputElement
-                                    ).value,
-                                });
                             }}
                             placeholder="Name"
                         />
@@ -236,10 +223,6 @@ const RowForm = (props) => {
                                 value={item.address[0]}
                                 update={(address) => {
                                     setItem({
-                                        ...item,
-                                        address: [address],
-                                    });
-                                    props.setItem({
                                         ...item,
                                         address: [address],
                                     });
@@ -371,10 +354,6 @@ const RowForm = (props) => {
                                     ...item,
                                     [e.target.name]: e.target.value,
                                 });
-                                props.setItem({
-                                    ...item,
-                                    [e.target.name]: e.target.value,
-                                });
                             }}
                             placeholder="About me"
                             rows="4"
@@ -421,7 +400,6 @@ const RowForm = (props) => {
                                             }
                                         };
                                         setItem(newItem);
-                                        props.setItem(newItem);
                                     }}
                                 />
                             </Form.Group>
@@ -448,7 +426,6 @@ const RowForm = (props) => {
                                             }
                                         };
                                         setItem(newItem);
-                                        props.setItem(newItem);
                                     }}
                                 />
                             </Form.Group>
@@ -474,7 +451,6 @@ const RowForm = (props) => {
                                             [key]: selected,
                                         };
                                         setItem(newItem);
-                                        props.setItem(newItem);
                                     }}
                                 />
                             </Form.Group>
