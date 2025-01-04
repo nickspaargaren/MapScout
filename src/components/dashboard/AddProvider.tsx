@@ -49,12 +49,25 @@ function AddProvider(props) {
     const [descriptions, setDescriptions] = useState(null);
     const [single, setSingle] = useState(null);
     const [error, setError] = useState("");
+    const [firstLoad, setFirstLoad] = useState(true);
     const [content, setContent] = useState(
         'ex. "Changing lives one bit at a time..."'
     );
     const handleUpdate = (updatedContent: string) => {
         setContent(updatedContent);
     };
+
+    useEffect(() => {
+        console.log((sessionStorage.getItem("item")))
+        if (firstLoad === false) {
+            sessionStorage.setItem('item', JSON.stringify(item))
+        } else {
+            if(JSON.parse(sessionStorage.getItem("item")) !== null) {
+                setItem(JSON.parse(sessionStorage.getItem("item")))
+            }
+            setFirstLoad(false)
+        }
+    }, [item])
 
     useEffect(() => {
         async function fetchData() {
@@ -206,6 +219,7 @@ function AddProvider(props) {
     };
 
     async function addFirestore() {
+        sessionStorage.clear()
         setIsLoading(true);
         const i = {
             ...item,
@@ -267,6 +281,7 @@ function AddProvider(props) {
     }
 
     async function updateFirestore() {
+        sessionStorage.clear()
         setIsLoading(true);
         const i = {
             ...item,
