@@ -1090,7 +1090,7 @@ const Map = (props) => {
                         }}
                     >
                         {!showInfo && renderTagControl()}
-                        <div style={{ "height": "100%", "overflowY": "scroll" }}>
+                        <div style={{ "height": !showInfo ? "calc(100% - 43px)" : "100%", "overflowY": "scroll" }}>
                             <div
                                 className={classNames("tag-row padder", {
                                     "result-tutorial": isEmpty(activeProviders),
