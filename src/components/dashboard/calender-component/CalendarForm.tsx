@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CalendarEvent from "./CalendarEvent";
 import { Button } from "react-bootstrap";
 
@@ -62,11 +62,6 @@ export default function CalendarForm({
         buttonText: "",
     };
 
-    // const [events, setEvents] = useState<ICalendarEvent[]>(
-    //     calendarData.events.length > 0
-    //         ? calendarData.events
-    //         : [{ ...defaultEvent }]
-    // );
     const events = calendarData.events;
 
     const [displayNumber, setDisplayNumber] = useState<number>(
@@ -86,14 +81,7 @@ export default function CalendarForm({
                     ? { ...event, [field]: value, ...additionalUpdates }
                     : event
             )
-        })
-        // setEvents((prevEvents) => {
-        //     return prevEvents.map((event, i) =>
-        //         i === index
-        //             ? { ...event, [field]: value, ...additionalUpdates }
-        //             : event
-        //     );
-        // });
+        });
     };
 
     const handleDisplayNumberChange = (value: number) => {
@@ -113,26 +101,14 @@ export default function CalendarForm({
                     }
                     : event
             )
-        })
-        // setEvents((prevEvents) => {
-        //     return prevEvents.map((event, i) =>
-        //         i === index
-        //             ? {
-        //                 ...event,
-        //                 isAllDay,
-        //                 fromTime: isAllDay ? "00:00" : "",
-        //                 toTime: isAllDay ? "23:59" : "",
-        //             }
-        //             : event
-        //     );
-        // });
+        });
     };
 
     const handleDelete = (index: number) => {
         setCalendarData({
             ...calendarData,
             events: events.filter((_, i) => i !== index)
-        })
+        });
     };
 
     const handleAdd = (index: number) => {
@@ -150,7 +126,7 @@ export default function CalendarForm({
         setCalendarData({
             ...calendarData,
             events: newEventHandler(events)
-        })
+        });
     };
 
     const renderEvents = () => {
@@ -160,13 +136,10 @@ export default function CalendarForm({
                 eventData={{ ...event }}
                 index={i}
                 key={i}
-                length={events.length}
                 handleEventDataChange={handleEventDataChange}
                 handleDisplayNumberChange={handleDisplayNumberChange}
                 handleAllDayUpdate={handleAllDayUpdate}
                 handleDelete={handleDelete}
-                handleAdd={handleAdd}
-                deleteComponent={deleteComponent}
             />
         ));
     };

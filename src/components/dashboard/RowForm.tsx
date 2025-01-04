@@ -18,33 +18,6 @@ import Button from "react-bootstrap/Button";
 import ActionForm from "./ActionForm";
 import ContentForm from "./ContentForm";
 
-const galleryData = [
-    {
-        title: "testVal1",
-        description: "testing testing",
-        imgLink:
-            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-    },
-    {
-        title: "testVal2",
-        description: "testing testing",
-        imgLink:
-            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-    },
-    {
-        title: "testVal3",
-        description: "testing testing",
-        imgLink:
-            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-    },
-    {
-        title: "testVal4",
-        description: "testing testing",
-        imgLink:
-            "https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg",
-    },
-];
-
 function validURL(str) {
     const pattern = new RegExp(
         "^(https?:\\/\\/)?" + // protocol

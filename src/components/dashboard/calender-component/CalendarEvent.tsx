@@ -1,18 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, InputGroup } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 
 export default function CalendarEvent({
     index,
-    length,
     displayNumber,
     eventData,
     handleEventDataChange,
     handleDisplayNumberChange,
     handleDelete,
-    handleAdd,
     handleAllDayUpdate,
-    deleteComponent,
 }) {
     const {
         eventName,
