@@ -13,6 +13,7 @@ import Collapsible from "components/collapsible";
 import ProviderGallery from "./ProviderGallery";
 import EmbedForm from "./embed-component/EmbedForm";
 import { SimpleEditor } from "./TextComponent/SimpleEditor";
+import CalendarForm from "components/dashboard/calender-component/CalendarForm";
 
 const EditableText = ({ text, setText, isEditing, setIsEditing }) => {
     const inputRef = useRef(null);
@@ -114,6 +115,28 @@ const SectionCard = ({
 
     const getDefaultData = (componentType) => {
         switch (componentType) {
+            case "Calendar":
+                return {
+                    displayNumber: 5,
+                    events: [{
+                        eventName: "",
+                        fromDate: "",
+                        toDate: "",
+                        fromTime: "",
+                        toTime: "",
+                        isAllDay: false,
+                        isCustom: false,
+                        address: "",
+                        description: "",
+                        repeatDays: [],
+                        customEndDate: "",
+                        customEndOccurrences: 1,
+                        isOn: true,
+                        isAfter: false,
+                        buttonLink: "",
+                        buttonText: "",
+                    }]
+                };
             case "Chart":
                 return {
                     type: "donut",
@@ -190,6 +213,18 @@ const SectionCard = ({
 
     const switchRender = (type, data, i) => {
         switch (type) {
+            case "Calendar":
+                return (
+                    <CalendarForm
+                        calendarData={data}
+                        setCalendarData={(newData) => {
+                            updateIthComponent(newData, i);
+                        }}
+                        deleteComponent={() => {
+                            deleteIthComponent(i);
+                        }}
+                    ></CalendarForm>
+                );
             case "Chart":
                 return (
                     <ChartComponentForm
@@ -336,10 +371,12 @@ const SectionCard = ({
 
                     <Dropdown.Menu>
                         <Dropdown.Item
-                            onClick={() => {
-                                // console.log("")
-                                addComponent("Chart");
-                            }}
+                            onClick={() => addComponent("Calendar")}
+                        >
+                            Calendar
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                            onClick={() => addComponent("Chart")}
                         >
                             Chart
                         </Dropdown.Item>
